@@ -1,0 +1,88 @@
+@charset "UTF-8";
+
+#key-visual {
+  background: url("/media/images/cover.svg") no-repeat center;
+  background-size: cover;
+  height: calc(100vh - 250px);
+}
+
+#featured {
+  background-color: #F7F7F7;
+}
+#featured h3:after {
+  content: ".";
+}
+#featured .grid > div:nth-child(1) h3:after {
+  color: #fda602;
+}
+#featured .grid > div:nth-child(2) h3:after {
+  color: #ffc93c;
+}
+#featured .grid > div:nth-child(3) h3:after {
+  color: #7cf9bf;
+}
+
+#clients {
+  background-color: #222;
+  color: #FFF;
+}
+
+.quote {
+  font-family: georgia, "Times New Roman", Times, serif;
+}
+.quote .message {
+  font-size: 1.2rem;
+  font-style: italic;
+  margin-bottom: 0.25em;
+}
+.quote .message:before {
+  content: "“ ";
+}
+.quote .message:after {
+  content: " ”";
+}
+.quote .client {
+  color: #6c757d;
+}
+.quote .client:before {
+  content: "— ";
+}
+
+#client-list ul,
+#client-list li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+#client-list ul {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+}
+#client-list ul li {
+  width: 20%;
+  padding: 2px;
+}
+#client-list ul li > img {
+  width: 100%;
+}
+
+#quotes {
+  height: 8rem;
+  overflow: hidden;
+  position: relative;
+}
+#quotes > .quote {
+  height: 4em;
+  position: absolute;
+  width: 100%;
+  visibility: hidden;
+  opacity: 0;
+  transition: 0.5s;
+}
+#quotes[data-active="1"] > .quote:nth-child(1), #quotes[data-active="2"] > .quote:nth-child(2), #quotes[data-active="3"] > .quote:nth-child(3), #quotes[data-active="4"] > .quote:nth-child(4) {
+  opacity: 1;
+  visibility: visible;
+}
