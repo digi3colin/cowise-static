@@ -12,6 +12,36 @@
   height: clamp(200px, 26vw, 460px);
 }
 
+/* Landscape key visuals -- 1920x1080 seamless tiles, three tiers: a cool stripe
+   field, an oversized shape behind, a warm motif in front. Built for a 16:9 or
+   wider block. Swap the background line for `repeat-x` + `auto 100%` if you would
+   rather a wider-than-16:9 block extend the artwork than crop it. */
+.kv-wide,
+#key-visual.kv-wide {
+  background: var(--kv) no-repeat center;
+  background-size: cover;
+  aspect-ratio: 16 / 9;
+}
+#key-visual.kv-wide {
+  aspect-ratio: auto;
+  height: clamp(260px, 30vw, 560px);
+}
+.kv-sunrise {
+  --kv: url("/media/images/kv-wide-sunrise.svg");
+}
+.kv-growth-wide {
+  --kv: url("/media/images/kv-wide-growth.svg");
+}
+.kv-reach {
+  --kv: url("/media/images/kv-wide-reach.svg");
+}
+.kv-spark {
+  --kv: url("/media/images/kv-wide-spark.svg");
+}
+.kv-gears {
+  --kv: url("/media/images/kv-wide-gears.svg");
+}
+
 /* Motif key visuals -- 1200x440 seamless tiles in the cover.svg bar grammar.
    Set the motif with a .kv-* class; .kv-band handles the rest. */
 .kv-band,
@@ -240,7 +270,8 @@ html {
 }
 #page-header #logo,
 #key-visual #logo,
-.kv-band #logo {
+.kv-band #logo,
+.kv-wide #logo {
   display: block;
 }
 
@@ -251,6 +282,19 @@ html {
 .page-nav a:hover,
 .page-nav a:focus {
   color: #ffc93c;
+}
+
+/* Shared service palette -- used by the service cards on /services/
+   and the category headings on /projects/ so both stay in step. */
+:root {
+  --svc-event: #fda602;
+  --svc-genai: #ffc93c;
+  --svc-web: #7cf9bf;
+  --svc-app: #ff0062;
+  --svc-ecommerce: #7ce7f9;
+  --svc-social: #052675;
+  --svc-motion: #fda602;
+  --svc-seo: #ffc93c;
 }
 
 #services h1:after,
@@ -270,40 +314,40 @@ html {
   padding-top: 1rem;
 }
 #services .grid > div:nth-child(6n+1) {
-  border-top-color: #fda602;
+  border-top-color: var(--svc-event);
 }
 #services .grid > div:nth-child(6n+1) h3:after {
-  color: #fda602;
+  color: var(--svc-event);
 }
 #services .grid > div:nth-child(6n+2) {
-  border-top-color: #ffc93c;
+  border-top-color: var(--svc-genai);
 }
 #services .grid > div:nth-child(6n+2) h3:after {
-  color: #ffc93c;
+  color: var(--svc-genai);
 }
 #services .grid > div:nth-child(6n+3) {
-  border-top-color: #7cf9bf;
+  border-top-color: var(--svc-web);
 }
 #services .grid > div:nth-child(6n+3) h3:after {
-  color: #7cf9bf;
+  color: var(--svc-web);
 }
 #services .grid > div:nth-child(6n+4) {
-  border-top-color: #ff0062;
+  border-top-color: var(--svc-app);
 }
 #services .grid > div:nth-child(6n+4) h3:after {
-  color: #ff0062;
+  color: var(--svc-app);
 }
 #services .grid > div:nth-child(6n+5) {
-  border-top-color: #7ce7f9;
+  border-top-color: var(--svc-ecommerce);
 }
 #services .grid > div:nth-child(6n+5) h3:after {
-  color: #7ce7f9;
+  color: var(--svc-ecommerce);
 }
 #services .grid > div:nth-child(6n) {
-  border-top-color: #052675;
+  border-top-color: var(--svc-social);
 }
 #services .grid > div:nth-child(6n) h3:after {
-  color: #052675;
+  color: var(--svc-social);
 }
 
 #projects {
@@ -319,8 +363,24 @@ html {
   letter-spacing: 0.05em;
   text-transform: uppercase;
   color: #6c757d;
-  border-bottom: 1px solid #DDD;
+  border-bottom: 3px solid var(--cat-color, #DDD);
   padding-bottom: 0.5rem;
+}
+#projects .category:after {
+  content: ".";
+  color: var(--cat-color, #6c757d);
+}
+#projects .category.svc-web {
+  --cat-color: var(--svc-web);
+}
+#projects .category.svc-app {
+  --cat-color: var(--svc-app);
+}
+#projects .category.svc-ecommerce {
+  --cat-color: var(--svc-ecommerce);
+}
+#projects .category.svc-social {
+  --cat-color: var(--svc-social);
 }
 #projects .project {
   background: #FFF;
