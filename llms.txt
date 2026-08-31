@@ -1,0 +1,87 @@
+# COWISE IDEA LAB
+
+> COWISE IDEA LAB LTD. (formerly Digi3 Studio) is a Hong Kong digital design agency that helps companies with design, technology, data and business — web and app development, e-commerce, social media and online advertising, event technology, motion graphics, IoT/RFID, SEO/GEO and generative AI consultancy.
+
+Founded in Hong Kong, COWISE has delivered digital work across Asia Pacific for luxury, retail, media and corporate clients including Veuve Clicquot, Louis Vuitton, Moët & Chandon, Hennessy, Cartier, Krug, Ruinart, Clinique, Berry Bros. & Rudd, SCMP, Times Square and Towngas.
+
+- Website: https://cowise.com.hk/
+- Contact: info@cowise.com.hk
+- Based in: Hong Kong
+
+## Core pages
+
+- [Home](https://cowise.com.hk/): Agency overview, featured work, testimonials, clients and contact details.
+- [Our Services](https://cowise.com.hk/services/): Full list of services offered by COWISE IDEA LAB.
+- [Projects](https://cowise.com.hk/projects/): Selected digital and motion-graphics work for Veuve Clicquot, Louis Vuitton, Moët & Chandon, Cloudy Bay, Sulwhasoo, Times Square and more.
+- [About Us](https://cowise.com.hk/about/): Company story, team and milestones since the Digi3 Studio days.
+
+## Services
+
+- [Web Development](https://cowise.com.hk/services/web-development/): Responsive, multilingual website and CMS development for Asian markets.
+- [App Design & Development](https://cowise.com.hk/services/app-development/): Mobile, tablet, cross-platform app and interactive experience design and development.
+- [E-Commerce](https://cowise.com.hk/services/ecommerce/): Shopify, e-commerce, CRM, ordering, booking and sales-platform development.
+- [Social Media & Online Advertising (SEM)](https://cowise.com.hk/services/social-media-advertising/): Social media management, creative, live content and online advertising.
+- [Event Management System](https://cowise.com.hk/services/event-management/): Event technology from invitation and RSVP to QR check-in, interactive experiences and reporting.
+- [Gen AI Training & Consultancy](https://cowise.com.hk/services/gen-ai-consultancy/): Practical generative AI training and consultancy for marketing and operations teams.
+- [Vibe Coding & Forward Deployment Engineer](https://cowise.com.hk/services/vibe-coding-forward-deployment/): An embedded engineer who builds working software with AI in the loop, then deploys and hands it over.
+- [Motion Graphics](https://cowise.com.hk/services/motion-graphics/): Motion graphics, animation, social video and event-screen content.
+- [IoT & RFID](https://cowise.com.hk/services/iot-rfid/): RFID/NFC access and cashless, sensors and beacons, connected installations and real-time dashboards for live events and retail.
+- [SEO & GEO](https://cowise.com.hk/services/seo-geo/): Technical SEO and generative engine optimisation for multilingual websites.
+
+## Projects — Web Development
+
+- [Asia Art Archive](https://cowise.com.hk/projects/aaa-china1980s/): Web engineering for china1980s.org, a trilingual research archive of contemporary Chinese art from 1980 to 1990.
+- [Veuve Clicquot Website](https://cowise.com.hk/projects/veuve-clicquot-website/): Multi-language content, SEO and server engine for the Asia Pacific site across Korea, Hong Kong, China and Singapore.
+- [Louis Vuitton Mini-sites](https://cowise.com.hk/projects/louis-vuitton-minisites/): Mini-site animation design and programming for launches, exhibitions and shop openings across Asia.
+- [Louis Vuitton + Supreme](https://cowise.com.hk/projects/louis-vuitton-supreme/): Online RSVP programming with data collection and SMS confirmation for Hong Kong and Japan.
+- [Rimowa + Supreme](https://cowise.com.hk/projects/rimowa-supreme/): Online registration with data collection and SMS confirmation for Hong Kong and USA.
+- [SCMP](https://cowise.com.hk/projects/scmp/): A customised Drupal site for SCMP's marketing team to manage and showcase their portfolios.
+- [Amstyle.cn](https://cowise.com.hk/projects/amstyle-cn/): Website design and development for a luxury portal site.
+- [Any-Wish](https://cowise.com.hk/projects/any-wish/): Website design and development for a gift registry startup.
+- [Central Venue Management](https://cowise.com.hk/projects/central-venue-management/): Website and e-newsletter design and development.
+- [Team Building Asia](https://cowise.com.hk/projects/team-building-asia/): Website design and development.
+
+## Projects — App Design & Development
+
+- [Cartier](https://cowise.com.hk/projects/cartier/): Internal iPad catalogue app for the High End Jewelry team to showcase pieces to VIP clients.
+- [Krug](https://cowise.com.hk/projects/krug/): A digital Krug Book for Korea's tasting event pairing music and Champagne on headphones and iPad.
+- [Ruinart at Art Basel](https://cowise.com.hk/projects/ruinart-art-basel/): iPad app and online registration for Ruinart's VIP Lounge at Art Basel Hong Kong.
+- [Veuve Clicquot Digital Tools](https://cowise.com.hk/projects/veuve-clicquot-digital-tools/): Multi-language digital tools adapted across markets and devices for engagement and data acquisition.
+- [Hennessy Artistry Photo Booth](https://cowise.com.hk/projects/hennessy-artistry-photo-booth/): 360° panorama photo booth with iPad data capture and instant SMS sharing across Asia markets.
+- [Times Square + Cantonese Opera](https://cowise.com.hk/projects/times-square-cantonese-opera/): Interactive photo booth for the Cantonese Opera Exhibition at Times Square.
+- [Apex Manual](https://cowise.com.hk/projects/apex-manual/): Cross-platform mobile app serving luxury articles from the amstyle.com CMS.
+
+## Projects — E-Commerce
+
+- [Berry Bros. & Rudd Hong Kong — CMS](https://cowise.com.hk/projects/berry-bros-rudd-cms/): Custom CMS supporting offline-to-online wine sales, ordering, booking, CRM and event technology.
+- [Berry Bros. & Rudd Hong Kong — Shopify](https://cowise.com.hk/projects/berry-bros-rudd-shopify/): Design, development and maintenance of the Shopify storefront.
+- [Moët Hennessy Asia Pacific](https://cowise.com.hk/projects/moet-hennessy-asia-pacific/): Shopping site implementation with Watson's Wine, Hong Kong's largest wine cellar.
+- [Moët Hennessy Diego](https://cowise.com.hk/projects/moet-hennessy-diego/): Internal wine sales platform for LVMH and Moët Hennessy staff, built on Shopify with custom business rules.
+- [Clinique](https://cowise.com.hk/projects/clinique/): Official e-commerce CMS site updates in Thai — banners, menus, landing pages, T&C and privacy.
+- [Ruinart — Avize](https://cowise.com.hk/projects/ruinart-avize/): Design and integration of branded offer pages on avize.com.hk.
+
+## Projects — Social Media & Online Advertising
+
+- [Veuve Clicquot Social](https://cowise.com.hk/projects/veuve-clicquot-social/): Campaign creative, copy and paid social on Facebook and Instagram for Hong Kong and Korea.
+- [Moët & Chandon](https://cowise.com.hk/projects/moet-chandon/): Moët Party Day social buzz, advertising, UGC and communication materials for Hong Kong since 2012.
+- [Cloudy Bay](https://cowise.com.hk/projects/cloudy-bay/): Communication and online advertising materials — banner ads, animated GIFs and video — since 2014.
+- [Hennessy Artistry Facebook Live](https://cowise.com.hk/projects/hennessy-artistry-facebook-live/): Simultaneous Facebook live broadcast to Hong Kong, Philippines, Taiwan and Vietnam from Shanghai.
+- [Hennessy Canvas](https://cowise.com.hk/projects/hennessy-canvas/): Facebook Canvas ad design and production.
+- [Times Square + Batman 75th Anniversary](https://cowise.com.hk/projects/times-square-batman/): Bat-signal.com, a digital innovation promoting the 2014 Batman 75th Anniversary celebration.
+- [Landmark — Santa Paws](https://cowise.com.hk/projects/landmark-santa-paws/): Facebook app with social sharing and data acquisition for Landmark's Huggable Christmas campaign.
+- [Towngas — Low Carbon Action!](https://cowise.com.hk/projects/towngas-low-carbon/): Interactive pledge and calculator to help reduce your carbon footprint.
+- [Wells Fargo Securities Asia](https://cowise.com.hk/projects/wells-fargo/): Festive e-card design and production carrying the brand's "Together we'll go far" line.
+
+## Projects — Motion Graphics
+
+- [Veuve Clicquot Motion](https://cowise.com.hk/projects/veuve-clicquot-motion/): Yelloween, Colorama, Rosé 200th Anniversary, Clicquot Journey and the Airstream Asia Tour.
+- [Louis Vuitton Motion](https://cowise.com.hk/projects/louis-vuitton-motion/): Store opening and exhibition motion graphics across Hong Kong, Macau, Singapore, Malaysia and Australia.
+- [Moët & Chandon Motion](https://cowise.com.hk/projects/moet-motion/): Moët Birthday films and a French Art de Vivre piece adapted for Korea.
+- [Cloudy Bay Motion](https://cowise.com.hk/projects/cloudy-bay-motion/): Motion posters, launch countdown series and social films for Sauvignon Blanc in Korea.
+- [Sulwhasoo Motion](https://cowise.com.hk/projects/sulwhasoo-motion/): Looping event backdrop animation.
+- [Times Square Showreel](https://cowise.com.hk/projects/times-square-showreel/): "Reigniting Past Glories and Success", a long-form film for Hong Kong Times Square.
+
+## Optional
+
+- [robots.txt](https://cowise.com.hk/robots.txt): Crawling rules and sitemap location.
+- [Sitemap](https://cowise.com.hk/sitemap.xml): Full list of indexable URLs.
