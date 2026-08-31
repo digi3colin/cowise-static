@@ -1,0 +1,697 @@
+{
+ "veuve-clicquot-website": {
+  "page": 3,
+  "images": [
+   {
+    "file": "01.jpg",
+    "w": 1940,
+    "h": 1362
+   }
+  ]
+ },
+ "louis-vuitton-minisites": {
+  "page": 4,
+  "images": [
+   {
+    "file": "01.jpg",
+    "w": 873,
+    "h": 577
+   },
+   {
+    "file": "02.jpg",
+    "w": 873,
+    "h": 494
+   },
+   {
+    "file": "03.jpg",
+    "w": 534,
+    "h": 354
+   },
+   {
+    "file": "04.jpg",
+    "w": 534,
+    "h": 354
+   },
+   {
+    "file": "05.jpg",
+    "w": 533,
+    "h": 353
+   },
+   {
+    "file": "06.jpg",
+    "w": 534,
+    "h": 351
+   },
+   {
+    "file": "07.jpg",
+    "w": 529,
+    "h": 351
+   },
+   {
+    "file": "08.jpg",
+    "w": 529,
+    "h": 351
+   }
+  ]
+ },
+ "louis-vuitton-supreme": {
+  "page": 5,
+  "images": [
+   {
+    "file": "01.jpg",
+    "w": 1579,
+    "h": 1576
+   }
+  ]
+ },
+ "rimowa-supreme": {
+  "page": 6,
+  "images": [
+   {
+    "file": "01.jpg",
+    "w": 786,
+    "h": 1309
+   },
+   {
+    "file": "02.jpg",
+    "w": 719,
+    "h": 1306
+   },
+   {
+    "file": "03.jpg",
+    "w": 357,
+    "h": 699
+   },
+   {
+    "file": "04.jpg",
+    "w": 357,
+    "h": 587
+   }
+  ]
+ },
+ "scmp": {
+  "page": 7,
+  "images": [
+   {
+    "file": "01.jpg",
+    "w": 1319,
+    "h": 1594
+   },
+   {
+    "file": "02.jpg",
+    "w": 526,
+    "h": 1017
+   },
+   {
+    "file": "03.jpg",
+    "w": 525,
+    "h": 565
+   }
+  ]
+ },
+ "central-venue-management": {
+  "page": 8,
+  "images": [
+   {
+    "file": "01.jpg",
+    "w": 1447,
+    "h": 1100
+   },
+   {
+    "file": "02.jpg",
+    "w": 448,
+    "h": 1100
+   }
+  ]
+ },
+ "team-building-asia": {
+  "page": 9,
+  "images": [
+   {
+    "file": "01.jpg",
+    "w": 1064,
+    "h": 1373
+   },
+   {
+    "file": "02.jpg",
+    "w": 528,
+    "h": 714
+   },
+   {
+    "file": "03.jpg",
+    "w": 528,
+    "h": 630
+   }
+  ]
+ },
+ "any-wish": {
+  "page": 10,
+  "images": [
+   {
+    "file": "01.jpg",
+    "w": 1100,
+    "h": 1400
+   },
+   {
+    "file": "02.jpg",
+    "w": 768,
+    "h": 941
+   },
+   {
+    "file": "03.jpg",
+    "w": 768,
+    "h": 449
+   }
+  ]
+ },
+ "amstyle-cn": {
+  "page": 11,
+  "images": [
+   {
+    "file": "01.jpg",
+    "w": 891,
+    "h": 1513
+   },
+   {
+    "file": "02.jpg",
+    "w": 566,
+    "h": 892
+   },
+   {
+    "file": "03.jpg",
+    "w": 477,
+    "h": 592
+   },
+   {
+    "file": "04.jpg",
+    "w": 424,
+    "h": 599
+   }
+  ]
+ },
+ "krug": {
+  "page": 13,
+  "images": [
+   {
+    "file": "01.jpg",
+    "w": 706,
+    "h": 1055
+   },
+   {
+    "file": "02.jpg",
+    "w": 511,
+    "h": 721
+   },
+   {
+    "file": "03.jpg",
+    "w": 555,
+    "h": 372
+   },
+   {
+    "file": "04.jpg",
+    "w": 507,
+    "h": 314
+   },
+   {
+    "file": "05.jpg",
+    "w": 382,
+    "h": 376
+   },
+   {
+    "file": "06.jpg",
+    "w": 251,
+    "h": 372
+   }
+  ]
+ },
+ "ruinart-art-basel": {
+  "page": 14,
+  "images": [
+   {
+    "file": "01.jpg",
+    "w": 1875,
+    "h": 606
+   },
+   {
+    "file": "02.jpg",
+    "w": 1168,
+    "h": 675
+   },
+   {
+    "file": "03.jpg",
+    "w": 690,
+    "h": 519
+   }
+  ]
+ },
+ "times-square-cantonese-opera": {
+  "page": 15,
+  "images": [
+   {
+    "file": "01.jpg",
+    "w": 732,
+    "h": 975
+   },
+   {
+    "file": "02.jpg",
+    "w": 362,
+    "h": 481
+   },
+   {
+    "file": "03.jpg",
+    "w": 362,
+    "h": 481
+   },
+   {
+    "file": "04.jpg",
+    "w": 362,
+    "h": 481
+   },
+   {
+    "file": "05.jpg",
+    "w": 362,
+    "h": 481
+   },
+   {
+    "file": "06.jpg",
+    "w": 300,
+    "h": 576
+   },
+   {
+    "file": "07.jpg",
+    "w": 300,
+    "h": 576
+   },
+   {
+    "file": "08.jpg",
+    "w": 273,
+    "h": 481
+   }
+  ]
+ },
+ "hennessy-artistry-photo-booth": {
+  "page": 16,
+  "images": [
+   {
+    "file": "01.jpg",
+    "w": 1347,
+    "h": 899
+   },
+   {
+    "file": "02.jpg",
+    "w": 528,
+    "h": 431
+   },
+   {
+    "file": "03.jpg",
+    "w": 403,
+    "h": 431
+   },
+   {
+    "file": "04.jpg",
+    "w": 355,
+    "h": 426
+   }
+  ]
+ },
+ "apex-manual": {
+  "page": 17,
+  "images": [
+   {
+    "file": "01.jpg",
+    "w": 2124,
+    "h": 1428
+   }
+  ]
+ },
+ "cartier": {
+  "page": 18,
+  "images": [
+   {
+    "file": "01.jpg",
+    "w": 2103,
+    "h": 1389
+   }
+  ]
+ },
+ "veuve-clicquot-digital-tools": {
+  "page": 19,
+  "images": [
+   {
+    "file": "01.jpg",
+    "w": 1937,
+    "h": 1380
+   }
+  ]
+ },
+ "berry-bros-rudd-cms": {
+  "page": 21,
+  "images": [
+   {
+    "file": "01.jpg",
+    "w": 1578,
+    "h": 1551
+   }
+  ]
+ },
+ "berry-bros-rudd-shopify": {
+  "page": 22,
+  "images": [
+   {
+    "file": "01.jpg",
+    "w": 1220,
+    "h": 1270
+   },
+   {
+    "file": "02.jpg",
+    "w": 660,
+    "h": 686
+   },
+   {
+    "file": "03.jpg",
+    "w": 320,
+    "h": 563
+   },
+   {
+    "file": "04.jpg",
+    "w": 318,
+    "h": 563
+   }
+  ]
+ },
+ "moet-hennessy-diego": {
+  "page": 23,
+  "images": [
+   {
+    "file": "01.jpg",
+    "w": 1589,
+    "h": 1415
+   }
+  ]
+ },
+ "moet-hennessy-asia-pacific": {
+  "page": 24,
+  "images": [
+   {
+    "file": "01.jpg",
+    "w": 1295,
+    "h": 1230
+   },
+   {
+    "file": "02.jpg",
+    "w": 351,
+    "h": 648
+   }
+  ]
+ },
+ "ruinart-avize": {
+  "page": 25,
+  "images": [
+   {
+    "file": "01.jpg",
+    "w": 802,
+    "h": 1504
+   },
+   {
+    "file": "02.jpg",
+    "w": 731,
+    "h": 1503
+   },
+   {
+    "file": "03.jpg",
+    "w": 427,
+    "h": 755
+   },
+   {
+    "file": "04.jpg",
+    "w": 427,
+    "h": 740
+   }
+  ]
+ },
+ "clinique": {
+  "page": 26,
+  "images": [
+   {
+    "file": "01.jpg",
+    "w": 760,
+    "h": 1579
+   },
+   {
+    "file": "02.jpg",
+    "w": 248,
+    "h": 1579
+   }
+  ]
+ },
+ "landmark-santa-paws": {
+  "page": 28,
+  "images": [
+   {
+    "file": "01.jpg",
+    "w": 1086,
+    "h": 1419
+   },
+   {
+    "file": "02.jpg",
+    "w": 673,
+    "h": 923
+   },
+   {
+    "file": "03.jpg",
+    "w": 673,
+    "h": 470
+   }
+  ]
+ },
+ "hennessy-artistry-facebook-live": {
+  "page": 29,
+  "images": [
+   {
+    "file": "01.jpg",
+    "w": 462,
+    "h": 686
+   },
+   {
+    "file": "02.jpg",
+    "w": 460,
+    "h": 686
+   },
+   {
+    "file": "03.jpg",
+    "w": 459,
+    "h": 686
+   },
+   {
+    "file": "04.jpg",
+    "w": 459,
+    "h": 686
+   },
+   {
+    "file": "05.jpg",
+    "w": 477,
+    "h": 546
+   },
+   {
+    "file": "06.jpg",
+    "w": 478,
+    "h": 271
+   },
+   {
+    "file": "07.jpg",
+    "w": 477,
+    "h": 271
+   },
+   {
+    "file": "08.jpg",
+    "w": 477,
+    "h": 270
+   }
+  ]
+ },
+ "moet-chandon": {
+  "page": 30,
+  "images": [
+   {
+    "file": "01.jpg",
+    "w": 740,
+    "h": 1005
+   },
+   {
+    "file": "02.jpg",
+    "w": 585,
+    "h": 1005
+   },
+   {
+    "file": "03.jpg",
+    "w": 561,
+    "h": 1005
+   },
+   {
+    "file": "04.jpg",
+    "w": 710,
+    "h": 460
+   },
+   {
+    "file": "05.jpg",
+    "w": 360,
+    "h": 465
+   },
+   {
+    "file": "06.jpg",
+    "w": 338,
+    "h": 465
+   },
+   {
+    "file": "07.jpg",
+    "w": 478,
+    "h": 305
+   }
+  ]
+ },
+ "veuve-clicquot-social": {
+  "page": 31,
+  "images": [
+   {
+    "file": "01.jpg",
+    "w": 1973,
+    "h": 1114
+   }
+  ]
+ },
+ "times-square-batman": {
+  "page": 32,
+  "images": [
+   {
+    "file": "01.jpg",
+    "w": 625,
+    "h": 935
+   },
+   {
+    "file": "02.jpg",
+    "w": 729,
+    "h": 689
+   },
+   {
+    "file": "03.jpg",
+    "w": 625,
+    "h": 490
+   },
+   {
+    "file": "04.jpg",
+    "w": 384,
+    "h": 528
+   },
+   {
+    "file": "05.jpg",
+    "w": 329,
+    "h": 402
+   },
+   {
+    "file": "06.jpg",
+    "w": 326,
+    "h": 320
+   },
+   {
+    "file": "07.jpg",
+    "w": 384,
+    "h": 200
+   }
+  ]
+ },
+ "hennessy-canvas": {
+  "page": 33,
+  "images": [
+   {
+    "file": "01.jpg",
+    "w": 626,
+    "h": 1109
+   },
+   {
+    "file": "02.jpg",
+    "w": 626,
+    "h": 1109
+   },
+   {
+    "file": "03.jpg",
+    "w": 626,
+    "h": 1109
+   }
+  ]
+ },
+ "cloudy-bay": {
+  "page": 34,
+  "images": [
+   {
+    "file": "01.jpg",
+    "w": 1182,
+    "h": 510
+   },
+   {
+    "file": "02.jpg",
+    "w": 651,
+    "h": 651
+   },
+   {
+    "file": "03.jpg",
+    "w": 651,
+    "h": 651
+   },
+   {
+    "file": "04.jpg",
+    "w": 651,
+    "h": 651
+   },
+   {
+    "file": "05.jpg",
+    "w": 381,
+    "h": 756
+   },
+   {
+    "file": "06.jpg",
+    "w": 376,
+    "h": 756
+   },
+   {
+    "file": "07.jpg",
+    "w": 651,
+    "h": 235
+   }
+  ]
+ },
+ "towngas-low-carbon": {
+  "page": 35,
+  "images": [
+   {
+    "file": "01.jpg",
+    "w": 1102,
+    "h": 828
+   },
+   {
+    "file": "02.jpg",
+    "w": 846,
+    "h": 542
+   },
+   {
+    "file": "03.jpg",
+    "w": 481,
+    "h": 362
+   },
+   {
+    "file": "04.jpg",
+    "w": 481,
+    "h": 362
+   },
+   {
+    "file": "05.jpg",
+    "w": 481,
+    "h": 362
+   },
+   {
+    "file": "06.jpg",
+    "w": 477,
+    "h": 359
+   }
+  ]
+ }
+}

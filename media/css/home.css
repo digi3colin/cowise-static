@@ -419,3 +419,212 @@ html {
 #contact {
   scroll-margin-top: 4.5rem;
 }
+
+/* Project detail pages -- /projects/<slug>/ */
+#project-detail {
+  background-color: #F7F7F7;
+}
+#project-detail h1:after {
+  content: ".";
+  color: #fda602;
+}
+
+.breadcrumb {
+  font-size: 0.9rem;
+  font-weight: 300;
+  letter-spacing: 0.05em;
+  color: #6c757d;
+}
+.breadcrumb > span[aria-hidden] {
+  padding: 0 0.25em;
+}
+.breadcrumb .category {
+  text-transform: uppercase;
+  color: #222;
+  border-bottom: 3px solid var(--cat-color, #DDD);
+}
+.breadcrumb .category.svc-web {
+  --cat-color: var(--svc-web);
+}
+.breadcrumb .category.svc-app {
+  --cat-color: var(--svc-app);
+}
+.breadcrumb .category.svc-ecommerce {
+  --cat-color: var(--svc-ecommerce);
+}
+.breadcrumb .category.svc-social {
+  --cat-color: var(--svc-social);
+}
+
+.project-gallery figure {
+  margin: 0;
+}
+.project-gallery img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 0.25rem;
+  background: #FFF;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.06);
+}
+.project-gallery .lead {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+.project-gallery .lead img {
+  width: auto;
+  max-width: 100%;
+  max-height: 70vh;
+  margin: 0 auto;
+}
+.project-gallery .rest {
+  columns: 260px;
+  column-gap: 1rem;
+}
+.project-gallery .rest figure {
+  break-inside: avoid;
+  margin-bottom: 1rem;
+}
+
+.project-video iframe {
+  border-radius: 0.25rem;
+}
+
+#projects .project .client a {
+  color: inherit;
+}
+#projects .project .client a:hover,
+#projects .project .client a:focus {
+  color: #fda602;
+}
+#projects .project .more {
+  display: inline-block;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  color: #6c757d;
+}
+#projects .project .more:hover,
+#projects .project .more:focus {
+  color: #222;
+}
+
+.project-pager .index {
+  opacity: 0.7;
+}
+
+/* About page -- intro stats and the milestone timeline. */
+#about-us h1:after,
+#milestones h2:after {
+  content: ".";
+  color: #fda602;
+}
+#about-us .stat {
+  border-top: 3px solid var(--stat-color, #222);
+  padding-top: 1rem;
+  font-weight: 300;
+}
+#about-us .stat .figure {
+  font-size: 2.375rem;
+  line-height: 1.2;
+  font-weight: 400;
+  color: #222;
+}
+#about-us .stat .figure:after {
+  content: ".";
+  color: var(--stat-color, #222);
+}
+#about-us .grid > div:nth-child(3n+1) {
+  --stat-color: var(--svc-event);
+}
+#about-us .grid > div:nth-child(3n+2) {
+  --stat-color: var(--svc-genai);
+}
+#about-us .grid > div:nth-child(3n) {
+  --stat-color: var(--svc-web);
+}
+
+#milestones {
+  background-color: #F7F7F7;
+}
+.timeline,
+.timeline .milestone {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.timeline {
+  position: relative;
+  padding-left: 2rem;
+  border-left: 3px solid #DDD;
+}
+.timeline .milestone {
+  position: relative;
+  padding-bottom: 2.5rem;
+}
+.timeline .milestone:last-child {
+  padding-bottom: 0;
+}
+.timeline .milestone:before {
+  content: "";
+  position: absolute;
+  top: 0.5rem;
+  left: calc(-2rem - 1.5px);
+  width: 0.9rem;
+  height: 0.9rem;
+  margin-left: -0.45rem;
+  border-radius: 50%;
+  background: var(--ms-color, #222);
+}
+.timeline .milestone:nth-child(6n+1) {
+  --ms-color: var(--svc-event);
+}
+.timeline .milestone:nth-child(6n+2) {
+  --ms-color: var(--svc-genai);
+}
+.timeline .milestone:nth-child(6n+3) {
+  --ms-color: var(--svc-web);
+}
+.timeline .milestone:nth-child(6n+4) {
+  --ms-color: var(--svc-app);
+}
+.timeline .milestone:nth-child(6n+5) {
+  --ms-color: var(--svc-ecommerce);
+}
+.timeline .milestone:nth-child(6n) {
+  --ms-color: var(--svc-social);
+}
+.timeline .milestone .year {
+  font-size: 1.5rem;
+  line-height: 1.2;
+  letter-spacing: 0.05em;
+  color: #6c757d;
+}
+.timeline .milestone .body h3 {
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+  font-size: 1.25rem;
+}
+.timeline .milestone .body h3:after {
+  content: ".";
+  color: var(--ms-color, #222);
+}
+.timeline .milestone .body > div {
+  font-weight: 300;
+  max-width: 46em;
+}
+
+@media (min-width: 718px) {
+  .timeline .milestone {
+    display: grid;
+    grid-template-columns: 7rem 1fr;
+    gap: 0 2rem;
+  }
+  .timeline .milestone .year {
+    text-align: right;
+  }
+  .timeline .milestone .body h3 {
+    margin-top: 0;
+  }
+}
