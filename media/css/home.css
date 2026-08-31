@@ -582,8 +582,8 @@ html {
 #services .service {
   display: flex;
   flex-direction: column;
-  border-top: 3px solid #222;
-  padding-top: 1rem;
+  border-bottom: 3px solid #222;
+  padding-bottom: 1rem;
 }
 #services .service h3 a {
   color: inherit;
@@ -656,37 +656,37 @@ html {
   }
 }
 #services .grid > div:nth-child(6n+1) {
-  border-top-color: var(--svc-event);
+  border-bottom-color: var(--svc-event);
 }
 #services .grid > div:nth-child(6n+1) h3:after {
   color: var(--svc-event);
 }
 #services .grid > div:nth-child(6n+2) {
-  border-top-color: var(--svc-genai);
+  border-bottom-color: var(--svc-genai);
 }
 #services .grid > div:nth-child(6n+2) h3:after {
   color: var(--svc-genai);
 }
 #services .grid > div:nth-child(6n+3) {
-  border-top-color: var(--svc-web);
+  border-bottom-color: var(--svc-web);
 }
 #services .grid > div:nth-child(6n+3) h3:after {
   color: var(--svc-web);
 }
 #services .grid > div:nth-child(6n+4) {
-  border-top-color: var(--svc-app);
+  border-bottom-color: var(--svc-app);
 }
 #services .grid > div:nth-child(6n+4) h3:after {
   color: var(--svc-app);
 }
 #services .grid > div:nth-child(6n+5) {
-  border-top-color: var(--svc-ecommerce);
+  border-bottom-color: var(--svc-ecommerce);
 }
 #services .grid > div:nth-child(6n+5) h3:after {
   color: var(--svc-ecommerce);
 }
 #services .grid > div:nth-child(6n) {
-  border-top-color: var(--svc-social);
+  border-bottom-color: var(--svc-social);
 }
 #services .grid > div:nth-child(6n) h3:after {
   color: var(--svc-social);
