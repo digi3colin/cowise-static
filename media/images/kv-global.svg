@@ -1,0 +1,274 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="440" viewBox="0 0 1200 440">
+    <g id="field">
+        <rect  width="9" height="440" transform="translate(0)" fill="#ffde0b"/>
+        <rect  width="9" height="440" transform="translate(10)" fill="#052675"/>
+        <rect  width="9" height="440" transform="translate(20)" fill="#7ce7f9"/>
+        <rect  width="9" height="440" transform="translate(30)" fill="#ff0062"/>
+        <rect  width="9" height="440" transform="translate(40)" fill="#7ce7f9"/>
+        <rect  width="9" height="440" transform="translate(50)" fill="#ff0062"/>
+        <rect  width="9" height="440" transform="translate(60)" fill="#7ce7f9"/>
+        <rect  width="9" height="440" transform="translate(70)" fill="#fda602"/>
+        <rect  width="9" height="440" transform="translate(80)" fill="#fda602"/>
+        <rect  width="9" height="440" transform="translate(90)" fill="#ff0062"/>
+        <rect  width="9" height="440" transform="translate(100)" fill="#ffde0b"/>
+        <rect  width="9" height="440" transform="translate(110)" fill="#ffde0b"/>
+        <rect  width="9" height="440" transform="translate(120)" fill="#052675"/>
+        <rect  width="9" height="440" transform="translate(130)" fill="#7ce7f9"/>
+        <rect  width="9" height="440" transform="translate(140)" fill="#ff0062"/>
+        <rect  width="9" height="440" transform="translate(150)" fill="#7ce7f9"/>
+        <rect  width="9" height="440" transform="translate(160)" fill="#fda602"/>
+        <rect  width="9" height="440" transform="translate(170)" fill="#fda602"/>
+        <rect  width="9" height="440" transform="translate(180)" fill="#7ce7f9"/>
+        <rect  width="9" height="440" transform="translate(190)" fill="#7ce7f9"/>
+        <rect  width="9" height="440" transform="translate(200)" fill="#7ce7f9"/>
+        <rect  width="9" height="440" transform="translate(210)" fill="#7ce7f9"/>
+        <rect  width="9" height="440" transform="translate(220)" fill="#7ce7f9"/>
+        <rect  width="9" height="440" transform="translate(230)" fill="#fda602"/>
+        <rect  width="9" height="440" transform="translate(240)" fill="#7ce7f9"/>
+        <rect  width="9" height="440" transform="translate(250)" fill="#ff0062"/>
+        <rect  width="9" height="440" transform="translate(260)" fill="#fda602"/>
+        <rect  width="9" height="440" transform="translate(270)" fill="#ff0062"/>
+        <rect  width="9" height="440" transform="translate(280)" fill="#7ce7f9"/>
+        <rect  width="9" height="440" transform="translate(290)" fill="#7ce7f9"/>
+        <rect  width="9" height="440" transform="translate(300)" fill="#fda602"/>
+        <rect  width="9" height="440" transform="translate(310)" fill="#ffde0b"/>
+        <rect  width="9" height="440" transform="translate(320)" fill="#7ce7f9"/>
+        <rect  width="9" height="440" transform="translate(330)" fill="#7ce7f9"/>
+        <rect  width="9" height="440" transform="translate(340)" fill="#7ce7f9"/>
+        <rect  width="9" height="440" transform="translate(350)" fill="#ff0062"/>
+        <rect  width="9" height="440" transform="translate(360)" fill="#7ce7f9"/>
+        <rect  width="9" height="440" transform="translate(370)" fill="#7ce7f9"/>
+        <rect  width="9" height="440" transform="translate(380)" fill="#7ce7f9"/>
+        <rect  width="9" height="440" transform="translate(390)" fill="#7ce7f9"/>
+        <rect  width="9" height="440" transform="translate(400)" fill="#7ce7f9"/>
+        <rect  width="9" height="440" transform="translate(410)" fill="#7ce7f9"/>
+        <rect  width="9" height="440" transform="translate(420)" fill="#ff0062"/>
+        <rect  width="9" height="440" transform="translate(430)" fill="#ff0062"/>
+        <rect  width="9" height="440" transform="translate(440)" fill="#ff0062"/>
+        <rect  width="9" height="440" transform="translate(450)" fill="#ff0062"/>
+        <rect  width="9" height="440" transform="translate(460)" fill="#7ce7f9"/>
+        <rect  width="9" height="179" transform="translate(470)" fill="#7ce7f9"/>
+        <rect  width="9" height="179" transform="translate(470 261)" fill="#fda602"/>
+        <rect  width="9" height="156" transform="translate(480)" fill="#ffde0b"/>
+        <rect  width="9" height="18" transform="translate(480 211)" fill="#fda602"/>
+        <rect  width="9" height="156" transform="translate(480 284)" fill="#fda602"/>
+        <rect  width="9" height="141" transform="translate(490)" fill="#ffde0b"/>
+        <rect  width="9" height="18" transform="translate(490 211)" fill="#ffde0b"/>
+        <rect  width="9" height="141" transform="translate(490 299)" fill="#7ce7f9"/>
+        <rect  width="9" height="129" transform="translate(500)" fill="#ff0062"/>
+        <rect  width="9" height="18" transform="translate(500 211)" fill="#7ce7f9"/>
+        <rect  width="9" height="129" transform="translate(500 311)" fill="#7ce7f9"/>
+        <rect  width="9" height="119" transform="translate(510)" fill="#fda602"/>
+        <rect  width="9" height="18" transform="translate(510 211)" fill="#052675"/>
+        <rect  width="9" height="119" transform="translate(510 321)" fill="#7ce7f9"/>
+        <rect  width="9" height="112" transform="translate(520)" fill="#7ce7f9"/>
+        <rect  width="9" height="92" transform="translate(520 174)" fill="#052675"/>
+        <rect  width="9" height="112" transform="translate(520 328)" fill="#7ce7f9"/>
+        <rect  width="9" height="105" transform="translate(530)" fill="#7ce7f9"/>
+        <rect  width="9" height="30" transform="translate(530 143)" fill="#7ce7f9"/>
+        <rect  width="9" height="18" transform="translate(530 211)" fill="#ffde0b"/>
+        <rect  width="9" height="30" transform="translate(530 267)" fill="#7ce7f9"/>
+        <rect  width="9" height="105" transform="translate(530 335)" fill="#7ce7f9"/>
+        <rect  width="9" height="100" transform="translate(540)" fill="#ff0062"/>
+        <rect  width="9" height="23" transform="translate(540 123)" fill="#7ce7f9"/>
+        <rect  width="9" height="18" transform="translate(540 211)" fill="#052675"/>
+        <rect  width="9" height="23" transform="translate(540 294)" fill="#052675"/>
+        <rect  width="9" height="100" transform="translate(540 340)" fill="#fda602"/>
+        <rect  width="9" height="96" transform="translate(550)" fill="#052675"/>
+        <rect  width="9" height="18" transform="translate(550 111)" fill="#7ce7f9"/>
+        <rect  width="9" height="18" transform="translate(550 211)" fill="#7ce7f9"/>
+        <rect  width="9" height="18" transform="translate(550 311)" fill="#ffde0b"/>
+        <rect  width="9" height="96" transform="translate(550 344)" fill="#052675"/>
+        <rect  width="9" height="93" transform="translate(560)" fill="#ffde0b"/>
+        <rect  width="9" height="10" transform="translate(560 107)" fill="#ffde0b"/>
+        <rect  width="9" height="18" transform="translate(560 211)" fill="#052675"/>
+        <rect  width="9" height="10" transform="translate(560 323)" fill="#052675"/>
+        <rect  width="9" height="93" transform="translate(560 347)" fill="#7ce7f9"/>
+        <rect  width="9" height="90" transform="translate(570)" fill="#fda602"/>
+        <rect  width="9" height="5" transform="translate(570 105)" fill="#052675"/>
+        <rect  width="9" height="18" transform="translate(570 211)" fill="#052675"/>
+        <rect  width="9" height="5" transform="translate(570 330)" fill="#7ce7f9"/>
+        <rect  width="9" height="90" transform="translate(570 350)" fill="#7ce7f9"/>
+        <rect  width="9" height="89" transform="translate(580)" fill="#7ce7f9"/>
+        <rect  width="9" height="2" transform="translate(580 103)" fill="#7ce7f9"/>
+        <rect  width="9" height="18" transform="translate(580 211)" fill="#7ce7f9"/>
+        <rect  width="9" height="2" transform="translate(580 335)" fill="#052675"/>
+        <rect  width="9" height="89" transform="translate(580 351)" fill="#052675"/>
+        <rect  width="9" height="88" transform="translate(590)" fill="#7ce7f9"/>
+        <rect  width="9" height="236" transform="translate(590 102)" fill="#fda602"/>
+        <rect  width="9" height="88" transform="translate(590 352)" fill="#052675"/>
+        <rect  width="9" height="88" transform="translate(600)" fill="#7ce7f9"/>
+        <rect  width="9" height="236" transform="translate(600 102)" fill="#7ce7f9"/>
+        <rect  width="9" height="88" transform="translate(600 352)" fill="#052675"/>
+        <rect  width="9" height="89" transform="translate(610)" fill="#ff0062"/>
+        <rect  width="9" height="1" transform="translate(610 103)" fill="#7ce7f9"/>
+        <rect  width="9" height="18" transform="translate(610 211)" fill="#fda602"/>
+        <rect  width="9" height="1" transform="translate(610 336)" fill="#ffde0b"/>
+        <rect  width="9" height="89" transform="translate(610 351)" fill="#fda602"/>
+        <rect  width="9" height="90" transform="translate(620)" fill="#ffde0b"/>
+        <rect  width="9" height="4" transform="translate(620 105)" fill="#ffde0b"/>
+        <rect  width="9" height="18" transform="translate(620 211)" fill="#052675"/>
+        <rect  width="9" height="4" transform="translate(620 331)" fill="#7ce7f9"/>
+        <rect  width="9" height="90" transform="translate(620 350)" fill="#7ce7f9"/>
+        <rect  width="9" height="93" transform="translate(630)" fill="#fda602"/>
+        <rect  width="9" height="10" transform="translate(630 107)" fill="#7ce7f9"/>
+        <rect  width="9" height="18" transform="translate(630 211)" fill="#ffde0b"/>
+        <rect  width="9" height="10" transform="translate(630 323)" fill="#7ce7f9"/>
+        <rect  width="9" height="93" transform="translate(630 347)" fill="#7ce7f9"/>
+        <rect  width="9" height="96" transform="translate(640)" fill="#052675"/>
+        <rect  width="9" height="17" transform="translate(640 111)" fill="#ff0062"/>
+        <rect  width="9" height="18" transform="translate(640 211)" fill="#052675"/>
+        <rect  width="9" height="17" transform="translate(640 312)" fill="#052675"/>
+        <rect  width="9" height="96" transform="translate(640 344)" fill="#052675"/>
+        <rect  width="9" height="100" transform="translate(650)" fill="#7ce7f9"/>
+        <rect  width="9" height="22" transform="translate(650 122)" fill="#7ce7f9"/>
+        <rect  width="9" height="18" transform="translate(650 211)" fill="#7ce7f9"/>
+        <rect  width="9" height="22" transform="translate(650 296)" fill="#052675"/>
+        <rect  width="9" height="100" transform="translate(650 340)" fill="#7ce7f9"/>
+        <rect  width="9" height="105" transform="translate(660)" fill="#7ce7f9"/>
+        <rect  width="9" height="30" transform="translate(660 140)" fill="#7ce7f9"/>
+        <rect  width="9" height="18" transform="translate(660 211)" fill="#052675"/>
+        <rect  width="9" height="30" transform="translate(660 270)" fill="#7ce7f9"/>
+        <rect  width="9" height="105" transform="translate(660 335)" fill="#ff0062"/>
+        <rect  width="9" height="111" transform="translate(670)" fill="#7ce7f9"/>
+        <rect  width="9" height="100" transform="translate(670 170)" fill="#7ce7f9"/>
+        <rect  width="9" height="111" transform="translate(670 329)" fill="#7ce7f9"/>
+        <rect  width="9" height="119" transform="translate(680)" fill="#7ce7f9"/>
+        <rect  width="9" height="18" transform="translate(680 211)" fill="#7ce7f9"/>
+        <rect  width="9" height="119" transform="translate(680 321)" fill="#ff0062"/>
+        <rect  width="9" height="128" transform="translate(690)" fill="#052675"/>
+        <rect  width="9" height="18" transform="translate(690 211)" fill="#052675"/>
+        <rect  width="9" height="128" transform="translate(690 312)" fill="#7ce7f9"/>
+        <rect  width="9" height="139" transform="translate(700)" fill="#fda602"/>
+        <rect  width="9" height="18" transform="translate(700 211)" fill="#7ce7f9"/>
+        <rect  width="9" height="139" transform="translate(700 301)" fill="#7ce7f9"/>
+        <rect  width="9" height="154" transform="translate(710)" fill="#ffde0b"/>
+        <rect  width="9" height="18" transform="translate(710 211)" fill="#7ce7f9"/>
+        <rect  width="9" height="154" transform="translate(710 286)" fill="#052675"/>
+        <rect  width="9" height="176" transform="translate(720)" fill="#052675"/>
+        <rect  width="9" height="176" transform="translate(720 264)" fill="#052675"/>
+        <rect  width="9" height="440" transform="translate(730)" fill="#fda602"/>
+        <rect  width="9" height="440" transform="translate(740)" fill="#7ce7f9"/>
+        <rect  width="9" height="440" transform="translate(750)" fill="#052675"/>
+        <rect  width="9" height="440" transform="translate(760)" fill="#fda602"/>
+        <rect  width="9" height="440" transform="translate(770)" fill="#7ce7f9"/>
+        <rect  width="9" height="440" transform="translate(780)" fill="#7ce7f9"/>
+        <rect  width="9" height="440" transform="translate(790)" fill="#7ce7f9"/>
+        <rect  width="9" height="440" transform="translate(800)" fill="#fda602"/>
+        <rect  width="9" height="440" transform="translate(810)" fill="#fda602"/>
+        <rect  width="9" height="440" transform="translate(820)" fill="#fda602"/>
+        <rect  width="9" height="440" transform="translate(830)" fill="#fda602"/>
+        <rect  width="9" height="440" transform="translate(840)" fill="#7ce7f9"/>
+        <rect  width="9" height="440" transform="translate(850)" fill="#052675"/>
+        <rect  width="9" height="440" transform="translate(860)" fill="#052675"/>
+        <rect  width="9" height="440" transform="translate(870)" fill="#7ce7f9"/>
+        <rect  width="9" height="440" transform="translate(880)" fill="#ffde0b"/>
+        <rect  width="9" height="440" transform="translate(890)" fill="#7ce7f9"/>
+        <rect  width="9" height="440" transform="translate(900)" fill="#ffde0b"/>
+        <rect  width="9" height="440" transform="translate(910)" fill="#ffde0b"/>
+        <rect  width="9" height="440" transform="translate(920)" fill="#052675"/>
+        <rect  width="9" height="440" transform="translate(930)" fill="#fda602"/>
+        <rect  width="9" height="440" transform="translate(940)" fill="#ff0062"/>
+        <rect  width="9" height="440" transform="translate(950)" fill="#052675"/>
+        <rect  width="9" height="440" transform="translate(960)" fill="#7ce7f9"/>
+        <rect  width="9" height="440" transform="translate(970)" fill="#ffde0b"/>
+        <rect  width="9" height="440" transform="translate(980)" fill="#052675"/>
+        <rect  width="9" height="440" transform="translate(990)" fill="#7ce7f9"/>
+        <rect  width="9" height="440" transform="translate(1000)" fill="#ff0062"/>
+        <rect  width="9" height="440" transform="translate(1010)" fill="#7ce7f9"/>
+        <rect  width="9" height="440" transform="translate(1020)" fill="#ff0062"/>
+        <rect  width="9" height="440" transform="translate(1030)" fill="#ffde0b"/>
+        <rect  width="9" height="440" transform="translate(1040)" fill="#052675"/>
+        <rect  width="9" height="440" transform="translate(1050)" fill="#ff0062"/>
+        <rect  width="9" height="440" transform="translate(1060)" fill="#7ce7f9"/>
+        <rect  width="9" height="440" transform="translate(1070)" fill="#ff0062"/>
+        <rect  width="9" height="440" transform="translate(1080)" fill="#7ce7f9"/>
+        <rect  width="9" height="440" transform="translate(1090)" fill="#7ce7f9"/>
+        <rect  width="9" height="440" transform="translate(1100)" fill="#ff0062"/>
+        <rect  width="9" height="440" transform="translate(1110)" fill="#052675"/>
+        <rect  width="9" height="440" transform="translate(1120)" fill="#7ce7f9"/>
+        <rect  width="9" height="440" transform="translate(1130)" fill="#052675"/>
+        <rect  width="9" height="440" transform="translate(1140)" fill="#7ce7f9"/>
+        <rect  width="9" height="440" transform="translate(1150)" fill="#7ce7f9"/>
+        <rect  width="9" height="440" transform="translate(1160)" fill="#fda602"/>
+        <rect  width="9" height="440" transform="translate(1170)" fill="#ff0062"/>
+        <rect  width="9" height="440" transform="translate(1180)" fill="#052675"/>
+        <rect  width="9" height="440" transform="translate(1190)" fill="#052675"/>
+    </g>
+    <g id="shape">
+        <rect  width="9" height="82" transform="translate(470 179)" fill="#ffde0b"/>
+        <rect  width="9" height="55" transform="translate(480 156)" fill="#ff0062"/>
+        <rect  width="9" height="55" transform="translate(480 229)" fill="#ffde0b"/>
+        <rect  width="9" height="70" transform="translate(490 141)" fill="#fda602"/>
+        <rect  width="9" height="70" transform="translate(490 229)" fill="#fda602"/>
+        <rect  width="9" height="82" transform="translate(500 129)" fill="#fda602"/>
+        <rect  width="9" height="82" transform="translate(500 229)" fill="#fda602"/>
+        <rect  width="9" height="92" transform="translate(510 119)" fill="#ffde0b"/>
+        <rect  width="9" height="92" transform="translate(510 229)" fill="#fda602"/>
+        <rect  width="9" height="62" transform="translate(520 112)" fill="#ffde0b"/>
+        <rect  width="9" height="62" transform="translate(520 266)" fill="#ffde0b"/>
+        <rect  width="9" height="38" transform="translate(530 105)" fill="#fda602"/>
+        <rect  width="9" height="38" transform="translate(530 173)" fill="#fda602"/>
+        <rect  width="9" height="38" transform="translate(530 229)" fill="#fda602"/>
+        <rect  width="9" height="38" transform="translate(530 297)" fill="#fda602"/>
+        <rect  width="9" height="23" transform="translate(540 100)" fill="#ffde0b"/>
+        <rect  width="9" height="65" transform="translate(540 146)" fill="#ffde0b"/>
+        <rect  width="9" height="65" transform="translate(540 229)" fill="#ffde0b"/>
+        <rect  width="9" height="23" transform="translate(540 317)" fill="#ffde0b"/>
+        <rect  width="9" height="15" transform="translate(550 96)" fill="#ff0062"/>
+        <rect  width="9" height="82" transform="translate(550 129)" fill="#ff0062"/>
+        <rect  width="9" height="82" transform="translate(550 229)" fill="#ff0062"/>
+        <rect  width="9" height="15" transform="translate(550 329)" fill="#ff0062"/>
+        <rect  width="9" height="14" transform="translate(560 93)" fill="#ff0062"/>
+        <rect  width="9" height="94" transform="translate(560 117)" fill="#ff0062"/>
+        <rect  width="9" height="94" transform="translate(560 229)" fill="#ff0062"/>
+        <rect  width="9" height="14" transform="translate(560 333)" fill="#ff0062"/>
+        <rect  width="9" height="15" transform="translate(570 90)" fill="#ff0062"/>
+        <rect  width="9" height="101" transform="translate(570 110)" fill="#ff0062"/>
+        <rect  width="9" height="101" transform="translate(570 229)" fill="#ff0062"/>
+        <rect  width="9" height="15" transform="translate(570 335)" fill="#ff0062"/>
+        <rect  width="9" height="14" transform="translate(580 89)" fill="#ffde0b"/>
+        <rect  width="9" height="106" transform="translate(580 105)" fill="#ffde0b"/>
+        <rect  width="9" height="106" transform="translate(580 229)" fill="#ffde0b"/>
+        <rect  width="9" height="14" transform="translate(580 337)" fill="#ffde0b"/>
+        <rect  width="9" height="14" transform="translate(590 88)" fill="#ffde0b"/>
+        <rect  width="9" height="14" transform="translate(590 338)" fill="#ffde0b"/>
+        <rect  width="9" height="14" transform="translate(600 88)" fill="#ffde0b"/>
+        <rect  width="9" height="14" transform="translate(600 338)" fill="#ffde0b"/>
+        <rect  width="9" height="14" transform="translate(610 89)" fill="#fda602"/>
+        <rect  width="9" height="107" transform="translate(610 104)" fill="#ff0062"/>
+        <rect  width="9" height="107" transform="translate(610 229)" fill="#ff0062"/>
+        <rect  width="9" height="14" transform="translate(610 337)" fill="#ff0062"/>
+        <rect  width="9" height="15" transform="translate(620 90)" fill="#ff0062"/>
+        <rect  width="9" height="102" transform="translate(620 109)" fill="#ff0062"/>
+        <rect  width="9" height="102" transform="translate(620 229)" fill="#ff0062"/>
+        <rect  width="9" height="15" transform="translate(620 335)" fill="#ff0062"/>
+        <rect  width="9" height="14" transform="translate(630 93)" fill="#ff0062"/>
+        <rect  width="9" height="94" transform="translate(630 117)" fill="#ff0062"/>
+        <rect  width="9" height="94" transform="translate(630 229)" fill="#ff0062"/>
+        <rect  width="9" height="14" transform="translate(630 333)" fill="#ff0062"/>
+        <rect  width="9" height="15" transform="translate(640 96)" fill="#fda602"/>
+        <rect  width="9" height="83" transform="translate(640 128)" fill="#fda602"/>
+        <rect  width="9" height="83" transform="translate(640 229)" fill="#fda602"/>
+        <rect  width="9" height="15" transform="translate(640 329)" fill="#fda602"/>
+        <rect  width="9" height="22" transform="translate(650 100)" fill="#ffde0b"/>
+        <rect  width="9" height="67" transform="translate(650 144)" fill="#ffde0b"/>
+        <rect  width="9" height="67" transform="translate(650 229)" fill="#ffde0b"/>
+        <rect  width="9" height="22" transform="translate(650 318)" fill="#ffde0b"/>
+        <rect  width="9" height="35" transform="translate(660 105)" fill="#ffde0b"/>
+        <rect  width="9" height="41" transform="translate(660 170)" fill="#ffde0b"/>
+        <rect  width="9" height="41" transform="translate(660 229)" fill="#ffde0b"/>
+        <rect  width="9" height="35" transform="translate(660 300)" fill="#ffde0b"/>
+        <rect  width="9" height="59" transform="translate(670 111)" fill="#ff0062"/>
+        <rect  width="9" height="59" transform="translate(670 270)" fill="#ff0062"/>
+        <rect  width="9" height="92" transform="translate(680 119)" fill="#fda602"/>
+        <rect  width="9" height="92" transform="translate(680 229)" fill="#fda602"/>
+        <rect  width="9" height="83" transform="translate(690 128)" fill="#ff0062"/>
+        <rect  width="9" height="83" transform="translate(690 229)" fill="#ff0062"/>
+        <rect  width="9" height="72" transform="translate(700 139)" fill="#ff0062"/>
+        <rect  width="9" height="72" transform="translate(700 229)" fill="#ff0062"/>
+        <rect  width="9" height="57" transform="translate(710 154)" fill="#ff0062"/>
+        <rect  width="9" height="57" transform="translate(710 229)" fill="#ff0062"/>
+        <rect  width="9" height="88" transform="translate(720 176)" fill="#ff0062"/>
+    </g>
+</svg>

@@ -1,0 +1,16 @@
+{
+  "name": "cowise-www-static",
+  "version": "1.0.0",
+  "private": true,
+  "description": "cowise.com.hk static site",
+  "scripts": {
+    "build": "tailwindcss -i ./src/css/style.css -o ./media/css/style.css",
+    "build:min": "tailwindcss -i ./src/css/style.css -o ./media/css/style.css --minify",
+    "watch": "tailwindcss -i ./src/css/style.css -o ./media/css/style.css --watch"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.3.3",
+    "@tailwindcss/forms": "^0.5.10",
+    "tailwindcss": "^4.3.3"
+  }
+}

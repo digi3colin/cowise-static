@@ -1,12 +1,16 @@
 "use strict";
 
 (fn => document.readyState !== 'loading' ? fn() : document.addEventListener('DOMContentLoaded', fn))(() => {
-  setInterval(() => {
-    const quotes = document.getElementById('quotes');
-    let showId = parseInt(quotes.getAttribute('data-active') || 0);
-    showId = showId < 4 ? showId + 1 : 1;
-    quotes.setAttribute('data-active', showId.toString());
-  }, 4000);
+  const quotes = document.getElementById('quotes');
+  const quoteList = quotes ? [...quotes.querySelectorAll('.quote')] : [];
+  if (quoteList.length > 1) {
+    let showId = Math.max(0, quoteList.findIndex(q => q.classList.contains('active')));
+    setInterval(() => {
+      quoteList[showId].classList.remove('active');
+      showId = (showId + 1) % quoteList.length;
+      quoteList[showId].classList.add('active');
+    }, 4000);
+  }
   const logo = document.querySelector('#logo');
   const featured = document.querySelector('#featured');
   document.addEventListener('scroll', () => {
@@ -22,4 +26,3 @@
     }
   });
 });
-//# sourceMappingURL=home.js.map
