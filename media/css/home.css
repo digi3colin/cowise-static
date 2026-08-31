@@ -894,6 +894,20 @@ html {
 .service-showcase .section-intro {
   color: #BFBFBF;
 }
+.genai-series + .genai-series {
+  margin-top: 3rem;
+  padding-top: 3rem;
+  border-top: 1px solid #333;
+}
+.genai-series h3 {
+  margin: 0 0 1rem;
+  font-size: 1.4rem;
+  font-weight: 400;
+}
+.genai-series h3:after {
+  content: ".";
+  color: var(--service-color, #fda602);
+}
 .genai-gallery {
   columns: 1;
   column-gap: 1rem;
@@ -991,6 +1005,9 @@ html {
   .genai-gallery {
     columns: 2;
   }
+  .genai-gallery-wide {
+    columns: 1;
+  }
 }
 @media (min-width: 993px) {
   .method-grid {
@@ -998,6 +1015,9 @@ html {
   }
   .genai-gallery {
     columns: 3;
+  }
+  .genai-gallery-wide {
+    columns: 1;
   }
 }
 
