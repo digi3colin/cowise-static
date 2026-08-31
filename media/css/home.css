@@ -649,6 +649,7 @@ html {
   --svc-motion: #fda602;
   --svc-seo: #ffc93c;
   --svc-iot: #a97cf9;
+  --svc-vibe: #7c9cf9;
 }
 
 #services h1:after,
@@ -972,6 +973,7 @@ html {
 .service-detail-motion { --service-color: var(--svc-motion); }
 .service-detail-seo { --service-color: var(--svc-seo); }
 .service-detail-iot { --service-color: var(--svc-iot); }
+.service-detail-vibe { --service-color: var(--svc-vibe); }
 
 @media (min-width: 718px) {
   .service-hero {
