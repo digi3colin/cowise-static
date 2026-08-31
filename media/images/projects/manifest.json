@@ -3,7 +3,7 @@
   "page": 3,
   "images": [
    {
-    "file": "01.jpg",
+    "file": "01.webp",
     "w": 1940,
     "h": 1362
    }
@@ -13,42 +13,42 @@
   "page": 4,
   "images": [
    {
-    "file": "01.jpg",
+    "file": "01.webp",
     "w": 873,
     "h": 577
    },
    {
-    "file": "02.jpg",
+    "file": "02.webp",
     "w": 873,
     "h": 494
    },
    {
-    "file": "03.jpg",
+    "file": "03.webp",
     "w": 534,
     "h": 354
    },
    {
-    "file": "04.jpg",
+    "file": "04.webp",
     "w": 534,
     "h": 354
    },
    {
-    "file": "05.jpg",
+    "file": "05.webp",
     "w": 533,
     "h": 353
    },
    {
-    "file": "06.jpg",
+    "file": "06.webp",
     "w": 534,
     "h": 351
    },
    {
-    "file": "07.jpg",
+    "file": "07.webp",
     "w": 529,
     "h": 351
    },
    {
-    "file": "08.jpg",
+    "file": "08.webp",
     "w": 529,
     "h": 351
    }
@@ -58,7 +58,7 @@
   "page": 5,
   "images": [
    {
-    "file": "01.jpg",
+    "file": "01.webp",
     "w": 1579,
     "h": 1576
    }
@@ -68,22 +68,22 @@
   "page": 6,
   "images": [
    {
-    "file": "01.jpg",
+    "file": "01.webp",
     "w": 786,
     "h": 1309
    },
    {
-    "file": "02.jpg",
+    "file": "02.webp",
     "w": 719,
     "h": 1306
    },
    {
-    "file": "03.jpg",
+    "file": "03.webp",
     "w": 357,
     "h": 699
    },
    {
-    "file": "04.jpg",
+    "file": "04.webp",
     "w": 357,
     "h": 587
    }
@@ -93,17 +93,17 @@
   "page": 7,
   "images": [
    {
-    "file": "01.jpg",
+    "file": "01.webp",
     "w": 1319,
     "h": 1594
    },
    {
-    "file": "02.jpg",
+    "file": "02.webp",
     "w": 526,
     "h": 1017
    },
    {
-    "file": "03.jpg",
+    "file": "03.webp",
     "w": 525,
     "h": 565
    }
@@ -113,12 +113,12 @@
   "page": 8,
   "images": [
    {
-    "file": "01.jpg",
+    "file": "01.webp",
     "w": 1447,
     "h": 1100
    },
    {
-    "file": "02.jpg",
+    "file": "02.webp",
     "w": 448,
     "h": 1100
    }
@@ -128,17 +128,17 @@
   "page": 9,
   "images": [
    {
-    "file": "01.jpg",
+    "file": "01.webp",
     "w": 1064,
     "h": 1373
    },
    {
-    "file": "02.jpg",
+    "file": "02.webp",
     "w": 528,
     "h": 714
    },
    {
-    "file": "03.jpg",
+    "file": "03.webp",
     "w": 528,
     "h": 630
    }
@@ -148,17 +148,17 @@
   "page": 10,
   "images": [
    {
-    "file": "01.jpg",
+    "file": "01.webp",
     "w": 1100,
     "h": 1400
    },
    {
-    "file": "02.jpg",
+    "file": "02.webp",
     "w": 768,
     "h": 941
    },
    {
-    "file": "03.jpg",
+    "file": "03.webp",
     "w": 768,
     "h": 449
    }
@@ -168,22 +168,22 @@
   "page": 11,
   "images": [
    {
-    "file": "01.jpg",
+    "file": "01.webp",
     "w": 891,
     "h": 1513
    },
    {
-    "file": "02.jpg",
+    "file": "02.webp",
     "w": 566,
     "h": 892
    },
    {
-    "file": "03.jpg",
+    "file": "03.webp",
     "w": 477,
     "h": 592
    },
    {
-    "file": "04.jpg",
+    "file": "04.webp",
     "w": 424,
     "h": 599
    }
@@ -193,32 +193,32 @@
   "page": 13,
   "images": [
    {
-    "file": "01.jpg",
+    "file": "01.webp",
     "w": 706,
     "h": 1055
    },
    {
-    "file": "02.jpg",
+    "file": "02.webp",
     "w": 511,
     "h": 721
    },
    {
-    "file": "03.jpg",
+    "file": "03.webp",
     "w": 555,
     "h": 372
    },
    {
-    "file": "04.jpg",
+    "file": "04.webp",
     "w": 507,
     "h": 314
    },
    {
-    "file": "05.jpg",
+    "file": "05.webp",
     "w": 382,
     "h": 376
    },
    {
-    "file": "06.jpg",
+    "file": "06.webp",
     "w": 251,
     "h": 372
    }
@@ -228,17 +228,17 @@
   "page": 14,
   "images": [
    {
-    "file": "01.jpg",
+    "file": "01.webp",
     "w": 1875,
     "h": 606
    },
    {
-    "file": "02.jpg",
+    "file": "02.webp",
     "w": 1168,
     "h": 675
    },
    {
-    "file": "03.jpg",
+    "file": "03.webp",
     "w": 690,
     "h": 519
    }
@@ -248,42 +248,42 @@
   "page": 15,
   "images": [
    {
-    "file": "01.jpg",
+    "file": "01.webp",
     "w": 732,
     "h": 975
    },
    {
-    "file": "02.jpg",
+    "file": "02.webp",
     "w": 362,
     "h": 481
    },
    {
-    "file": "03.jpg",
+    "file": "03.webp",
     "w": 362,
     "h": 481
    },
    {
-    "file": "04.jpg",
+    "file": "04.webp",
     "w": 362,
     "h": 481
    },
    {
-    "file": "05.jpg",
+    "file": "05.webp",
     "w": 362,
     "h": 481
    },
    {
-    "file": "06.jpg",
+    "file": "06.webp",
     "w": 300,
     "h": 576
    },
    {
-    "file": "07.jpg",
+    "file": "07.webp",
     "w": 300,
     "h": 576
    },
    {
-    "file": "08.jpg",
+    "file": "08.webp",
     "w": 273,
     "h": 481
    }
@@ -293,22 +293,22 @@
   "page": 16,
   "images": [
    {
-    "file": "01.jpg",
+    "file": "01.webp",
     "w": 1347,
     "h": 899
    },
    {
-    "file": "02.jpg",
+    "file": "02.webp",
     "w": 528,
     "h": 431
    },
    {
-    "file": "03.jpg",
+    "file": "03.webp",
     "w": 403,
     "h": 431
    },
    {
-    "file": "04.jpg",
+    "file": "04.webp",
     "w": 355,
     "h": 426
    }
@@ -318,7 +318,7 @@
   "page": 17,
   "images": [
    {
-    "file": "01.jpg",
+    "file": "01.webp",
     "w": 2124,
     "h": 1428
    }
@@ -328,7 +328,7 @@
   "page": 18,
   "images": [
    {
-    "file": "01.jpg",
+    "file": "01.webp",
     "w": 2103,
     "h": 1389
    }
@@ -338,7 +338,7 @@
   "page": 19,
   "images": [
    {
-    "file": "01.jpg",
+    "file": "01.webp",
     "w": 1937,
     "h": 1380
    }
@@ -348,7 +348,7 @@
   "page": 21,
   "images": [
    {
-    "file": "01.jpg",
+    "file": "01.webp",
     "w": 1578,
     "h": 1551
    }
@@ -358,22 +358,22 @@
   "page": 22,
   "images": [
    {
-    "file": "01.jpg",
+    "file": "01.webp",
     "w": 1220,
     "h": 1270
    },
    {
-    "file": "02.jpg",
+    "file": "02.webp",
     "w": 660,
     "h": 686
    },
    {
-    "file": "03.jpg",
+    "file": "03.webp",
     "w": 320,
     "h": 563
    },
    {
-    "file": "04.jpg",
+    "file": "04.webp",
     "w": 318,
     "h": 563
    }
@@ -383,7 +383,7 @@
   "page": 23,
   "images": [
    {
-    "file": "01.jpg",
+    "file": "01.webp",
     "w": 1589,
     "h": 1415
    }
@@ -393,12 +393,12 @@
   "page": 24,
   "images": [
    {
-    "file": "01.jpg",
+    "file": "01.webp",
     "w": 1295,
     "h": 1230
    },
    {
-    "file": "02.jpg",
+    "file": "02.webp",
     "w": 351,
     "h": 648
    }
@@ -408,22 +408,22 @@
   "page": 25,
   "images": [
    {
-    "file": "01.jpg",
+    "file": "01.webp",
     "w": 802,
     "h": 1504
    },
    {
-    "file": "02.jpg",
+    "file": "02.webp",
     "w": 731,
     "h": 1503
    },
    {
-    "file": "03.jpg",
+    "file": "03.webp",
     "w": 427,
     "h": 755
    },
    {
-    "file": "04.jpg",
+    "file": "04.webp",
     "w": 427,
     "h": 740
    }
@@ -433,12 +433,12 @@
   "page": 26,
   "images": [
    {
-    "file": "01.jpg",
+    "file": "01.webp",
     "w": 760,
     "h": 1579
    },
    {
-    "file": "02.jpg",
+    "file": "02.webp",
     "w": 248,
     "h": 1579
    }
@@ -448,17 +448,17 @@
   "page": 28,
   "images": [
    {
-    "file": "01.jpg",
+    "file": "01.webp",
     "w": 1086,
     "h": 1419
    },
    {
-    "file": "02.jpg",
+    "file": "02.webp",
     "w": 673,
     "h": 923
    },
    {
-    "file": "03.jpg",
+    "file": "03.webp",
     "w": 673,
     "h": 470
    }
@@ -468,42 +468,42 @@
   "page": 29,
   "images": [
    {
-    "file": "01.jpg",
+    "file": "01.webp",
     "w": 462,
     "h": 686
    },
    {
-    "file": "02.jpg",
+    "file": "02.webp",
     "w": 460,
     "h": 686
    },
    {
-    "file": "03.jpg",
+    "file": "03.webp",
     "w": 459,
     "h": 686
    },
    {
-    "file": "04.jpg",
+    "file": "04.webp",
     "w": 459,
     "h": 686
    },
    {
-    "file": "05.jpg",
+    "file": "05.webp",
     "w": 477,
     "h": 546
    },
    {
-    "file": "06.jpg",
+    "file": "06.webp",
     "w": 478,
     "h": 271
    },
    {
-    "file": "07.jpg",
+    "file": "07.webp",
     "w": 477,
     "h": 271
    },
    {
-    "file": "08.jpg",
+    "file": "08.webp",
     "w": 477,
     "h": 270
    }
@@ -513,37 +513,37 @@
   "page": 30,
   "images": [
    {
-    "file": "01.jpg",
+    "file": "01.webp",
     "w": 740,
     "h": 1005
    },
    {
-    "file": "02.jpg",
+    "file": "02.webp",
     "w": 585,
     "h": 1005
    },
    {
-    "file": "03.jpg",
+    "file": "03.webp",
     "w": 561,
     "h": 1005
    },
    {
-    "file": "04.jpg",
+    "file": "04.webp",
     "w": 710,
     "h": 460
    },
    {
-    "file": "05.jpg",
+    "file": "05.webp",
     "w": 360,
     "h": 465
    },
    {
-    "file": "06.jpg",
+    "file": "06.webp",
     "w": 338,
     "h": 465
    },
    {
-    "file": "07.jpg",
+    "file": "07.webp",
     "w": 478,
     "h": 305
    }
@@ -553,7 +553,7 @@
   "page": 31,
   "images": [
    {
-    "file": "01.jpg",
+    "file": "01.webp",
     "w": 1973,
     "h": 1114
    }
@@ -563,37 +563,37 @@
   "page": 32,
   "images": [
    {
-    "file": "01.jpg",
+    "file": "01.webp",
     "w": 625,
     "h": 935
    },
    {
-    "file": "02.jpg",
+    "file": "02.webp",
     "w": 729,
     "h": 689
    },
    {
-    "file": "03.jpg",
+    "file": "03.webp",
     "w": 625,
     "h": 490
    },
    {
-    "file": "04.jpg",
+    "file": "04.webp",
     "w": 384,
     "h": 528
    },
    {
-    "file": "05.jpg",
+    "file": "05.webp",
     "w": 329,
     "h": 402
    },
    {
-    "file": "06.jpg",
+    "file": "06.webp",
     "w": 326,
     "h": 320
    },
    {
-    "file": "07.jpg",
+    "file": "07.webp",
     "w": 384,
     "h": 200
    }
@@ -603,17 +603,17 @@
   "page": 33,
   "images": [
    {
-    "file": "01.jpg",
+    "file": "01.webp",
     "w": 626,
     "h": 1109
    },
    {
-    "file": "02.jpg",
+    "file": "02.webp",
     "w": 626,
     "h": 1109
    },
    {
-    "file": "03.jpg",
+    "file": "03.webp",
     "w": 626,
     "h": 1109
    }
@@ -623,37 +623,37 @@
   "page": 34,
   "images": [
    {
-    "file": "01.jpg",
+    "file": "01.webp",
     "w": 1182,
     "h": 510
    },
    {
-    "file": "02.jpg",
+    "file": "02.webp",
     "w": 651,
     "h": 651
    },
    {
-    "file": "03.jpg",
+    "file": "03.webp",
     "w": 651,
     "h": 651
    },
    {
-    "file": "04.jpg",
+    "file": "04.webp",
     "w": 651,
     "h": 651
    },
    {
-    "file": "05.jpg",
+    "file": "05.webp",
     "w": 381,
     "h": 756
    },
    {
-    "file": "06.jpg",
+    "file": "06.webp",
     "w": 376,
     "h": 756
    },
    {
-    "file": "07.jpg",
+    "file": "07.webp",
     "w": 651,
     "h": 235
    }
@@ -663,32 +663,32 @@
   "page": 35,
   "images": [
    {
-    "file": "01.jpg",
+    "file": "01.webp",
     "w": 1102,
     "h": 828
    },
    {
-    "file": "02.jpg",
+    "file": "02.webp",
     "w": 846,
     "h": 542
    },
    {
-    "file": "03.jpg",
+    "file": "03.webp",
     "w": 481,
     "h": 362
    },
    {
-    "file": "04.jpg",
+    "file": "04.webp",
     "w": 481,
     "h": 362
    },
    {
-    "file": "05.jpg",
+    "file": "05.webp",
     "w": 481,
     "h": 362
    },
    {
-    "file": "06.jpg",
+    "file": "06.webp",
     "w": 477,
     "h": 359
    }
