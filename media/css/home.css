@@ -310,14 +310,41 @@ html {
   content: ".";
 }
 #services .service {
+  display: flex;
+  flex-direction: column;
   border-top: 3px solid #222;
   padding-top: 1rem;
 }
+#services .service h3 a {
+  color: inherit;
+}
+#services .service h3 a:hover,
+#services .service h3 a:focus {
+  color: #6c757d;
+}
+#services .service-more {
+  display: inline-block;
+  margin-top: auto;
+  padding-top: 1rem;
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: #222;
+}
+#services .service-more:hover,
+#services .service-more:focus {
+  color: #fda602;
+}
 #services .service-visual {
+  position: relative;
   aspect-ratio: 4 / 3;
   margin: 0 0 1.25rem;
   overflow: hidden;
   background: #111;
+}
+#services .service-visual a {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 #services .service-visual img {
   display: block;
@@ -325,6 +352,33 @@ html {
   height: 100%;
   object-fit: cover;
   transition: transform 0.45s ease;
+}
+#services .service-visual figcaption {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 2.5rem 1rem 0.8rem;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.88));
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+#services .service-visual figcaption span {
+  display: block;
+  color: #ddd;
+  font-size: 0.7rem;
+  font-weight: 300;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+#services .grid > div:nth-child(4) .service-visual img,
+#services .grid > div:nth-child(6) .service-visual img {
+  object-position: center 45%;
+}
+#services .grid > div:nth-child(8) .service-visual img {
+  object-position: center 18%;
 }
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
   #services .service:hover .service-visual img {
@@ -366,6 +420,179 @@ html {
 }
 #services .grid > div:nth-child(6n) h3:after {
   color: var(--svc-social);
+}
+
+/* Service detail pages -- /services/<slug>/ */
+#service-detail {
+  background: #F7F7F7;
+}
+.service-hero {
+  display: grid;
+  gap: 2rem;
+  align-items: center;
+}
+.service-hero h1 {
+  max-width: 14em;
+}
+.service-hero h1:after,
+.service-method h2:after,
+.service-projects h2:after {
+  content: ".";
+  color: var(--service-color, #fda602);
+}
+.service-eyebrow {
+  margin-bottom: 0.5rem;
+  color: #6c757d;
+  font-size: 0.85rem;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.service-hero-visual {
+  margin: 0;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  border-radius: 0.25rem;
+  background: #111;
+}
+.service-hero-visual img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.service-method {
+  background: #FFF;
+}
+.method-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  counter-reset: method;
+}
+.method-step {
+  position: relative;
+  padding-top: 3.75rem;
+  border-top: 3px solid var(--service-color, #fda602);
+  counter-increment: method;
+}
+.method-step:before {
+  content: "0" counter(method);
+  position: absolute;
+  top: 0.75rem;
+  color: var(--service-color, #fda602);
+  font-size: 1.5rem;
+  font-weight: 200;
+  line-height: 1;
+}
+.method-step h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.25rem;
+}
+.method-step p {
+  margin: 0;
+  font-weight: 300;
+}
+.service-scope {
+  display: grid;
+  gap: 1rem;
+  margin-top: 2.5rem;
+  padding: 1.5rem;
+  background: #F7F7F7;
+  border-left: 3px solid var(--service-color, #fda602);
+}
+.service-scope h3 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+.service-scope p {
+  margin: 0;
+  font-weight: 300;
+}
+.service-projects {
+  background: #F7F7F7;
+}
+.related-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+.related-project {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 1.5rem;
+  border-radius: 0.25rem;
+  background: #FFF;
+}
+.related-project .project-thumb {
+  display: block;
+  aspect-ratio: 16 / 10;
+  margin: -1.5rem -1.5rem 1.25rem;
+  overflow: hidden;
+  background: #E9E9E9;
+}
+.related-project .project-thumb img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  transition: transform 220ms ease;
+}
+.related-project .project-thumb:hover img,
+.related-project .project-thumb:focus img {
+  transform: scale(1.025);
+}
+.related-project h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.2rem;
+}
+.related-project h3 a {
+  color: inherit;
+}
+.related-project h3 a:hover,
+.related-project h3 a:focus,
+.related-project .more:hover,
+.related-project .more:focus {
+  color: #fda602;
+}
+.related-project p {
+  margin: 0;
+  font-weight: 300;
+}
+.related-project .more {
+  margin-top: auto;
+  padding-top: 1rem;
+  font-size: 0.9rem;
+}
+.service-detail-event { --service-color: var(--svc-event); }
+.service-detail-genai { --service-color: var(--svc-genai); }
+.service-detail-web { --service-color: var(--svc-web); }
+.service-detail-app { --service-color: var(--svc-app); }
+.service-detail-ecommerce { --service-color: var(--svc-ecommerce); }
+.service-detail-social { --service-color: var(--svc-social); }
+.service-detail-motion { --service-color: var(--svc-motion); }
+.service-detail-seo { --service-color: var(--svc-seo); }
+
+@media (min-width: 718px) {
+  .service-hero {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  }
+  .method-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .service-scope {
+    grid-template-columns: 1fr 3fr;
+  }
+  .related-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (min-width: 993px) {
+  .method-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
 
 #projects {
