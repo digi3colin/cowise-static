@@ -229,8 +229,8 @@
   .w-full {
     width: 100%;
   }
-  .grow {
-    flex-grow: 1;
+  .max-w-\[900px\] {
+    max-width: 900px;
   }
   .transform {
     transform: var(--tw-rotate-x,) var(--tw-rotate-y,) var(--tw-rotate-z,) var(--tw-skew-x,) var(--tw-skew-y,);
@@ -337,6 +337,9 @@
     }
     .lg\:w-7\/12 {
       width: calc(7 / 12 * 100%);
+    }
+    .lg\:grid-cols-7 {
+      grid-template-columns: repeat(7, minmax(0, 1fr));
     }
     .lg\:px-40 {
       padding-inline: calc(var(--spacing) * 40);
