@@ -386,9 +386,31 @@ html {
   --cat-color: var(--svc-motion);
 }
 #projects .project {
+  display: flex;
+  flex-direction: column;
   background: #FFF;
   padding: 1.5rem;
   border-radius: 0.25rem;
+  overflow: hidden;
+}
+#projects .project-thumb {
+  display: block;
+  aspect-ratio: 16 / 10;
+  margin: -1.5rem -1.5rem 1.25rem;
+  overflow: hidden;
+  background: #E9E9E9;
+}
+#projects .project-thumb img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  transition: transform 220ms ease;
+}
+#projects .project-thumb:hover img,
+#projects .project-thumb:focus img {
+  transform: scale(1.025);
 }
 #projects .project .client {
   margin-top: 0;
@@ -574,7 +596,8 @@ html {
 }
 #projects .project .more {
   display: inline-block;
-  margin-top: 1rem;
+  margin-top: auto;
+  padding-top: 1rem;
   font-size: 0.9rem;
   font-weight: 400;
   letter-spacing: 0.05em;
@@ -583,6 +606,16 @@ html {
 #projects .project .more:hover,
 #projects .project .more:focus {
   color: #222;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #projects .project-thumb img {
+    transition: none;
+  }
+  #projects .project-thumb:hover img,
+  #projects .project-thumb:focus img {
+    transform: none;
+  }
 }
 
 .project-pager .index {
