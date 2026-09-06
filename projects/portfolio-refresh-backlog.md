@@ -17,6 +17,16 @@ This file tracks recent work found under `/Volumes/projects`, `/Volumes/previews
 
 Dolce & Gabbana is deliberately excluded. Its archive contains only a client-supplied concept wireframe and no Cowise design or development work.
 
+## Project index coverage by service
+
+The project index follows the Services page order and currently shows the seven service groups with publishable case studies: Event Management System, Web Development, App Design & Development, E-Commerce, Social Media & Online Advertising (SEM), Motion Graphics, and IoT & RFID.
+
+Dedicated case-study material is still missing for these service groups:
+
+- Gen AI Training & Consultancy
+- Vibe Coding & Forward Deployment Engineer
+- SEO & GEO
+
 ## Next projects requiring a server preview
 
 These archives contain runnable application code, but screenshots should be captured from an isolated local environment before publishing a case-study page.

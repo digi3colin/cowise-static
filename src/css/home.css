@@ -1084,6 +1084,9 @@ html {
 #projects .category.svc-event {
   --cat-color: var(--svc-event);
 }
+#projects .category.svc-iot {
+  --cat-color: var(--svc-iot);
+}
 #projects .project {
   display: flex;
   flex-direction: column;
@@ -1186,6 +1189,9 @@ html {
 }
 .breadcrumb .category.svc-event {
   --cat-color: var(--svc-event);
+}
+.breadcrumb .category.svc-iot {
+  --cat-color: var(--svc-iot);
 }
 
 .project-gallery figure {
