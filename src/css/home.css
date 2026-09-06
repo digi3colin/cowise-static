@@ -1081,6 +1081,9 @@ html {
 #projects .category.svc-motion {
   --cat-color: var(--svc-motion);
 }
+#projects .category.svc-event {
+  --cat-color: var(--svc-event);
+}
 #projects .project {
   display: flex;
   flex-direction: column;
@@ -1180,6 +1183,9 @@ html {
 }
 .breadcrumb .category.svc-motion {
   --cat-color: var(--svc-motion);
+}
+.breadcrumb .category.svc-event {
+  --cat-color: var(--svc-event);
 }
 
 .project-gallery figure {
