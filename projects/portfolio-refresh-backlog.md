@@ -12,14 +12,16 @@ This file tracks recent work found under `/Volumes/projects`, `/Volumes/previews
 | PCBPro.online | 2025-2026 | `/projects/pcbpro-online/` | Desktop/mobile designs, quote workflows, admin/API/Shopify source |
 | Faberge x Game of Thrones | 2023 | `/projects/faberge-game-of-thrones/` | 3D assets, Unreal build, AR export, hologram prototypes and campaign photography |
 | RESURGENCE - French Chamber Gala Dinner | 2023 | `/projects/fcci-resurgence/` | Immersive tunnel/mirror-room concepts, key visuals and production assets |
-| Global Tourism Economy Forum | 2023 | `/projects/gtef-registration/` | Registration and ticketing presentation |
+| Global Tourism Economy Forum | 2020, 2023, 2025 | `/projects/gtef-registration/` | Registration and ticketing presentation; event photo and guest-management copy from the 2026-09 website update brief |
+| Women Power Forum 2026 | 2026 | `/projects/women-power-forum-2026/` | Event photo and case-study copy from the 2026-09 website update brief |
+| MO·MENTS 2025 (Ant International and GFTN) | 2025 | `/projects/moments-2025/` | Event photo and case-study copy from the 2026-09 website update brief |
 | Palace Gourmet (archive name: NY8) | 2021-2022 | `/projects/ny8-palace-gourmet/` | Full desktop designs, mobile designs, menus, locations and policy material |
 
 Dolce & Gabbana is deliberately excluded. Its archive contains only a client-supplied concept wireframe and no Cowise design or development work.
 
 ## Project index coverage by service
 
-The project index follows the Services page order and currently shows the seven service groups with publishable case studies: Event Management System, Web Development, App Design & Development, E-Commerce, Social Media & Online Advertising (SEM), Motion Graphics, and IoT & RFID.
+The project index follows the Services page order and currently shows the seven service groups with publishable case studies: Event and Guest Management, Web Development, App Design & Development, E-Commerce, Social Media & Online Advertising (SEM), Motion Graphics, and IoT & RFID.
 
 Dedicated case-study material is still missing for these service groups:
 
@@ -55,7 +57,6 @@ These archives contain runnable application code, but screenshots should be capt
 | Le French May 2023-2024 | Event video, LED-screen and EDM assets | Final selection, project description and approval for public use |
 | MGM 2024 | Dated project folder | Project identity, output, final visuals and role |
 | FAB Instagram AR Filter 2021 | Spark AR projects, frames, 3D bottle and water effects | Full client/campaign name and confirmation of Cowise's role |
-| Ant Moments 2025 | Badge and lanyard artwork | Project context and decision on whether print-production work belongs in the digital portfolio |
 
 ## Preview environment plan
 

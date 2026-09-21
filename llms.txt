@@ -21,12 +21,18 @@ Founded in Hong Kong, COWISE has delivered digital work across Asia Pacific for 
 - [App Design & Development](https://cowise.com.hk/services/app-development/): Mobile, tablet, cross-platform app and interactive experience design and development.
 - [E-Commerce](https://cowise.com.hk/services/ecommerce/): Shopify, e-commerce, CRM, ordering, booking and sales-platform development.
 - [Social Media & Online Advertising (SEM)](https://cowise.com.hk/services/social-media-advertising/): Social media management, creative, live content and online advertising.
-- [Event Management System](https://cowise.com.hk/services/event-management/): Event technology from invitation and RSVP to QR check-in, interactive experiences and reporting.
+- [Event and Guest Management](https://cowise.com.hk/services/event-management/): The practice and technology that runs an event through its guests, end to end: invitations and RSVP, guest list control, onsite flow and logistics, QR / RFID check-in and reporting.
 - [Gen AI Training & Consultancy](https://cowise.com.hk/services/gen-ai-consultancy/): Practical generative AI training and consultancy for marketing and operations teams.
 - [Vibe Coding & Forward Deployment Engineer](https://cowise.com.hk/services/vibe-coding-forward-deployment/): An embedded engineer who builds working software with AI in the loop, then deploys and hands it over.
 - [Motion Graphics](https://cowise.com.hk/services/motion-graphics/): Motion graphics, animation, social video and event-screen content.
 - [IoT & RFID](https://cowise.com.hk/services/iot-rfid/): RFID/NFC access and cashless, sensors and beacons, connected installations and real-time dashboards for live events and retail.
 - [SEO & GEO](https://cowise.com.hk/services/seo-geo/): Technical SEO and generative engine optimisation for multilingual websites.
+
+## Projects — Event and Guest Management
+
+- [Global Tourism Economy Forum 2020, 2023, 2025](https://cowise.com.hk/projects/gtef-registration/): Recruitment eDM and CRM, guest RSVP and onsite management, seamless QR / RFID check-in and detailed RFID tracking.
+- [Women Power Forum 2026](https://cowise.com.hk/projects/women-power-forum-2026/): Guest RSVP and onsite management, seamless check-in and a full-day side programme for 380 leaders from 27 countries.
+- [MO·MENTS 2025](https://cowise.com.hk/projects/moments-2025/): Guest RSVP, accredited check-in, RFID tracking and side programmes for a closed-door executive forum by Ant International and GFTN.
 
 ## Projects — Web Development
 
