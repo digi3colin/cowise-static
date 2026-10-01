@@ -190,7 +190,13 @@ html,body{height:100%;background:#000;color:#fff;overflow:hidden;font-family:var
    so the picture is locked to the 128 BPM grid and scrubbable.
    ============================================================ */
 const BPM = 128, SPB = 60 / BPM;             // 0.46875 s per beat
-const END = 148;                             // beats (37 bars ≈ 69.4 s)
+// The story was authored on a 148-beat timeline; one bar (story beats 44–48, the old Times Square
+// slide) is cut, so real playback is 144 beats (36 bars = 67.5 s). Everything after the cut is
+// authored in story beats and mapped through toStory(); the app chapter + device use real beats.
+const CUT = 44, CUT_LEN = 4;
+const toStory = b => b < CUT ? b : b + CUT_LEN;
+const toReal = sb => sb < CUT ? sb : Math.max(CUT, sb - CUT_LEN);
+const END = 148 - CUT_LEN;                   // real beats
 const DURATION = END * SPB;
 const W = 1920, H = 1080;
 const C = {pink:'#ff0062',cyan:'#7ce7f9',orange:'#fda602',yellow:'#ffde0b',navy:'#052675',green:'#7cf9bf',purple:'#a97cf9',gold:'#ffc93c',ink:'#0d0d10'};
@@ -274,7 +280,7 @@ function renderTag(tag, b, inB, outB) {
 const SRC = {
   web: ['projects/veuve-clicquot-website/01.webp', 'projects/louis-vuitton-minisites/01.webp', 'projects/berry-bros-rudd-shopify/01.webp', 'projects/towngas-low-carbon/01.webp', 'projects/scmp/01.webp', 'projects/veuve-clicquot-digital-tools/01.webp', 'projects/central-venue-management/01.webp'],
   // last app slide is the Hennessy photo booth the camera zooms into for the pandemic chapter
-  app: ['projects/ruinart-art-basel/02.webp', 'projects/krug/02.webp', 'projects/cartier/01.webp', 'projects/times-square-batman/01.webp', 'projects/hennessy-artistry-photo-booth/01.webp'],
+  app: ['projects/ruinart-art-basel/02.webp', 'projects/krug/02.webp', 'projects/cartier/01.webp', 'projects/hennessy-artistry-photo-booth/01.webp'],
   wall: ['projects/hennessy-artistry-facebook-live/02.webp', 'projects/hennessy-artistry-facebook-live/05.webp', 'projects/hennessy-artistry-facebook-live/03.webp', 'projects/hennessy-artistry-facebook-live/06.webp', 'projects/hennessy-artistry-photo-booth/01.webp', 'projects/hennessy-artistry-facebook-live/07.webp', 'projects/hennessy-artistry-facebook-live/04.webp', 'projects/times-square-showreel/01.webp', 'projects/hennessy-artistry-facebook-live/08.webp'],
   event: ['services/event.webp', 'projects/investhk-wghk/01.webp'],
   // four results from the same prompt (French Chamber gala: tricolour × Bauhinia)
@@ -325,10 +331,31 @@ function stripeField(ctx, b, opt) {
     const x = i * PITCH, off = lift(i) * H;
     const full = H * a;
     const hb = H * (opt.lower ? opt.lower(i) : profile(i, b) * (1 - bump * (.25 + .2 * hash(i + 9))) * split) * a;
-    ctx.fillStyle = colTop[i]; ctx.fillRect(x, -off, w, full - hb);
-    ctx.fillStyle = colBot[i]; ctx.fillRect(x, full - hb - off, w, hb);
+    const tc = opt.tc ? opt.tc(i) : colTop[i], bc = opt.bc ? opt.bc(i) : colBot[i];
+    if (tc) { ctx.fillStyle = tc; ctx.fillRect(x, -off, w, full - hb); }
+    if (bc) { ctx.fillStyle = bc; ctx.fillRect(x, full - hb - off, w, hb); }
   }
   ctx.globalAlpha = 1;
+}
+
+/* the homepage key visual (media/images/cover.svg), one entry per 10px column:
+   [top colour index, top height, bottom colour index, visible bottom height]; -1 = no bar */
+const COVER = [[-1,0,1,147],[3,930,3,149],[0,1080,1,0],[0,928,2,151],[1,927,2,152],[1,925,2,154],[2,923,1,156],[3,922,2,157],[0,1080,2,0],[3,914,1,165],[1,910,2,169],[1,905,1,174],[3,899,3,180],[1,893,3,186],[0,885,2,194],[0,874,0,205],[3,861,2,218],[2,850,4,229],[1,841,0,238],[1,833,4,246],[0,826,0,253],[4,819,3,260],[0,813,1,266],[1,808,2,271],[3,803,1,276],[1,799,0,280],[0,795,2,284],[2,792,3,287],[2,788,1,291],[2,786,2,293],[3,782,2,297],[4,779,2,300],[3,776,2,303],[2,773,1,306],[2,770,1,309],[0,767,0,312],[0,763,1,316],[2,759,2,320],[3,754,4,325],[3,748,4,331],[2,743,2,336],[2,737,2,342],[2,732,4,347],[0,727,4,352],[0,722,2,357],[3,716,0,363],[3,711,0,368],[2,705,0,374],[1,700,0,379],[0,694,4,385],[0,980,1,100],[4,683,3,396],[4,676,1,403],[1,671,1,408],[2,664,0,415],[1,658,2,421],[4,651,3,428],[4,642,4,437],[2,634,2,445],[4,625,3,454],[4,617,2,462],[2,609,1,470],[2,600,3,479],[0,592,4,487],[3,583,0,496],[0,572,3,507],[2,554,3,525],[1,525,1,554],[1,496,1,583],[2,471,0,608],[4,112,3,42],[3,82,0,636],[2,65,0,92],[0,269,2,810],[2,259,2,820],[3,246,2,833],[4,238,3,841],[1,228,1,851],[1,225,3,854],[2,219,4,860],[1,213,2,866],[2,211,1,868],[1,213,2,866],[2,211,2,868],[0,214,4,865],[1,217,3,862],[3,219,2,860],[2,221,0,858],[0,219,2,860],[1,221,0,858],[4,239,4,840],[2,235,2,844],[3,237,2,842],[3,251,0,828],[1,262,3,817],[2,267,4,812],[3,265,2,814],[3,260,2,819],[1,251,2,828],[2,243,2,836],[0,239,2,840],[1,235,4,844],[0,231,0,848],[4,224,2,855],[2,214,0,865],[2,205,0,874],[0,201,1,878],[1,199,1,880],[0,196,0,883],[0,192,1,887],[1,187,4,892],[4,181,3,898],[0,177,1,902],[3,175,0,904],[1,174,0,905],[1,177,2,902],[3,181,2,898],[2,183,0,896],[2,187,2,892],[4,192,2,887],[2,196,3,883],[1,199,3,880],[3,202,2,877],[2,203,2,876],[1,202,0,877],[0,199,2,880],[2,195,2,884],[0,1080,2,0],[3,180,2,899],[2,175,4,904],[3,171,0,908],[3,168,0,911],[0,166,1,913],[1,168,1,911],[3,171,2,908],[0,174,3,905],[2,175,1,904],[3,177,2,902],[3,174,3,905],[2,171,4,908],[3,169,3,910],[0,1080,1,0],[0,176,3,903],[1,175,0,904],[2,172,3,907],[0,170,1,909],[4,171,1,908],[1,174,0,905],[4,176,1,903],[3,179,1,900],[1,183,1,896],[3,187,2,892],[1,194,4,885],[1,201,2,878],[1,206,2,873],[2,210,4,869],[1,214,2,865],[3,218,1,861],[0,222,1,857],[2,229,2,850],[2,233,4,846],[4,240,1,839],[0,1080,1,0],[3,252,2,827],[0,259,1,820],[3,266,3,813],[2,272,2,807],[3,277,1,802],[0,282,4,797],[4,285,1,794],[2,286,3,793],[1,281,2,798],[3,284,3,795],[3,280,4,799],[2,272,2,807],[4,274,2,805],[4,278,4,801],[0,284,1,795],[3,289,2,790],[2,296,2,783],[2,302,3,777],[4,309,2,770],[4,317,2,762],[0,328,2,751],[3,335,2,744],[1,342,4,737],[1,348,0,731],[2,353,4,726],[3,358,2,721],[1,362,4,717],[1,364,2,715],[0,366,1,713]];
+const coverTC = i => COVER[i][0] < 0 ? null : STRIPES[COVER[i][0]];
+const coverBC = i => COVER[i][2] < 0 ? null : STRIPES[COVER[i][2]];
+
+/* horizontal stripe wipe: rows grow in from the left, cover, then leave off the right edge */
+function wipeH(ctx, b, B, palette, lenIn = 1, lenOut = 1) {
+  const t1 = (b - (B - lenIn)) / lenIn, t2 = (b - B) / lenOut;
+  if (t1 <= 0 || t2 >= 1) return false;
+  const ROWS = 108;
+  for (let r = 0; r < ROWS; r++) {
+    const d = Math.abs(r - 53.5) / ROWS * .5 + hash(r * 2.3) * .15;
+    ctx.fillStyle = palette[Math.floor(hash(r * 5.3 + B) * palette.length)];
+    if (t2 < 0) { const w = W * E.io3(clamp((t1 - d) / .5)); ctx.fillRect(0, r * PITCH, w, PITCH); }
+    else { const x = W * E.io3(clamp((t2 - d) / .5)); ctx.fillRect(x, r * PITCH, W - x, PITCH); }
+  }
+  return true;
 }
 
 /* stripe wipe transition: bars rise from the bottom, cover, then leave through the top */
@@ -352,7 +379,7 @@ window.__G = { E, P, clamp, lerp, pulse, hash, profile, colTop, colBot, colRank,
    ============================================================ */
 const scenesEl = document.getElementById('scenes');
 const scenes = [];
-function scene(from, to, build) { const el = $('div', 'scene', scenesEl); const s = { from, to, el, render: build(el) }; scenes.push(s); return s; }
+function scene(from, to, build, real = false) { const el = $('div', 'scene', scenesEl); const s = { from, to, el, real, render: build(el) }; scenes.push(s); return s; }
 
 /* ---------- 0 · Intro: every idea starts with a line ---------- */
 let logoPaths = [];
@@ -394,25 +421,25 @@ const glare = $('div', 'glare', device);
 const ipadFrame = $('img', 'frame', device); ipadFrame.src = 'ipad-frame.png'; ipadFrame.alt = '';
 const SLIDES = [
   ...SRC.web.map((s, i) => ({ src: s, at: 18 + i * 2, mode: 'up' })),
-  ...SRC.app.map((s, i) => ({ src: s, at: [33.5, 37.5, 39.5, 41.5, 44][i], mode: 'side', focus: ['33% 42%', , '80% 50%', , '30% 50%'][i], zoom: [1.6, 1, 1.3, 1, 1][i] })),
+  ...SRC.app.map((s, i) => ({ src: s, at: [33.5, 37.5, 39.5, 41.5][i], mode: 'side', focus: ['33% 42%', , '80% 50%', '30% 50%'][i], zoom: [1.6, 1, 1.3, 1][i] })),
 ];
 SLIDES.forEach(s => { s.el = $('img', '', screen); s.el.src = IMG + s.src; s.el.alt = ''; if (s.focus) s.el.style.objectPosition = s.el.style.transformOrigin = s.focus; });
 const BROWSER = { cx: 1290, cy: 560, w: 980, h: 640, r: 18, pad: 0, padY: 0, tb: 58 };
 // screen inset matches ipad-frame.png: x 126/1240, y 147/1610
 const IPAD = { cx: 640, cy: 545, w: 600, h: 779, r: 37, pad: 61, padY: 71, tb: 0 };
 function renderDevice(b) {
-  const vis = b >= 16 && b < 52.05; show(deviceLayer, vis); if (!vis) return;
+  const vis = b >= 16 && b < 48.05; show(deviceLayer, vis); if (!vis) return;
   const a1 = E.oExp(P(b, 16, 1)), a2 = E.oExp(P(b, 16.6, 1.4));
   const m = E.io4(P(b, 32.5, 3));
   const g = {};
   for (const k in BROWSER) g[k] = lerp(BROWSER[k], IPAD[k], m);
   g.w = lerp(8, g.w, a1); g.h = lerp(8, g.h, a2);
   // zoom through the phone screen into the live stream
-  const z = E.iExp(P(b, 48.25, 3.75));
-  const cx = lerp(g.cx, 960, E.io3(P(b, 47.5, 4))), cy = lerp(g.cy, 540, E.io3(P(b, 47.5, 4)));
+  const z = E.iExp(P(b, 44.25, 3.75));
+  const cx = lerp(g.cx, 960, E.io3(P(b, 43.5, 4))), cy = lerp(g.cy, 540, E.io3(P(b, 43.5, 4)));
   const float = b >= 35 ? Math.sin(b * .5) * 10 * (1 - z) : 0;
-  const ry = b >= 34 ? (Math.sin(b * .39) * 14 - 8 * (1 - E.o3(P(b, 34, 3)))) * (1 - E.io3(P(b, 47, 3))) : 0;
-  const s = lerp(1, 5.6, z) * (1 + .01 * pulse(b) * (b >= 18 && b < 48));
+  const ry = b >= 34 ? (Math.sin(b * .39) * 14 - 8 * (1 - E.o3(P(b, 34, 3)))) * (1 - E.io3(P(b, 43, 3))) : 0;
+  const s = lerp(1, 5.6, z) * (1 + .01 * pulse(b) * (b >= 18 && b < 44));
   place(device, cx - g.w / 2, cy - g.h / 2 + float, g.w, g.h);
   device.style.borderRadius = g.r + 'px';
   T(device, { s, ry, rx: b >= 34 ? Math.sin(b * .27) * 4 * (1 - z) : 0, o: 1 });
@@ -472,7 +499,7 @@ scene(16, 36, el => {
 });
 
 /* ---------- 2 · App development ---------- */
-scene(33, 52, el => {
+scene(33, 48, el => {
   const mq = $('div', 'abs marquee', el, ('APP DESIGN &amp; DEVELOPMENT — ').repeat(4)); place(mq, 0, 380);
   const tag = makeTag(el, '02', 'App Development', C.pink);
   const h1 = words(el, 'Then came', 'xl', 1080, 330);
@@ -481,12 +508,12 @@ scene(33, 52, el => {
   const glyphs = ['<circle cx="20" cy="20" r="11" fill="none" stroke="#fff" stroke-width="4"/>', '<path d="M8 30 20 8l12 22z" fill="#fff"/>', '<rect x="9" y="9" width="22" height="22" rx="4" fill="#fff"/>', '<path d="M6 20h28M20 6v28" stroke="#fff" stroke-width="5"/>', '<path d="M8 22l8 8 16-18" fill="none" stroke="#fff" stroke-width="5"/>', '<circle cx="20" cy="20" r="6" fill="#fff"/><circle cx="20" cy="20" r="15" fill="none" stroke="#fff" stroke-width="3"/>', '<path d="M20 6l4 10 10 1-8 7 3 10-9-6-9 6 3-10-8-7 10-1z" fill="#fff"/>', '<path d="M10 12h20M10 20h20M10 28h12" stroke="#fff" stroke-width="4"/>'];
   const icons = glyphs.map((g, i) => { const d = $('div', 'abs icon', el, `<svg viewBox="0 0 40 40">${g}</svg>`); d.style.background = [C.pink, C.cyan, C.orange, C.navy, C.green, C.purple, C.yellow, C.pink][i]; return d; });
   return b => {
-    T(mq, { x: -((b - 33) * 38) % 1400 - 200, o: E.o3(P(b, 35, 2)) * (1 - E.i3(P(b, 47, 2))) });
-    renderTag(tag, b, 36, 47.5);
-    reveal(h1, b, 36.5, .5, 1, 46.75);
-    reveal(h2, b, 37.5, .5, 1, 47);
-    fadeUp(sub, b, 39, 46.5);
-    const suck = E.iExp(P(b, 46.5, 1.75));
+    T(mq, { x: -((b - 33) * 38) % 1400 - 200, o: E.o3(P(b, 35, 2)) * (1 - E.i3(P(b, 43, 2))) });
+    renderTag(tag, b, 36, 43.5);
+    reveal(h1, b, 36.5, .5, 1, 42.75);
+    reveal(h2, b, 37.5, .5, 1, 43);
+    fadeUp(sub, b, 39, 42.5);
+    const suck = E.iExp(P(b, 42.5, 1.75));
     icons.forEach((ic, i) => {
       const p = E.oBack(P(b, 37 + i * .25, .75), 2.4);
       const ang = i / icons.length * Math.PI * 2 + b * .16;
@@ -495,7 +522,7 @@ scene(33, 52, el => {
       ic.style.zIndex = Math.sin(ang) > 0 ? 3 : 1;
     });
   };
-});
+}, true); // real beats: this chapter absorbs the cut
 
 /* ---------- 3 · Pandemic: events go online ---------- */
 scene(51.9, 72.2, el => {
@@ -671,12 +698,12 @@ scene(91.4, 117, el => {
   const ANSWER = 'COWISE IDEA LAB is a Hong Kong creative technology agency. It builds RSVP, QR check-in and CRM systems for event and guest management.'.split(' ');
   const QUERY = 'event check-in system hong kong';
   return b => {
-    // 0:43 — "In the same year," slams in over the glitch with an RGB split that settles on the drop
+    // "In the same year," lands over the left-to-right bar wipe; a brief RGB split settles on the drop
     reveal(same, b, 91.5, .125, .6, 93.4, .08);
-    const split = b < 92 ? 14 + hash(Math.floor(b * 8)) * 18 : 16 * Math.exp(-(b - 92) * 4);
+    const split = b < 92 ? 0 : 16 * Math.exp(-(b - 92) * 4);
     same.ws.forEach((w, i) => { w.style.textShadow = split > .5 ? `${-split}px 0 0 rgba(255,0,98,.85), ${split}px 0 0 rgba(124,231,249,.85)` : 'none'; });
     const sp = 1 + .05 * (b >= 92 && b < 93.4 ? pulse(b, 4) : 0) + .03 * E.iExp(P(b, 93.3, .6));
-    T(same.line, { s: sp, x: b < 92 ? (hash(Math.floor(b * 16) + 7) - .5) * 30 : 0 });
+    T(same.line, { s: sp });
     // then: Generative AI joins the studio.
     reveal(yl1, b, 93.75, .5, 1, 96.25, .1);
     reveal(yl2, b, 94.5, .5, 1, 96.35, .1);
@@ -814,38 +841,46 @@ scene(131.5, 150, el => {
 let logoB = [];
 
 /* ---------- background canvas: stripe artwork per section ---------- */
-const T2 = 2 / SPB, T4 = 4 / SPB, T7 = 7 / SPB; // intro landmarks in beats
+const T2 = 2 / SPB, T2_5 = 2.5 / SPB, T4 = 4 / SPB, T7 = 7 / SPB; // intro landmarks in beats
 // beat envelope with a short attack so the dance swells into each kick instead of jumping
 const softPulse = x => { const f = frac(x); return x < 0 ? 0 : f < .12 ? E.o2(f / .12) : Math.exp(-(f - .12) * 4.5); };
-function renderBG(b) {
+function renderBG(b, rb = b) { // b = story beat, rb = real beat (for motion that spans the cut)
   bg.fillStyle = C.ink; bg.fillRect(0, 0, W, H);
   if (b < 16.2) {
     const appearAt = i => { const r = colRank[i]; return r < 1 ? 0 : r < 4 ? 1 : r < 13 ? 2 : r < 40 ? 3 : 4 + (r - 40) / 152 * 2.5; };
     stripeField(bg, b, {
       appear: i => E.oExp(P(b, appearAt(i), .5)),
-      // 0:02–0:04 a flat line rises to half height; 0:04–0:07 it morphs into the wave and the dance builds
+      // 0:02 a flat line starts rising (reaches half height at 0:04); from 0:02.5 it morphs into the wave
+      // while still rising; 0:04–0:07 the beat dance builds
       lower: i => {
-        const rise = .5 * E.io3(P(b, T2, T4 - T2));
-        const m = E.io3(P(b, T4, 3)), k = E.i2(P(b, T4, T7 - T4));
+        const r = E.io3(P(b, T2, T4 - T2));
+        const m = E.io3(P(b, T2_5, T4 - T2_5)), k = E.i2(P(b, T4, T7 - T4));
         const wave = profile(i, b) * (1 - k * softPulse(b - i * .004) * (.3 + .25 * hash(i + 9)));
-        return lerp(rise, wave, m);
+        return lerp(.5, wave, m) * (b < T4 ? r : 1);
       },
       alpha: 1 - .72 * E.io3(P(b, 7.5, 1.5)) + .08 * (b > 9 ? pulse(b, 4) : 0),
       lift: i => E.iExp(P(b, 14 + (i / COLS) * .6, 1.4)) * 1.05,
     });
-  } else if ((b >= 16 && b < 52) || (b >= 116 && b < 132)) { // quiet brand band along the floor
-    const a = b < 52 ? E.o3(P(b, 16.5, 2)) * (1 - P(b, 50, 2)) : E.o3(P(b, 116, 2)) * (1 - P(b, 129, 2));
-    bg.globalAlpha = .16 * a;
-    for (let i = 0; i < COLS; i++) { const h = 40 + profile(i, b * .5) * 160 * (1 - .25 * pulse(b, 5) * hash(i)); bg.fillStyle = colBot[i]; bg.fillRect(i * PITCH, H - h, 9, h); }
+  } else if ((b >= 16 && b < 56) || (b >= 116 && b < 132)) { // quiet brand band along the floor
+    const a = b < 56 ? E.o3(P(b, 16.5, 2)) : E.o3(P(b, 116, 2)) * (1 - P(b, 129, 2));
+    // 0:15 → 0:24 the wave keeps rising until it fills the whole screen; timed in real beats so it
+    // flows straight through the cut bar instead of jumping
+    const t = b < 56 ? rb : b;
+    const grow = b < 56 ? (x => x * x * (3 - 2 * x))(P(rb, 32, 24 / SPB - 32)) : 0;
+    bg.globalAlpha = (.16 + .06 * grow) * a;
+    for (let i = 0; i < COLS; i++) { const h = lerp(40 + profile(i, t * .5) * 160, H + 40 + profile(i, t * .5) * 60, grow) * (1 - .25 * pulse(t, 5) * hash(i) * (1 - grow)); bg.fillStyle = colBot[i]; bg.fillRect(i * PITCH, H - h, 9, h); }
     bg.globalAlpha = 1;
   } else if (b >= 92 && b < 94.5) { // stripe burst on the 2023 drop
     stripeField(bg, b, { alpha: .9 * (1 - E.o3(P(b, 92, 2.5))), bump: pulse(b, 4) });
   } else if (b >= 136 && b < 150) { // finale: stripes rise into the cover, logo lands on top
+    // the bars rise as the gently rolling wave (no beat bounce), then from 1:03 morph over 3 s
+    // into the exact shape of the homepage cover
+    const mc = E.io3(P(b, toStory(63 / SPB), 3 / SPB)), split = E.io3(P(b, 137.5, 2));
     stripeField(bg, b, {
       appear: i => E.oExp(P(b, 136.5 + Math.abs(i - 95.5) / 96 * 1.5 + hash(i) * .3, .8)),
-      split: E.io3(P(b, 137.5, 2)),
-      bump: b >= 138 && b < 146 ? pulse(b, 5) * .8 : 0,
-      alpha: 1 - .74 * E.io3(P(b, 139.75, .5)),
+      lower: i => lerp(profile(i, b) * split, COVER[i][3] / H, mc),
+      tc: coverTC, bc: coverBC,
+      alpha: 1 - .74 * E.io3(P(b, 139.75, .5)) + .08 * mc,
     });
   }
   if (window.__three) window.__three.render(b); // 3D particles on top of the stripes
@@ -856,28 +891,15 @@ let fxDirty = true;
 function renderFX(b) {
   if (fxDirty) fx.clearRect(0, 0, W, H);
   let drew = false;
-  drew = wipe(fx, b, 16, [C.green, C.cyan, C.navy], .9) || drew;
+  drew = wipe(fx, b, 16, STRIPES, .9) || drew;
   drew = wipe(fx, b, 72, [C.pink, C.navy, C.cyan, C.orange]) || drew;
   drew = wipe(fx, b, 116, [C.gold, C.purple, C.cyan, C.pink]) || drew;
   drew = wipe(fx, b, 132, STRIPES) || drew;
   // white camera flash at the match cut into the live wall
   const fl = b >= 51.75 && b < 53 ? (b < 52 ? E.i3(P(b, 51.75, .25)) : 1 - E.o2(P(b, 52, 1))) : 0;
   if (fl > 0) { fx.fillStyle = `rgba(255,255,255,${fl})`; fx.fillRect(0, 0, W, H); drew = true; }
-  // glitch into 2023
-  if (b >= 89.5 && b < 92.4) {
-    const cov = E.iExp(P(b, 89.5, 2.25)), step = Math.floor(b * 4);
-    if (b >= 91.75 && b < 92) { fx.fillStyle = '#000'; fx.fillRect(0, 0, W, H); }
-    else if (b < 92) {
-      const n = 6 + Math.floor(cov * 40);
-      for (let k = 0; k < n; k++) {
-        const y = hash(step * 13 + k) * H, hh = 4 + hash(step * 7 + k * 3) * 90 * (.3 + cov);
-        fx.fillStyle = k % 3 === 0 ? '#000' : STRIPES[Math.floor(hash(step + k * 11) * 5)];
-        fx.globalAlpha = .55 + .45 * cov; fx.fillRect(hash(k * 5 + step) * -200, y, W + 400, hh);
-      }
-      fx.globalAlpha = 1;
-    } else { fx.fillStyle = `rgba(255,255,255,${1 - E.o3(P(b, 92, .6))})`; fx.fillRect(0, 0, W, H); }
-    drew = true;
-  }
+  // into "In the same year": brand bars sweep across left → right, then exit to the right
+  drew = wipeH(fx, b, 92, STRIPES, 2, 1) || drew;
   // live reactions floating up the wall
   if (b >= 58.5 && b < 71) {
     for (let k = 0; k < 64; k++) {
@@ -906,20 +928,20 @@ const grain = document.getElementById('grain');
 const HUD_COL = [C.pink, C.cyan, C.orange, C.yellow];
 const overEl = document.getElementById('over');
 function render(b) {
-  renderBG(b);
-  for (const s of scenes) { const on = b >= s.from && b < s.to; show(s.el, on); if (on) s.render(b); }
-  show(document.getElementById('ovYear'), b >= 70.9 && b < 76);
-  show(document.getElementById('ovSame'), b >= 91.4 && b < 94.5);
+  const sb = toStory(b); // real beat → story beat (the cut keeps the beat phase, so pulses stay on the kick)
+  renderBG(sb, b);
+  for (const s of scenes) { const t = s.real ? b : sb, on = t >= s.from && t < s.to; show(s.el, on); if (on) s.render(t); }
+  show(document.getElementById('ovYear'), sb >= 70.9 && sb < 76);
+  show(document.getElementById('ovSame'), sb >= 91.4 && sb < 94.5);
   renderDevice(b);
-  renderFX(b);
+  renderFX(sb);
   // camera: punch on the big drops, jitter in the glitch
-  const hit = [16, 52, 72, 92, 140].reduce((m, d) => Math.max(m, b >= d && b < d + 1 ? Math.exp(-(b - d) * 5) : 0), 0);
-  const gj = b >= 89.5 && b < 92 ? (hash(Math.floor(b * 8)) - .5) * 60 * E.iExp(P(b, 89.5, 2.5)) : 0;
-  T(scenesEl, { x: gj, s: 1 + hit * .025 });
-  // beat HUD
-  const hv = b >= 16.5 && b < 131.5; show(hud, hv);
+  const hit = [16, 52, 72, 92, 140].reduce((m, d) => Math.max(m, sb >= d && sb < d + 1 ? Math.exp(-(sb - d) * 5) : 0), 0);
+  T(scenesEl, { s: 1 + hit * .025 });
+  // beat HUD (real bars)
+  const hv = b >= 16.5 && sb < 131.5; show(hud, hv);
   if (hv) {
-    hud.style.opacity = E.o3(P(b, 16.5, 1)) * (1 - P(b, 130.5, 1)) * (b >= 89.5 && b < 92.5 ? .2 : 1);
+    hud.style.opacity = E.o3(P(b, 16.5, 1)) * (1 - P(sb, 130.5, 1)) * (sb >= 90.5 && sb < 92.5 ? .2 : 1);
     const k = Math.floor(b) % 4;
     hudSq.forEach((q, i) => { q.style.background = i === k ? HUD_COL[i] : '#333'; });
     setText(hudBar, 'BAR ' + String(Math.floor(b / 4) + 1).padStart(2, '0'));
@@ -953,7 +975,7 @@ const params = new URLSearchParams(location.search);
 let actx = null, buffer = null, gainNode = null, src = null, noiseBuf = null, sess = null;
 const lpFreq = b => b < 52 ? 20000 : b < 60 ? 380 : b < 70 ? 380 * Math.pow(20000 / 380, (b - 60) / 10) : 20000;
 const SCORE = (() => {
-  const ev = [], add = (b, fn) => ev.push({ t: b * SPB, fn });
+  const ev = [], add = (b, fn) => { if (b >= CUT && b < CUT + CUT_LEN) return; ev.push({ t: toReal(b) * SPB, fn }); };
   const env = (g, t, a, d, peak) => { g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(peak, t + a); g.gain.exponentialRampToValueAtTime(.0001, t + a + d); };
   const pan = (c, node, p) => { if (!p || !c.createStereoPanner) return node; const sp = c.createStereoPanner(); sp.pan.value = p; node.connect(sp); return sp; };
   const kick = (b, amp = 1) => add(b, (c, o, t) => { const s = c.createOscillator(), g = c.createGain(); s.frequency.setValueAtTime(160, t); s.frequency.exponentialRampToValueAtTime(42, t + .13); env(g, t, .002, .38, amp); s.connect(g).connect(o.lp); s.start(t); s.stop(t + .5); });
@@ -985,7 +1007,7 @@ const SCORE = (() => {
   riser(12, 16);
   // web + app
   impact(16); groove(16, 48, { hats16: true, stabs: true });
-  riser(44, 48, .18); groove(48, 51, { hats16: true }); for (let s = 0; s < 8; s++) clap(51 + s * .125, .15 + s * .04);
+  riser(41, 44, .18); groove(48, 51, { hats16: true }); for (let s = 0; s < 8; s++) clap(51 + s * .125, .15 + s * .04);
   // pandemic: muffled, then the filter opens back up
   impact(52); groove(52, 68, { hats16: true, stabs: true });
   riser(68, 72); groove(68, 70, { noClap: true }); for (let s = 0; s < 16; s++) clap(70 + s * .125, .1 + s * .025);
@@ -1014,7 +1036,7 @@ function startSynth(at) {
   const c = actx, base = c.currentTime + .06;
   const out = c.createGain(), comp = c.createDynamicsCompressor(), lp = c.createBiquadFilter();
   comp.threshold.value = -16; comp.ratio.value = 4; comp.attack.value = .003; comp.release.value = .12;
-  lp.type = 'lowpass'; lp.Q.value = .8; lp.frequency.setValueAtTime(lpFreq(at / SPB), base);
+  lp.type = 'lowpass'; lp.Q.value = .8; lp.frequency.setValueAtTime(lpFreq(toStory(at / SPB)), base);
   lp.connect(comp); comp.connect(out); out.gain.value = .9; out.connect(gainNode);
   let idx = 0; while (idx < SCORE.length && SCORE[idx].t < at - 1e-4) idx++;
   sess = { out, lp, dry: comp, base, from: at, idx };
@@ -1028,7 +1050,7 @@ function schedule() {
     const e = SCORE[sess.idx++], when = sess.base + e.t - sess.from;
     if (when >= actx.currentTime - .005) e.fn(actx, sess, when);
   }
-  sess.lp.frequency.linearRampToValueAtTime(lpFreq((sess.from + horizon - sess.base) / SPB), horizon);
+  sess.lp.frequency.linearRampToValueAtTime(lpFreq(toStory((sess.from + horizon - sess.base) / SPB)), horizon);
 }
 setInterval(schedule, 25);
 async function initAudio() {
@@ -1053,11 +1075,24 @@ function stopSrc() { stopSynth(); if (src) { try { src.stop(); } catch (e) {} sr
 // starts audio at `at` seconds and returns the clock time that position plays at
 function startSrc(at) {
   stopSrc(); if (!audioLive()) return now();
-  if (!buffer) return startSynth(at);
-  src = actx.createBufferSource(); src.buffer = buffer; src.connect(gainNode);
-  const off = at + trackOffset, when = actx.currentTime + .03;
-  if (off < buffer.duration) src.start(when, Math.max(0, off));
+  let when;
+  if (!buffer) when = startSynth(at);
+  else {
+    src = actx.createBufferSource(); src.buffer = buffer; src.connect(gainNode);
+    const off = at + trackOffset; when = actx.currentTime + .03;
+    if (off < buffer.duration) src.start(when, Math.max(0, off));
+  }
+  fadeOut(at, when);
   return when;
+}
+// the music turns down over the last 5 seconds
+const FADE = 5;
+function fadeOut(at, when) {
+  const g = gainNode.gain, fs = DURATION - FADE, lvl = t => clamp((DURATION - t) / FADE);
+  g.cancelScheduledValues(0);
+  g.setValueAtTime(lvl(Math.max(at, fs)), when);
+  if (at < fs) g.setValueAtTime(1, when + fs - at);
+  g.linearRampToValueAtTime(0, when + DURATION - at);
 }
 function play() { if (getPos() >= DURATION - .01) pos = 0; playing = true; t0 = startSrc(pos); syncUI(); }
 function pause() { pos = getPos(); playing = false; stopSrc(); syncUI(); }
@@ -1073,7 +1108,7 @@ async function setSound(on) {
 const ui = document.getElementById('ui'), scrub = document.getElementById('scrub'), timeEl = document.getElementById('time'), railfill = document.getElementById('railfill');
 const startEl = document.getElementById('start'), startNote = document.getElementById('startNote');
 scrub.max = DURATION;
-[16, 36, 52, 72, 92, 116, 132].forEach(b => { const m = $('i', 'mk', document.getElementById('track')); m.style.left = (b / END * 100) + '%'; });
+[16, 36, 52, 72, 92, 116, 132].map(toReal).forEach(b => { const m = $('i', 'mk', document.getElementById('track')); m.style.left = (b / END * 100) + '%'; });
 function syncUI() {
   document.getElementById('icoPlay').setAttribute('d', playing ? 'M6 4h4v16H6zm8 0h4v16h-4z' : 'M7 4l13 8-13 8z');
   document.getElementById('icoSound').setAttribute('d', soundOn ? 'M4 9h4l5-4v14l-5-4H4zM16 8a5 5 0 0 1 0 8M18.5 5.5a8.5 8.5 0 0 1 0 13' : 'M4 9h4l5-4v14l-5-4H4zM16 9l6 6M22 9l-6 6');
@@ -1123,7 +1158,7 @@ const ready = Promise.all([imgReady, logoReady, document.fonts.ready]);
 const nextFrame = () => new Promise(r => { requestAnimationFrame(() => r()); setTimeout(r, 60); });
 const warm = ready.then(async () => { // paint every section once, invisibly, so the first play is smooth
   stage.style.opacity = .01;
-  for (const b of [2, 12, 20, 30, 40, 50, 53, 62, 75, 86, 91, 93, 102, 110, 120, 126, 134, 138, 142, 147]) { render(b); await nextFrame(); }
+  for (const b of [2, 12, 20, 30, 40, 50, 53, 62, 75, 86, 91, 93, 102, 110, 120, 126, 134, 138, 142, 147].map(toReal)) { render(b); await nextFrame(); }
   stage.style.opacity = '';
   render(pos / SPB); requestAnimationFrame(frame); startNote.textContent = 'Click to play · sound on';
 });
