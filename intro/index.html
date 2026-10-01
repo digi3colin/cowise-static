@@ -277,7 +277,8 @@ const SRC = {
   app: ['projects/ruinart-art-basel/02.webp', 'projects/krug/02.webp', 'projects/cartier/01.webp', 'projects/times-square-batman/01.webp', 'projects/hennessy-artistry-photo-booth/01.webp'],
   wall: ['projects/hennessy-artistry-facebook-live/02.webp', 'projects/hennessy-artistry-facebook-live/05.webp', 'projects/hennessy-artistry-facebook-live/03.webp', 'projects/hennessy-artistry-facebook-live/06.webp', 'projects/hennessy-artistry-photo-booth/01.webp', 'projects/hennessy-artistry-facebook-live/07.webp', 'projects/hennessy-artistry-facebook-live/04.webp', 'projects/times-square-showreel/01.webp', 'projects/hennessy-artistry-facebook-live/08.webp'],
   event: ['services/event.webp', 'projects/investhk-wghk/01.webp'],
-  gen: ['projects/genai/web/lion-dance.webp', 'projects/genai/web/hongkong/0_0-2.webp', 'projects/genai/web/ink-tiger.webp', 'projects/genai/web/immersive-waterfall.webp'],
+  // four results from the same prompt (French Chamber gala: tricolour × Bauhinia)
+  gen: ['projects/genai/web/hongkong/0_0-1.webp', 'projects/genai/web/hongkong/0_0-2.webp', 'projects/genai/web/hongkong/0_1.webp', 'projects/genai/web/hongkong/0_0.webp'],
   work: ['projects/women-power-forum-2026/01.webp', 'projects/moments-2025/01.webp', 'projects/vibe-coding/01.webp'],
 };
 const images = {};
@@ -645,13 +646,13 @@ scene(91.4, 117, el => {
   const cards = SRC.gen.map((s, i) => {
     const c = $('div', 'abs card', el); place(c, 180 + i * 400, 300, 360, 440);
     const cv = $('canvas', '', c); cv.width = 360; cv.height = 440;
-    const lbl = $('div', 'lbl', c, `<span>${['Lion dance', 'Light tunnel', 'Ink tiger', 'Waterfall'][i]}</span><span class="pct">0%</span>`);
+    const lbl = $('div', 'lbl', c, `<span>${['V1', 'V2', 'V3', 'V4'][i]}</span><span class="pct">0%</span>`);
     return { c, ctx: cv.getContext('2d'), img: images[s], pct: lbl.querySelector('.pct') };
   });
   const prompt = $('div', 'abs prompt panel', el); place(prompt, 360, 800, 1200);
   prompt.innerHTML = '<span style="color:var(--gold);font-size:34px">✦</span><span class="txt"></span><span class="gen">✦ Generate</span>';
   const ptxt = prompt.querySelector('.txt'), gen = prompt.querySelector('.gen');
-  const PROMPT = 'Lion dance meets neon Hong Kong night, ink-painting texture';
+  const PROMPT = '/imagine Red White Blue french flag, mix with Bauhinia blakeana';
   // SEO / GEO
   const h2 = words(el, 'SEO & GEO', 'xl', 96, 140); h2.ws[2].style.color = C.purple;
   const sub2 = $('div', 'abs sub', el, 'Found in search results, and cited in AI answers.'); place(sub2, 102, 290, 900);
