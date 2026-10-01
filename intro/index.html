@@ -286,7 +286,7 @@ const SRC = {
   // last app slide is the Hennessy photo booth the camera zooms into for the pandemic chapter
   app: ['projects/ruinart-art-basel/02.webp', 'projects/krug/02.webp', 'projects/cartier/01.webp', 'projects/hennessy-artistry-photo-booth/01.webp'],
   wall: ['projects/hennessy-artistry-facebook-live/02.webp', 'projects/hennessy-artistry-facebook-live/05.webp', 'projects/hennessy-artistry-facebook-live/03.webp', 'projects/hennessy-artistry-facebook-live/06.webp', 'projects/hennessy-artistry-photo-booth/01.webp', 'projects/hennessy-artistry-facebook-live/07.webp', 'projects/hennessy-artistry-facebook-live/04.webp', 'projects/times-square-showreel/01.webp', 'projects/hennessy-artistry-facebook-live/08.webp'],
-  event: ['services/event.webp', 'projects/investhk-wghk/01.webp'],
+  event: ['services/event.webp', 'projects/gtef-registration/gtef-2023-stage.webp'],
   // four results from the same prompt (French Chamber gala: tricolour × Bauhinia)
   gen: ['projects/genai/web/hongkong/0_0-1.webp', 'projects/genai/web/hongkong/0_0-2.webp', 'projects/genai/web/hongkong/0_1.webp', 'projects/genai/web/hongkong/0_0.webp'],
   // lion dance leads the gallery (alternating rows: even = top, odd = bottom)
@@ -586,7 +586,7 @@ scene(51.9, 72.2, el => {
   });
   const dim = $('div', 'abs', el); place(dim, 0, 0, W, H); dim.style.background = 'radial-gradient(ellipse 70% 55% at 50% 50%,rgba(8,8,12,.96) 0%,rgba(8,8,12,.88) 55%,rgba(8,8,12,.62) 100%)';
   const tag = makeTag(el, '03', 'Online Events', C.pink);
-  const rec = $('div', 'abs rec', el, '<i></i><span>REC</span><span class="tc">00:00:00</span>'); place(rec, 1560, 80);
+  const rec = $('div', 'abs rec', el, '<i></i><span>REC</span><span class="tc">00:00:00</span>'); place(rec, 1530, 136); // sits under the 128 BPM counter
   const tc = rec.querySelector('.tc'), recDot = rec.querySelector('i');
   const hit = words(el, 'Then the pandemic hit.', 'xl', 0, 440); hit.line.style.width = W + 'px'; hit.line.style.textAlign = 'center';
   hit.line.style.fontSize = '172px'; hit.line.style.fontWeight = 400; hit.line.style.transformOrigin = '50% 50%';
@@ -682,7 +682,7 @@ scene(70.9, 92, el => {
     if (rv > 0) {
       ctx.save(); ctx.beginPath();
       for (let i = 0; i < 20; i++) { const cw = 96, d = E.io3(clamp(rv * 1.6 - (i % 5) * .12 - hash(i) * .1)) * cw; ctx.rect(i * cw + (cw - d) / 2, 0, d, H); }
-      ctx.clip(); drawCover(ctx, c2, 0, 0, W, H, 1.15 - .1 * P(b, 83.5, 8), .62, .5); ctx.restore();
+      ctx.clip(); drawCover(ctx, c2, 0, 0, W, H, 1.15 - .1 * P(b, 83.5, 8), .5, .85); ctx.restore();
     }
     // opener — 2023: digits drop in on 8ths with colour echoes, then rush the camera
     T(veil, { o: 1 - E.io3(P(b, 77.75, 1.25)) });
