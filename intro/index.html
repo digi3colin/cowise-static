@@ -344,6 +344,23 @@ const COVER = [[-1,0,1,147],[3,930,3,149],[0,1080,1,0],[0,928,2,151],[1,927,2,15
 const coverTC = i => COVER[i][0] < 0 ? null : STRIPES[COVER[i][0]];
 const coverBC = i => COVER[i][2] < 0 ? null : STRIPES[COVER[i][2]];
 
+/* diagonal stripe wipe: 45° bars travel from the top-left corner to the bottom-right, cover,
+   then leave off the bottom-right */
+function wipeD(ctx, b, B, palette, lenIn = 1, lenOut = 1, angle = Math.PI / 4) {
+  const t1 = (b - (B - lenIn)) / lenIn, t2 = (b - B) / lenOut;
+  if (t1 <= 0 || t2 >= 1) return false;
+  const R = Math.ceil(Math.hypot(W, H) / 2) + 4, N = Math.ceil(2 * R / PITCH);
+  ctx.save(); ctx.translate(W / 2, H / 2); ctx.rotate(angle);
+  for (let r = 0; r < N; r++) {
+    const y = -R + r * PITCH, d = Math.abs(r - N / 2) / N * .5 + hash(r * 2.3 + B) * .15;
+    ctx.fillStyle = palette[Math.floor(hash(r * 5.3 + B) * palette.length)];
+    if (t2 < 0) { const w = 2 * R * E.io3(clamp((t1 - d) / .5)); ctx.fillRect(-R, y, w, PITCH + .5); }
+    else { const x = -R + 2 * R * E.io3(clamp((t2 - d) / .5)); ctx.fillRect(x, y, R - x, PITCH + .5); }
+  }
+  ctx.restore();
+  return true;
+}
+
 /* horizontal stripe wipe: rows grow in from the left, cover, then leave off the right edge */
 function wipeH(ctx, b, B, palette, lenIn = 1, lenOut = 1) {
   const t1 = (b - (B - lenIn)) / lenIn, t2 = (b - B) / lenOut;
@@ -395,7 +412,7 @@ scene(0, 16.5, el => {
     reveal(line2, b, 1.5, .5, .9, 3.6, .1);
     // logo: stroke draws on, then fills on the beat, then rushes toward camera
     const out = E.iExp(P(b, 14, 1.75));
-    T(logo, { s: (1.06 - .06 * E.o3(P(b, 8, 6))) * (1 + .012 * pulse(b) * (b >= 10 && b < 14)) * (1 + out * .8), o: (b >= 7.5 ? 1 : 0) * (1 - out), blur: out * 24 });
+    T(logo, { s: (1.06 - .06 * E.o3(P(b, 8, 6))) * (1 + out * .8), o: (b >= 7.5 ? 1 : 0) * (1 - out), blur: out * 24 });
     logoPaths.forEach((p, i) => {
       const d = E.io3(P(b, 8 + i * .12, 1.6));
       p.style.strokeDashoffset = p._len * (1 - d);
@@ -439,7 +456,9 @@ function renderDevice(b) {
   const cx = lerp(g.cx, 960, E.io3(P(b, 43.5, 4))), cy = lerp(g.cy, 540, E.io3(P(b, 43.5, 4)));
   const float = b >= 35 ? Math.sin(b * .5) * 10 * (1 - z) : 0;
   const ry = b >= 34 ? (Math.sin(b * .39) * 14 - 8 * (1 - E.o3(P(b, 34, 3)))) * (1 - E.io3(P(b, 43, 3))) : 0;
-  const s = lerp(1, 5.6, z) * (1 + .01 * pulse(b) * (b >= 18 && b < 44));
+  // 0:08 → 0:16 slow push-in: the browser starts 20% smaller and grows back to full size
+  const push = lerp(.8, 1, (x => .5 - .5 * Math.cos(x * Math.PI))(P(b, 8 / SPB, 8 / SPB)));
+  const s = push * lerp(1, 5.6, z) * (1 + .01 * pulse(b) * (b >= 18 && b < 44));
   place(device, cx - g.w / 2, cy - g.h / 2 + float, g.w, g.h);
   device.style.borderRadius = g.r + 'px';
   T(device, { s, ry, rx: b >= 34 ? Math.sin(b * .27) * 4 * (1 - z) : 0, o: 1 });
@@ -475,10 +494,13 @@ function renderDevice(b) {
 }
 
 /* ---------- 1 · Web development ---------- */
-scene(16, 36, el => {
+scene(14.5, 36, el => {
   const tag = makeTag(el, '01', 'Web Development', C.green);
-  const h1 = words(el, 'We started', 'xl', 110, 330);
-  const h2 = words(el, 'with the web.', 'xl', 110, 466);
+  // the headline arrives during the 0:07 bar wipe, so it lives in the overlay layer above the bars
+  const ovWeb = $('div', 'abs', document.getElementById('over')); ovWeb.id = 'ovWeb'; place(ovWeb, 0, 0, W, H);
+  ovWeb.style.filter = 'drop-shadow(0 10px 30px rgba(0,0,0,.55))';
+  const h1 = words(ovWeb, 'We started', 'xl', 110, 330);
+  const h2 = words(ovWeb, 'with the web.', 'xl', 110, 466);
   h2.ws.slice(2).forEach(w => w.style.color = C.green);
   const sub = $('div', 'abs sub', el, 'Responsive, multilingual websites and CMS built for brands across Asia.'); place(sub, 116, 640, 640);
   const chips = ['<html>', '{ css }', 'CMS', '</>', 'i18n', '@media', 'SEO', '.js'].map((t, i) => {
@@ -487,9 +509,9 @@ scene(16, 36, el => {
   const chipPos = [[700, 170], [1700, 170], [1760, 800], [860, 930], [1830, 470], [600, 840], [1220, 950], [1080, 140]];
   return b => {
     renderTag(tag, b, 16.5, 32.5);
-    reveal(h1, b, 18, .5, 1, 32.25);
-    reveal(h2, b, 19, .5, 1, 32.5);
-    fadeUp(sub, b, 21, 32);
+    reveal(h1, b, 14.8, .5, 1, 32.25); // 1.5 s earlier than the original beat 18
+    reveal(h2, b, 15.8, .5, 1, 32.5);
+    fadeUp(sub, b, 17.8, 32);
     chips.forEach((c, i) => {
       const p = E.oBack(P(b, 19 + i * .5, .75), 2.2), q = E.i3(P(b, 31.5 + i * .1, .75));
       const [x, y] = chipPos[i];
@@ -510,9 +532,10 @@ scene(33, 48, el => {
   return b => {
     T(mq, { x: -((b - 33) * 38) % 1400 - 200, o: E.o3(P(b, 35, 2)) * (1 - E.i3(P(b, 43, 2))) });
     renderTag(tag, b, 36, 43.5);
-    reveal(h1, b, 36.5, .5, 1, 42.75);
-    reveal(h2, b, 37.5, .5, 1, 43);
-    fadeUp(sub, b, 39, 42.5);
+    const early = 1 / SPB; // headline 1 s earlier than the original beat 36.5
+    reveal(h1, b, 36.5 - early, .5, 1, 42.75);
+    reveal(h2, b, 37.5 - early, .5, 1, 43);
+    fadeUp(sub, b, 39 - early, 42.5);
     const suck = E.iExp(P(b, 42.5, 1.75));
     icons.forEach((ic, i) => {
       const p = E.oBack(P(b, 37 + i * .25, .75), 2.4);
@@ -893,7 +916,8 @@ function renderFX(b) {
   let drew = false;
   drew = wipe(fx, b, 16, STRIPES, .9) || drew;
   drew = wipe(fx, b, 72, [C.pink, C.navy, C.cyan, C.orange]) || drew;
-  drew = wipe(fx, b, 116, [C.gold, C.purple, C.cyan, C.pink]) || drew;
+  drew = wipeD(fx, b, 116, STRIPES) || drew;                                   // top-left → bottom-right
+  drew = wipeD(fx, b, 116 + .5 / SPB, STRIPES, 1, 1, -Math.PI / 4) || drew;    // bottom-left → top-right, 0.5 s later
   drew = wipe(fx, b, 132, STRIPES) || drew;
   // white camera flash at the match cut into the live wall
   const fl = b >= 51.75 && b < 53 ? (b < 52 ? E.i3(P(b, 51.75, .25)) : 1 - E.o2(P(b, 52, 1))) : 0;
@@ -931,6 +955,7 @@ function render(b) {
   const sb = toStory(b); // real beat → story beat (the cut keeps the beat phase, so pulses stay on the kick)
   renderBG(sb, b);
   for (const s of scenes) { const t = s.real ? b : sb, on = t >= s.from && t < s.to; show(s.el, on); if (on) s.render(t); }
+  show(document.getElementById('ovWeb'), b >= 14.5 && b < 34);
   show(document.getElementById('ovYear'), sb >= 70.9 && sb < 76);
   show(document.getElementById('ovSame'), sb >= 91.4 && sb < 94.5);
   renderDevice(b);
@@ -1085,8 +1110,8 @@ function startSrc(at) {
   fadeOut(at, when);
   return when;
 }
-// the music turns down over the last 5 seconds
-const FADE = 5;
+// the music turns down over the last 10 seconds
+const FADE = 10;
 function fadeOut(at, when) {
   const g = gainNode.gain, fs = DURATION - FADE, lvl = t => clamp((DURATION - t) / FADE);
   g.cancelScheduledValues(0);
