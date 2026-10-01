@@ -149,7 +149,10 @@ html,body{height:100%;background:#000;color:#fff;overflow:hidden;font-family:var
 #start .play{width:120px;height:120px;border-radius:50%;margin:0 auto 26px;display:grid;place-items:center;background:#fff;color:#000;box-shadow:0 0 0 0 rgba(255,255,255,.5);animation:ping 1.875s infinite}
 #start .play svg{width:46px;height:46px;margin-left:8px}
 #start h1{font-weight:300;font-size:40px;letter-spacing:.04em}
-#start p{color:#aaa;font-size:18px;letter-spacing:.2em;text-transform:uppercase;margin-top:10px}
+#start p{color:#aaa;font-size:18px;letter-spacing:.2em;text-transform:uppercase;margin-top:10px;font-variant-numeric:tabular-nums}
+#lbar{width:240px;height:3px;margin:16px auto 0;background:rgba(255,255,255,.15);border-radius:2px;overflow:hidden;transition:opacity .4s}
+#lbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--pink),var(--cyan),var(--orange),var(--yellow));transition:width .2s}
+#start.ready #lbar{opacity:0}
 @keyframes ping{0%{box-shadow:0 0 0 0 rgba(255,255,255,.45)}60%{box-shadow:0 0 0 34px rgba(255,255,255,0)}100%{box-shadow:0 0 0 0 rgba(255,255,255,0)}}
 </style>
 </head>
@@ -178,7 +181,8 @@ html,body{height:100%;background:#000;color:#fff;overflow:hidden;font-family:var
   <div>
     <div class="play"><svg viewBox="0 0 24 24"><path d="M6 3l15 9-15 9z"/></svg></div>
     <h1>COWISE IDEA LAB — Our Story</h1>
-    <p id="startNote">Loading…</p>
+    <p id="startNote">Loading 0%</p>
+    <div id="lbar"><i></i></div>
   </div>
 </div>
 
@@ -298,7 +302,24 @@ function loadImg(src) {
   return images[src] || (images[src] = Object.assign(new Image(), { decoding: 'async', src: IMG + src }));
 }
 Object.values(SRC).flat().forEach(loadImg);
-const imgReady = Promise.all(Object.values(images).map(i => i.decode().catch(() => {})));
+/* loading progress: images 55%, tunnel video (by bytes) 35%, fonts + logo 5% each */
+const LOAD = { img: 0, imgTotal: Object.keys(images).length, vid: 0, font: 0, logo: 0, warm: 0 };
+function showProgress() {
+  const p = .55 * LOAD.img / LOAD.imgTotal + .35 * LOAD.vid + .05 * LOAD.font + .05 * LOAD.logo;
+  const pct = Math.min(99, Math.floor(p * 100)), note = document.getElementById('startNote'), bar = document.querySelector('#lbar i');
+  if (!note || LOAD.warm) return;
+  note.textContent = (p >= 1 ? 'Preparing ' : 'Loading ') + pct + '%';
+  if (bar) bar.style.width = pct + '%';
+}
+const imgReady = Promise.all(Object.values(images).map(i => i.decode().catch(() => {}).finally(() => { LOAD.img++; showProgress(); })));
+document.fonts.ready.then(() => { LOAD.font = 1; showProgress(); });
+async function fetchWithProgress(url, onP) {
+  const r = await fetch(url), total = +r.headers.get('content-length') || 0;
+  if (!r.body || !total) { const bl = await r.blob(); onP(1); return bl; }
+  const reader = r.body.getReader(), chunks = []; let got = 0;
+  for (;;) { const { done, value } = await reader.read(); if (done) break; chunks.push(value); got += value.length; onP(Math.min(1, got / total)); }
+  onP(1); return new Blob(chunks, { type: r.headers.get('content-type') || 'video/mp4' });
+}
 
 /* ---------- canvas helpers ---------- */
 const bg = document.getElementById('bg').getContext('2d');
@@ -751,7 +772,7 @@ scene(91.4, 121, el => {
   const heroImg = $('video', '', hero);
   Object.assign(heroImg, { muted: true, playsInline: true, preload: 'auto', loop: false });
   // loaded as a blob so it can be seeked frame-accurately even on servers without byte-range support
-  heroVideoReady = fetch('/media/videos/resurgence-tunnel.mp4').then(r => r.blob())
+  heroVideoReady = fetchWithProgress('/media/videos/resurgence-tunnel.mp4', p => { LOAD.vid = p; showProgress(); })
     .then(bl => new Promise(res => { heroImg.onloadeddata = res; heroImg.src = URL.createObjectURL(bl); }))
     .catch(() => { heroImg.src = '/media/videos/resurgence-tunnel.mp4'; });
   heroImg.setAttribute('muted', ''); heroImg.setAttribute('playsinline', '');
@@ -1043,6 +1064,7 @@ function render(b) {
 
 /* ---------- logo (inline SVG so each letter can animate) ---------- */
 const logoReady = fetch(IMG + 'logo.svg').then(r => r.text()).then(svg => {
+  LOAD.logo = 1; showProgress();
   for (const [id, mode] of [['logoA', 'draw'], ['logoB', 'drop']]) {
     const host = document.getElementById(id); host.innerHTML = svg;
     const el = host.querySelector('svg'); el.setAttribute('width', 980); el.setAttribute('height', 980 * 116.847 / 326.737);
@@ -1256,7 +1278,9 @@ const warm = ready.then(async () => { // paint every section once, invisibly, so
   stage.style.opacity = .01;
   for (const b of [2, 12, 20, 30, 40, 50, 53, 62, 75, 86, 91, 93, 102, 110, 120, 126, 134, 138, 142, 147].map(toReal)) { render(b); await nextFrame(); }
   stage.style.opacity = '';
-  render(pos / SPB); requestAnimationFrame(frame); startNote.textContent = 'Click to play · sound on';
+  render(pos / SPB); requestAnimationFrame(frame);
+  LOAD.warm = 1; document.querySelector('#lbar i').style.width = '100%';
+  startNote.textContent = 'Click to play · sound on'; startEl.classList.add('ready');
 });
 async function begin() {
   if (booted) return; booted = true;
