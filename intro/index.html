@@ -849,7 +849,7 @@ scene(91.4, 121, el => {
       // keep the footage locked to the timeline (scrubbing included)
       const vt = .4 + (b - 105) * SPB;
       if (playing) { if (heroImg.paused) heroImg.play().catch(() => {}); if (Math.abs(heroImg.currentTime - vt) > .2) heroImg.currentTime = vt; }
-      else { if (!heroImg.paused) heroImg.pause(); if (Math.abs(heroImg.currentTime - vt) > .04) heroImg.currentTime = vt; }
+      else { if (!heroImg.paused) heroImg.pause(); if (Math.abs(heroImg.currentTime - vt) > (window.__exactFrames ? .001 : .04)) heroImg.currentTime = vt; } // exact when exporting
       T(hero, { o: 1 - hOut });
       T(heroDim, { o: .55 * E.io3(P(b, 108.4, 1.2)) });
       fadeUp(heroEb, b, 106, 108.4, 20);
