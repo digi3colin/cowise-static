@@ -193,10 +193,14 @@ const BPM = 128, SPB = 60 / BPM;             // 0.46875 s per beat
 // The story was authored on a 148-beat timeline; one bar (story beats 44–48, the old Times Square
 // slide) is cut, so real playback is 144 beats (36 bars = 67.5 s). Everything after the cut is
 // authored in story beats and mapped through toStory(); the app chapter + device use real beats.
-const CUT = 44, CUT_LEN = 4;
-const toStory = b => b < CUT ? b : b + CUT_LEN;
-const toReal = sb => sb < CUT ? sb : Math.max(CUT, sb - CUT_LEN);
-const END = 148 - CUT_LEN;                   // real beats
+// A second bar is inserted before story beat 112 (end of the Gen AI chapter): real beats 108–112
+// hold the story clock at 112 while the Gen AI chapter keeps running on its own clock (genClock).
+// Net length: 148 beats (37 bars = 69.4 s).
+const CUT = 44, CUT_LEN = 4, INS = 112, INS_LEN = 4;
+const toStory = b => b < CUT ? b : b < INS - CUT_LEN ? b + CUT_LEN : b < INS ? INS : b;
+const toReal = sb => sb < CUT ? sb : sb < CUT + CUT_LEN ? CUT : sb < INS ? sb - CUT_LEN : sb;
+const genClock = b => b < CUT ? b : b + CUT_LEN; // Gen AI chapter: continuous through the inserted bar
+const END = 148;                             // real beats
 const DURATION = END * SPB;
 const W = 1920, H = 1080;
 const C = {pink:'#ff0062',cyan:'#7ce7f9',orange:'#fda602',yellow:'#ffde0b',navy:'#052675',green:'#7cf9bf',purple:'#a97cf9',gold:'#ffc93c',ink:'#0d0d10'};
@@ -285,6 +289,8 @@ const SRC = {
   event: ['services/event.webp', 'projects/investhk-wghk/01.webp'],
   // four results from the same prompt (French Chamber gala: tricolour × Bauhinia)
   gen: ['projects/genai/web/hongkong/0_0-1.webp', 'projects/genai/web/hongkong/0_0-2.webp', 'projects/genai/web/hongkong/0_1.webp', 'projects/genai/web/hongkong/0_0.webp'],
+  // lion dance leads the gallery (alternating rows: even = top, odd = bottom)
+  gallery: ['projects/genai/web/lion-dance.webp', 'projects/genai/web/liondance/liondance01.webp', 'projects/genai/web/ink-tiger.webp', 'projects/genai/web/liondance/liondance02.webp', 'projects/genai/web/liondance/liondance.webp', 'projects/genai/web/cyber-fashion.webp', 'projects/genai/web/liondance/liondance03.webp', 'projects/genai/web/immersive-waterfall.webp', 'projects/genai/web/liondance/liondance04.webp', 'projects/genai/web/ink-painting.webp', 'projects/genai/web/novel-character.webp', 'projects/genai/web/painting/0_1.webp'],
   work: ['projects/women-power-forum-2026/01.webp', 'projects/moments-2025/01.webp', 'projects/vibe-coding/01.webp'],
 };
 const images = {};
@@ -298,7 +304,7 @@ const imgReady = Promise.all(Object.values(images).map(i => i.decode().catch(() 
 const bg = document.getElementById('bg').getContext('2d');
 const fx = document.getElementById('fx').getContext('2d');
 function drawCover(ctx, img, x, y, w, h, zoom = 1, fx_ = .5, fy = .5) {
-  const iw = img.naturalWidth, ih = img.naturalHeight; if (!iw) return;
+  const iw = img.naturalWidth || img.videoWidth, ih = img.naturalHeight || img.videoHeight; if (!iw) return;
   const s = Math.max(w / iw, h / ih) * zoom, dw = iw * s, dh = ih * s;
   ctx.drawImage(img, x + (w - dw) * fx_, y + (h - dh) * fy, dw, dh);
 }
@@ -446,6 +452,7 @@ const BROWSER = { cx: 1290, cy: 560, w: 980, h: 640, r: 18, pad: 0, padY: 0, tb:
 const IPAD = { cx: 640, cy: 545, w: 600, h: 779, r: 37, pad: 61, padY: 71, tb: 0 };
 function renderDevice(b) {
   const vis = b >= 16 && b < 48.05; show(deviceLayer, vis); if (!vis) return;
+  const sw = b >= 27 && b < 34; deviceLayer.querySelectorAll('.secw').forEach(c => show(c, sw)); // second-wave security tags
   const a1 = E.oExp(P(b, 16, 1)), a2 = E.oExp(P(b, 16.6, 1.4));
   const m = E.io4(P(b, 32.5, 3));
   const g = {};
@@ -507,6 +514,18 @@ scene(14.5, 36, el => {
     const c = $('div', 'abs chip', el); c.textContent = t; c.style.color = i % 2 ? C.cyan : C.green; return c;
   });
   const chipPos = [[700, 170], [1700, 170], [1760, 800], [860, 930], [1830, 470], [600, 840], [1220, 950], [1080, 140]];
+  // from 0:11, security tags join the build tags
+  const LOCK = '<svg viewBox="0 0 24 24" width="22" height="22" style="vertical-align:-3px;margin-right:10px"><rect x="4" y="10" width="16" height="11" rx="2" fill="currentColor"/><path d="M8 10V7a4 4 0 0 1 8 0v3" fill="none" stroke="currentColor" stroke-width="2.4"/></svg>';
+  const SHIELD = '<svg viewBox="0 0 24 24" width="22" height="22" style="vertical-align:-4px;margin-right:10px"><path d="M12 2l8 3v6c0 5-3.5 9-8 11-4.5-2-8-6-8-11V5z" fill="currentColor"/><path d="M8.5 12l2.5 2.5 4.5-5" fill="none" stroke="var(--chip-bg)" stroke-width="2.2"/></svg>';
+  const SEC = [['HTTPS / TLS', LOCK, 140, 790], ['WAF', SHIELD, 420, 870], ['OWASP Top 10', SHIELD, 150, 905], ['2FA', LOCK, 470, 975], ['DDoS protection', SHIELD, 1290, 105], ['CSP headers', SHIELD, 1335, 985], ['Pen test', SHIELD, 1640, 975], ['Encrypted data', LOCK, 360, 195]];
+  // second wave, 0:13 → 0:15: these float over the browser edges (device layer sits above the scene)
+  SEC.push(['SSL certificates', LOCK, 735, 285], ['Firewall', SHIELD, 1660, 250], ['Zero trust', SHIELD, 1640, 700], ['Daily backups', LOCK, 760, 735],
+    ['PDPO compliant', SHIELD, 1120, 215], ['Rate limiting', SHIELD, 1420, 860], ['Bot protection', SHIELD, 960, 865], ['Security audit', LOCK, 1560, 455]);
+  const secChips = SEC.map(([t, ic], i) => { const c = $('div', 'abs chip', i < 8 ? el : deviceLayer, ic + t); // solid green / blue pills with black icon + text
+    const bgc = i % 2 ? C.cyan : C.green;
+    Object.assign(c.style, { color: '#0d0d10', background: bgc, borderColor: bgc, fontWeight: 500, boxShadow: '0 10px 28px rgba(0,0,0,.35)' });
+    c.style.setProperty('--chip-bg', bgc);
+    if (i >= 8) { c.style.zIndex = 3; c.style.opacity = 0; c.classList.add('secw'); } return c; });
   return b => {
     renderTag(tag, b, 16.5, 32.5);
     reveal(h1, b, 14.8, .5, 1, 32.25); // 1.5 s earlier than the original beat 18
@@ -516,6 +535,12 @@ scene(14.5, 36, el => {
       const p = E.oBack(P(b, 19 + i * .5, .75), 2.2), q = E.i3(P(b, 31.5 + i * .1, .75));
       const [x, y] = chipPos[i];
       T(c, { x: x + Math.sin(b * .4 + i) * 14, y: y + Math.cos(b * .33 + i * 2) * 12 - q * 60, s: Math.max(0, p) * (1 + .06 * pulse(b + i * .5)) * (1 - q), o: P(b, 19 + i * .5, .25) * (1 - q) });
+    });
+    const SEC0 = 11 / SPB; // pop in on 8ths from 0:11
+    secChips.forEach((c, i) => {
+      const at = i < 8 ? SEC0 + i * .5 : 13 / SPB + (i - 8) * .55, p = E.oBack(P(b, at, .75), 2.2), q = E.i3(P(b, 32 + (i % 8) * .05, .6));
+      const [, , x, y] = SEC[i];
+      T(c, { x: x + Math.sin(b * .37 + i * 1.7) * 12, y: y + Math.cos(b * .31 + i) * 10 - q * 60, s: Math.max(0, p) * (1 + .06 * pulse(b + i * .5)) * (1 - q), o: P(b, at, .25) * (1 - q) });
     });
   };
 });
@@ -567,7 +592,18 @@ scene(51.9, 72.2, el => {
   hit.line.style.fontSize = '172px'; hit.line.style.fontWeight = 400; hit.line.style.transformOrigin = '50% 50%';
   hit.ws[2].style.color = C.pink;
   const h = words(el, 'Events went online.', 'xl', 0, 420); h.line.style.width = W + 'px'; h.line.style.textAlign = 'center';
-  const sub = $('div', 'abs sub', el, 'We partnered with PR agencies to produce live streams and online events.'); place(sub, 410, 600, 1100); sub.style.textAlign = 'center';
+  // typographic stack: small connective words, big keywords
+  const STACK = [
+    ['We partnered with', 230, 58, 300, '#d6d6de'],
+    ['PR agencies', 296, 156, 400, C.pink],
+    ['to produce', 468, 58, 300, '#d6d6de'],
+    ['live streams', 534, 156, 400, C.cyan],
+    ['& online events.', 690, 156, 400, '#fff'],
+  ].map(([t, y, fs, fw, col]) => {
+    const g = words(el, t, '', 0, y);
+    Object.assign(g.line.style, { width: W + 'px', textAlign: 'center', fontSize: fs + 'px', fontWeight: fw, lineHeight: 1, whiteSpace: 'nowrap', color: col });
+    return g;
+  });
   return b => {
     const z = E.io4(P(b, 52, 3.25));
     T(wall, { s: lerp(3.2, 1, z) * (1 + .006 * pulse(b)), r: (1 - z) * -2 });
@@ -589,8 +625,11 @@ scene(51.9, 72.2, el => {
     const HIT_OUT = 27 / SPB;
     reveal(hit, b, 55, .5, .8, HIT_OUT, .1);
     // beat 2: straight into the answer
-    reveal(h, b, HIT_OUT + .75, .5, 1, 69.25);
-    fadeUp(sub, b, HIT_OUT + 2.5, 69);
+    const ONLINE_OUT = toStory(27 / SPB); // "Events went online." leaves at 0:27
+    reveal(h, b, HIT_OUT + .75, .5, 1, ONLINE_OUT, .1);
+    // then the partnership statement builds line by line on the beat
+    const S0 = ONLINE_OUT + .5;
+    STACK.forEach((g, i) => reveal(g, b, S0 + [0, .5, 1.5, 2, 3][i], .25, .9, 69 + i * .08, .06));
   };
 });
 
@@ -681,8 +720,9 @@ scene(70.9, 92, el => {
   };
 });
 
-/* ---------- 5 · Generative AI since 2023 · SEO & GEO ---------- */
-scene(91.4, 117, el => {
+let heroVideoReady = Promise.resolve();
+/* ---------- 5 · Generative AI since 2023: prompt → variations → upscale → gallery ---------- */
+scene(91.4, 121, el => {
   // "In the same year, generative AI joins the studio."
   // big "In the same year," punches through the glitch (overlay layer, above the fx canvas)
   const same = words(document.getElementById('over'), 'In the same year,', 'xl', 0, 400);
@@ -690,8 +730,11 @@ scene(91.4, 117, el => {
   same.line.style.filter = 'drop-shadow(0 12px 36px rgba(0,0,0,.6))'; same.line.id = 'ovSame';
   const yl1 = words(el, 'Generative AI', 'xl', 0, 420), yl2 = words(el, 'joins the studio.', 'xl', 0, 556);
   [yl1, yl2].forEach(g => { g.line.style.width = W + 'px'; g.line.style.textAlign = 'center'; g.line.style.fontSize = '150px'; });
-  yl1.ws.forEach(w => w.style.color = C.gold);
-  const tag = makeTag(el, '05', 'Generative AI · 2023', C.gold);
+  // each letter of "Generative AI" in a key-visual stripe colour (navy is lifted so it reads on the dark stage)
+  const KV = [C.pink, C.cyan, C.orange, C.yellow, '#3d6bff'];
+  let li = 0;
+  yl1.ws.forEach(w => { w.innerHTML = [...w.textContent].map(ch => `<span style="color:${KV[li++ % KV.length]}">${ch}</span>`).join(''); });
+  const tag = makeTag(el, '05', 'Generative AI · 2023', C.gold); tag.el.style.zIndex = 4; // stays above the full-screen footage
   const h = words(el, 'Event ideas at the speed of a prompt.', 'lg', 96, 150);
   const cards = SRC.gen.map((s, i) => {
     const c = $('div', 'abs card', el); place(c, 180 + i * 400, 300, 360, 440);
@@ -703,23 +746,31 @@ scene(91.4, 117, el => {
   prompt.innerHTML = '<span style="color:var(--gold);font-size:34px">✦</span><span class="txt"></span><span class="gen">✦ Generate</span>';
   const ptxt = prompt.querySelector('.txt'), gen = prompt.querySelector('.gen');
   const PROMPT = '/imagine Red White Blue french flag, mix with Bauhinia blakeana';
-  // SEO / GEO
-  const h2 = words(el, 'SEO & GEO', 'xl', 96, 140); h2.ws[2].style.color = C.purple;
-  const sub2 = $('div', 'abs sub', el, 'Found in search results, and cited in AI answers.'); place(sub2, 102, 290, 900);
-  const sx = $('div', 'abs panel sx', el); place(sx, 140, 380, 800, 600);
-  sx.innerHTML = '<div class="sbar"><svg viewBox="0 0 24 24" width="26" height="26"><circle cx="10" cy="10" r="7" stroke="#aaa" stroke-width="2.5" fill="none"/><path d="M15 15l6 6" stroke="#aaa" stroke-width="2.5"/></svg><span class="q"></span></div>';
-  const qEl = sx.querySelector('.q');
-  const res = [0, 1, 2, 3].map(i => {
-    const r = $('div', 'res' + (i === 3 ? ' me' : ''), sx);
-    r.innerHTML = i === 3 ? '<div class="u">cowise.com.hk › services › event-management</div><div class="t">Event &amp; Guest Management | COWISE IDEA LAB</div><div class="rank">#4</div>' : `<div class="sk" style="width:${40 + hash(i) * 20}%"></div><div class="sk" style="width:${70 + hash(i + 4) * 20}%;height:20px"></div><div class="sk" style="width:${55 + hash(i + 8) * 30}%"></div>`;
-    return r;
+  // concept → result: the V2 tunnel concept opens up into footage of the built RESURGENCE tunnel
+  const hero = $('div', 'abs', el); place(hero, 0, 0, W, H); hero.style.overflow = 'hidden';
+  const heroImg = $('video', '', hero);
+  Object.assign(heroImg, { muted: true, playsInline: true, preload: 'auto', loop: false });
+  // loaded as a blob so it can be seeked frame-accurately even on servers without byte-range support
+  heroVideoReady = fetch('/media/videos/resurgence-tunnel.mp4').then(r => r.blob())
+    .then(bl => new Promise(res => { heroImg.onloadeddata = res; heroImg.src = URL.createObjectURL(bl); }))
+    .catch(() => { heroImg.src = '/media/videos/resurgence-tunnel.mp4'; });
+  heroImg.setAttribute('muted', ''); heroImg.setAttribute('playsinline', '');
+  heroImg.style.display = 'none'; // frames are painted into heroCv so they composite like every other layer
+  const heroCv = $('canvas', '', hero); heroCv.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;transform-origin:50% 50%';
+  const heroCtx = heroCv.getContext('2d');
+  const heroDim = $('div', 'abs', hero); heroDim.style.cssText += ';inset:0;width:auto;height:auto;background:#08080c;opacity:0;z-index:1';
+  const heroShade = $('div', 'abs', hero); heroShade.style.cssText += ';inset:0;width:auto;height:auto'; heroShade.style.background = 'linear-gradient(0deg,rgba(8,8,12,.88) 0%,rgba(8,8,12,.35) 38%,rgba(8,8,12,0) 60%)';
+  const heroEb = $('div', 'abs eyebrow', hero, 'From prompt to reality'); place(heroEb, 110, 760); heroEb.style.color = C.gold;
+  const heroT = words(hero, 'Bauhinia light tunnel', 'lg', 104, 806);
+  const heroS = $('div', 'abs sub', hero, 'RESURGENCE · French Chamber gala dinner, 2023'); place(heroS, 110, 916, 900);
+  // gallery: more generative work, two rows panning in opposite directions
+  const gh = words(el, 'From prompt to production.', 'lg', 96, 140);
+  const GAL = SRC.gallery.map((src, k) => {
+    const row = k % 2, col = Math.floor(k / 2);
+    const t = $('div', 'abs card', el); place(t, col * 420, row ? 640 : 300, 380, 270);
+    const im = $('img', '', t); im.src = IMG + src; im.alt = ''; im.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block';
+    return { t, row, col, k };
   });
-  const rank = res[3].querySelector('.rank');
-  const ai = $('div', 'abs panel sx', el); place(ai, 980, 380, 800, 600);
-  ai.innerHTML = '<div class="ai-h"><span style="font-size:30px">✦</span> AI answer</div><div class="ai-t"></div>';
-  const aiT = ai.querySelector('.ai-t'); const cite = $('div', 'cite', ai, '↗ cowise.com.hk');
-  const ANSWER = 'COWISE IDEA LAB is a Hong Kong creative technology agency. It builds RSVP, QR check-in and CRM systems for event and guest management.'.split(' ');
-  const QUERY = 'event check-in system hong kong';
   return b => {
     // "In the same year," lands over the left-to-right bar wipe; a brief RGB split settles on the drop
     reveal(same, b, 91.5, .125, .6, 93.4, .08);
@@ -732,7 +783,7 @@ scene(91.4, 117, el => {
     reveal(yl2, b, 94.5, .5, 1, 96.35, .1);
     const yp = 1 + .025 * (b >= 93.75 && b < 96.25 ? pulse(b, 5) : 0);
     T(yl1.line, { s: yp }); T(yl2.line, { s: yp });
-    renderTag(tag, b, 96.5, 114.5);
+    renderTag(tag, b, 96.5, 117.3);
     reveal(h, b, 97, .25, 1, 104.75, .05);
     // prompt typing → generate → diffusion-style reveal
     const pin = E.oExp(P(b, 96.5, 1.5)), pout = E.i3(P(b, 105, 1));
@@ -743,7 +794,8 @@ scene(91.4, 117, el => {
     T(gen, { s: 1 - .1 * Math.sin(press * Math.PI) + .04 * (b > 101 ? pulse(b, 4) : 0) });
     gen.style.boxShadow = b > 100.5 ? `0 0 ${40 * pulse(b, 3)}px rgba(255,201,60,.8)` : 'none';
     cards.forEach((c, i) => {
-      const cin = E.oBack(P(b, 100.5 + i * .25, 1), 1.6), cout = E.iExp(P(b, 104.75 + i * .12, 1.1));
+      const cin = E.oBack(P(b, 100.5 + i * .25, 1), 1.6), cout = i === 1 ? 0 : E.iExp(P(b, 104.75 + i * .12, 1.1));
+      show(c.c, !(i === 1 && b >= 105.1)); // V2 hands over to the full-screen upscale
       T(c.c, { y: (1 - P(b, 100.5 + i * .25, 1)) * 60 - cout * 900 + Math.sin(b * .6 + i) * 8, s: Math.max(0, cin) * (1 - cout * .3), o: P(b, 100.5 + i * .25, .3), r: (1 - cin) * 4 - cout * (i - 1.5) * 8 });
       const g = P(b, 101 + i * .5, 3);
       c.ctx.fillStyle = '#1b1b22'; c.ctx.fillRect(0, 0, 360, 440);
@@ -761,26 +813,37 @@ scene(91.4, 117, el => {
       }
       setText(c.pct, Math.round(100 * E.io3(g)) + '%');
     });
-    // SEO & GEO
-    reveal(h2, b, 105.5, .5, 1, 114.5);
-    fadeUp(sub2, b, 106.5, 114.5);
-    [sx, ai].forEach((p, i) => { const a = E.oExp(P(b, 106 + i * .5, 1.5)), o = E.i3(P(b, 114.25 + i * .15, .75)); T(p, { y: (1 - a) * 160 + o * 120, o: a * (1 - o), rx: (1 - a) * 18 }); });
-    setText(qEl, QUERY.slice(0, Math.floor(QUERY.length * P(b, 107, 1.5))));
-    // rank climb #4 → #1
-    const climb = E.io4(P(b, 109, 1.5));
-    res.forEach((r, i) => {
-      const slot = i === 3 ? lerp(3, 0, climb) : i + climb;
-      T(r, { y: 120 + slot * 112, s: i === 3 ? 1 + .04 * Math.sin(climb * Math.PI) : 1, o: E.o3(P(b, 107.5 + i * .15, .6)) });
-      r.style.zIndex = i === 3 ? 2 : 1;
+    // V2 opens from its card into the real tunnel footage
+    // the footage stays on as the backdrop behind the gallery until the transition covers it
+    const hx = E.io4(P(b, 105, 1.25)), hOut = E.iExp(P(b, 119.6, .8));
+    show(hero, b >= 105 && b < 120.5);
+    if (b >= 105 && b < 120.5) {
+      // the whole frame grows from the V2 card rectangle to full screen
+      place(hero, 580 * (1 - hx), 300 * (1 - hx), lerp(360, W, hx), lerp(440, H, hx));
+      hero.style.borderRadius = 22 * (1 - hx) + 'px';
+      // paint the current video frame, cover-fitted to the box, with a slow push-in
+      const bw = Math.round(lerp(360, W, hx)), bh = Math.round(lerp(440, H, hx));
+      if (heroCv.width !== bw || heroCv.height !== bh) { heroCv.width = bw; heroCv.height = bh; }
+      if (heroImg.readyState >= 2) { heroCtx.fillStyle = '#000'; heroCtx.fillRect(0, 0, bw, bh); drawCover(heroCtx, heroImg, 0, 0, bw, bh, 1.02 + .1 * P(b, 105, 4.5)); }
+      // keep the footage locked to the timeline (scrubbing included)
+      const vt = .4 + (b - 105) * SPB;
+      if (playing) { if (heroImg.paused) heroImg.play().catch(() => {}); if (Math.abs(heroImg.currentTime - vt) > .2) heroImg.currentTime = vt; }
+      else { if (!heroImg.paused) heroImg.pause(); if (Math.abs(heroImg.currentTime - vt) > .04) heroImg.currentTime = vt; }
+      T(hero, { o: 1 - hOut });
+      T(heroDim, { o: .55 * E.io3(P(b, 108.4, 1.2)) });
+      fadeUp(heroEb, b, 106, 108.4, 20);
+      reveal(heroT, b, 106.25, .25, 1, 108.5, .06);
+      fadeUp(heroS, b, 107, 108.4, 20);
+    } else if (!heroImg.paused) heroImg.pause();
+    // gallery
+    reveal(gh, b, 109, .25, 1, 117.3, .05);
+    GAL.forEach(({ t, row, col, k }) => {
+      const at = 108.9 + k * .3, a = E.oBack(P(b, at, .8), 1.6), o = E.i3(P(b, 117.2 + k * .025, .6));
+      const pan = row ? lerp(-560, 60, E.io3(P(b, 108.75, 9))) : lerp(60, -560, E.io3(P(b, 108.75, 9)));
+      T(t, { x: pan + 40, y: (1 - P(b, at, .8)) * 50 - o * 40, s: (.85 + .15 * Math.max(0, a)) * (1 + .02 * (b > at + 1 && b < 117 ? pulse(b, 5) : 0)), o: P(b, at, .3) * (1 - o) });
     });
-    setText(rank, '#' + Math.round(lerp(4, 1, climb)));
-    // AI answer streaming in on 16ths
-    const nw = Math.floor(P(b, 109, 4) * ANSWER.length);
-    setText(aiT, ANSWER.slice(0, nw).join(' '));
-    const ci = E.oBack(P(b, 113, .6), 2.5);
-    T(cite, { s: Math.max(0, ci) * (1 + .08 * (b > 113.5 ? pulse(b, 4) : 0)), o: P(b, 113, .2) });
   };
-});
+}).clock = genClock; // runs through the inserted bar
 
 /* ---------- 6 · Workshops: now, we teach ---------- */
 scene(115.5, 132.2, el => {
@@ -826,8 +889,11 @@ scene(115.5, 132.2, el => {
 });
 
 /* ---------- 7 · Outro: the whole story, then the logo ---------- */
-scene(131.5, 150, el => {
-  const h = words(el, 'From first idea to measurable impact.', 'lg', 0, 300); h.line.style.width = W + 'px'; h.line.style.textAlign = 'center';
+scene(130, 150, el => {
+  // arrives during the 1:01 bar wipe, so it sits in the overlay layer above the bars
+  const h = words(document.getElementById('over'), 'From first idea to measurable impact.', 'lg', 0, 300); h.line.style.width = W + 'px'; h.line.style.textAlign = 'center';
+  h.line.id = 'ovImpact'; h.line.style.fontWeight = 400;
+  h.line.style.filter = 'drop-shadow(0 0 3px #000) drop-shadow(0 0 6px #000) drop-shadow(0 0 10px #000) drop-shadow(0 8px 22px #000)';
   const line = $('div', 'abs tl-line', el), fill = $('div', 'abs tl-fill', el);
   const NODES = [['Web', 'Where we started', C.green], ['Apps', 'Mobile & tablet', C.pink], ['Online events', 'Pandemic years', C.navy], ['Event tech', '2023 · RSVP · Check-in', C.orange], ['Gen AI', 'Same year, 2023', C.gold], ['Workshops', 'Now', C.cyan]];
   const nodes = NODES.map(([t, s, c], i) => {
@@ -841,7 +907,7 @@ scene(131.5, 150, el => {
   const t2 = $('div', 'abs eyebrow', el, 'cowise.com.hk'); place(t2, 0, 840, W); t2.style.cssText += ';text-align:center;color:' + C.cyan;
   return b => {
     const leave = E.i3(P(b, 136.5, 1.25));
-    reveal(h, b, 132.5, .25, 1, 136.5, .05);
+    reveal(h, b, 132.5 - 1 / SPB, .25, 1, 136.5, .05); // 1 s earlier than beat 132.5
     T(line, { sx: E.io4(P(b, 133, 2)), o: 1 - leave });
     T(fill, { sx: E.io3(P(b, 133.5, 3)) * (1 - leave) });
     nodes.forEach(({ n, l }, i) => {
@@ -954,9 +1020,10 @@ const overEl = document.getElementById('over');
 function render(b) {
   const sb = toStory(b); // real beat → story beat (the cut keeps the beat phase, so pulses stay on the kick)
   renderBG(sb, b);
-  for (const s of scenes) { const t = s.real ? b : sb, on = t >= s.from && t < s.to; show(s.el, on); if (on) s.render(t); }
+  for (const s of scenes) { const t = s.clock ? s.clock(b) : s.real ? b : sb, on = t >= s.from && t < s.to; show(s.el, on); if (on) s.render(t); }
   show(document.getElementById('ovWeb'), b >= 14.5 && b < 34);
   show(document.getElementById('ovYear'), sb >= 70.9 && sb < 76);
+  show(document.getElementById('ovImpact'), sb >= 130 && sb < 138);
   show(document.getElementById('ovSame'), sb >= 91.4 && sb < 94.5);
   renderDevice(b);
   renderFX(sb);
@@ -1000,7 +1067,11 @@ const params = new URLSearchParams(location.search);
 let actx = null, buffer = null, gainNode = null, src = null, noiseBuf = null, sess = null;
 const lpFreq = b => b < 52 ? 20000 : b < 60 ? 380 : b < 70 ? 380 * Math.pow(20000 / 380, (b - 60) / 10) : 20000;
 const SCORE = (() => {
-  const ev = [], add = (b, fn) => { if (b >= CUT && b < CUT + CUT_LEN) return; ev.push({ t: toReal(b) * SPB, fn }); };
+  const ev = [], add = (b, fn) => {
+    if (b >= CUT && b < CUT + CUT_LEN) return;                                   // cut bar
+    ev.push({ t: toReal(b) * SPB, fn });
+    if (b >= INS - INS_LEN && b < INS) ev.push({ t: (b - CUT_LEN + INS_LEN) * SPB, fn }); // inserted bar repeats the groove
+  };
   const env = (g, t, a, d, peak) => { g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(peak, t + a); g.gain.exponentialRampToValueAtTime(.0001, t + a + d); };
   const pan = (c, node, p) => { if (!p || !c.createStereoPanner) return node; const sp = c.createStereoPanner(); sp.pan.value = p; node.connect(sp); return sp; };
   const kick = (b, amp = 1) => add(b, (c, o, t) => { const s = c.createOscillator(), g = c.createGain(); s.frequency.setValueAtTime(160, t); s.frequency.exponentialRampToValueAtTime(42, t + .13); env(g, t, .002, .38, amp); s.connect(g).connect(o.lp); s.start(t); s.stop(t + .5); });
@@ -1179,7 +1250,7 @@ function frame() {
 const hashBeat = +(new URLSearchParams(location.hash.slice(1)).get('b') || 0);
 pos = hashBeat * SPB;
 let booted = false;
-const ready = Promise.all([imgReady, logoReady, document.fonts.ready]);
+const ready = Promise.all([imgReady, logoReady, document.fonts.ready, heroVideoReady]);
 const nextFrame = () => new Promise(r => { requestAnimationFrame(() => r()); setTimeout(r, 60); });
 const warm = ready.then(async () => { // paint every section once, invisibly, so the first play is smooth
   stage.style.opacity = .01;
