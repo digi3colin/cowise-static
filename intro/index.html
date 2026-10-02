@@ -30,7 +30,8 @@ html,body{height:100%;background:#000;color:#fff;overflow:hidden;font-family:var
 #vignette{position:absolute;inset:0;z-index:6;pointer-events:none;background:radial-gradient(ellipse at 50% 50%,transparent 55%,rgba(0,0,0,.45) 100%)}
 .scene{position:absolute;inset:0}
 .abs{position:absolute;left:0;top:0;will-change:transform,opacity}
-.mask{display:inline-block;overflow:hidden;vertical-align:top;padding:0 .02em .06em}
+/* extra room below the baseline so descenders (y, g, p) aren't clipped; the negative margin keeps line spacing unchanged */
+.mask{display:inline-block;overflow:hidden;vertical-align:top;padding:0 .02em .24em;margin-bottom:-.18em}
 .w{display:inline-block;will-change:transform}
 .xl{font-size:132px;font-weight:300;line-height:1;letter-spacing:-.015em;white-space:nowrap}
 .lg{font-size:84px;font-weight:300;line-height:1.02;white-space:nowrap}
@@ -259,11 +260,11 @@ function words(parent, text, cls, x, y) {
   const ws = text.split(' ').map(w => { const m = $('span', 'mask', line); m.style.marginRight = '.22em'; return $('span', 'w', m, w); });
   return { line, ws };
 }
-function reveal(group, b, start, step = .5, dur = 1, out = Infinity, outStep = .12) {
+function reveal(group, b, start, step = .5, dur = 1, out = Infinity, outStep = .12, outDur = .6) {
   group.ws.forEach((w, i) => {
     const pin = E.oExp(P(b, start + i * step, dur));
-    const pout = E.i3(P(b, out + i * outStep, .6));
-    T(w, { y: `${(1 - pin) * 112 - pout * 112}%`, r: (1 - pin) * 6 });
+    const pout = E.i3(P(b, out + i * outStep, outDur));
+    T(w, { y: `${(1 - pin) * 140 - pout * 140}%`, r: (1 - pin) * 6 });
   });
 }
 function fadeUp(el, b, start, out = Infinity, dist = 40) {
@@ -283,8 +284,8 @@ function makeTag(parent, n, text, color) {
 function renderTag(tag, b, inB, outB) {
   const a = E.oExp(P(b, inB, 1.5)), z = E.i3(P(b, outB, .75));
   T(tag.bar, { sx: a * (1 - z) });
-  T(tag.nn, { y: `${(1 - E.oExp(P(b, inB + .25, 1))) * 110 - z * 110}%` });
-  T(tag.tt, { y: `${(1 - E.oExp(P(b, inB + .5, 1))) * 110 - z * 110}%` });
+  T(tag.nn, { y: `${(1 - E.oExp(P(b, inB + .25, 1))) * 140 - z * 140}%` });
+  T(tag.tt, { y: `${(1 - E.oExp(P(b, inB + .5, 1))) * 140 - z * 140}%` });
 }
 
 /* ---------- assets ---------- */
@@ -438,9 +439,9 @@ scene(0, 16.5, el => {
   const tagline = $('div', 'abs eyebrow', el, 'Creative technology · Hong Kong');
   place(tagline, 0, 780, 1920); tagline.style.textAlign = 'center'; tagline.style.color = '#fff';
   return b => {
-    const hold = 1 / SPB; // the opening line stays 1 s longer than originally
-    reveal(line1, b, 0, 1, .9, 3.5 + hold, .1);
-    reveal(line2, b, 1.5, .5, .9, 3.6 + hold, .1);
+    const hold = .5 / SPB; // the opening line stays 0.5 s longer than originally, then leaves slowly
+    reveal(line1, b, 0, 1, .9, 3.5 + hold, .15, 1.4);
+    reveal(line2, b, 1.5, .5, .9, 3.6 + hold, .15, 1.4);
     // logo: stroke draws on, then fills on the beat, then rushes toward camera
     const out = E.iExp(P(b, 14, 1.75));
     T(logo, { s: (1.06 - .06 * E.o3(P(b, 8, 6))) * (1 + out * .8), o: (b >= 7.5 ? 1 : 0) * (1 - out), blur: out * 24 });
