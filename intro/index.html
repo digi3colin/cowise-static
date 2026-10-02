@@ -545,7 +545,7 @@ scene(14.5, 36, el => {
   const SEC = [['HTTPS / TLS', LOCK, 140, 790], ['WAF', SHIELD, 420, 870], ['OWASP Top 10', SHIELD, 150, 905], ['2FA', LOCK, 470, 975], ['DDoS protection', SHIELD, 1290, 105], ['CSP headers', SHIELD, 1335, 985], ['Pen test', SHIELD, 1640, 975], ['Encrypted data', LOCK, 360, 195]];
   // second wave, 0:13 → 0:15: these float over the browser edges (device layer sits above the scene)
   SEC.push(['SSL certificates', LOCK, 735, 285], ['Firewall', SHIELD, 1660, 250], ['Zero trust', SHIELD, 1640, 700], ['Daily backups', LOCK, 760, 735],
-    ['PDPO compliant', SHIELD, 1120, 215], ['Rate limiting', SHIELD, 1420, 860], ['Bot protection', SHIELD, 960, 865], ['Security audit', LOCK, 1560, 455]);
+    ['GDPR compliant', SHIELD, 1120, 215], ['Rate limiting', SHIELD, 1420, 860], ['Bot protection', SHIELD, 960, 865], ['Security audit', LOCK, 1560, 455]);
   const secChips = SEC.map(([t, ic], i) => { const c = $('div', 'abs chip', i < 8 ? el : deviceLayer, ic + t); // solid green / blue pills with black icon + text
     const bgc = i % 2 ? C.cyan : C.green;
     Object.assign(c.style, { color: '#0d0d10', background: bgc, borderColor: bgc, fontWeight: 500, boxShadow: '0 10px 28px rgba(0,0,0,.35)' });
@@ -718,6 +718,7 @@ scene(70.9, 92, el => {
       d.style.textShadow = `${-echo * .6}px ${echo}px 0 ${YC[i]}, ${echo * .6}px ${-echo * .5}px 0 ${YC[(i + 2) % 4]}`;
     });
     reveal(back, b, 74.5, .375, 1, 77.6, .08);
+    show(back.line, b < HYB); // the online-to-the-world scene takes this line over during the hold
     // then the chapter as before
     renderTag(tag, b, 78.25, 89);
     fadeUp(eb, b, 78.5, 89);
@@ -744,6 +745,78 @@ scene(70.9, 92, el => {
     });
   };
 });
+
+/* ---------- 4a · …and online, to the world (two held bars, real beats) ---------- */
+scene(HYB_R, HYB_R + HYB_LEN, el => {
+  // a spinning globe built from the key-visual bars: 9px columns on the 10px pitch, two colour bands
+  // each, with the cover's rolling wave wrapped around the sphere as the band split
+  // full-stage canvas so the 0:37 zoom can push the globe past the frame edges
+  const globe = $('canvas', 'abs', el); globe.width = W; globe.height = H; place(globe, 0, 0, W, H);
+  const gx = globe.getContext('2d'), GR = 300, ZB = 37 / SPB - HYB_R; // 0:37 in held beats
+  // orbit of live-stream cities around the line
+  const orbit = $('div', 'abs', el); place(orbit, 100, 245, 1720, 600); orbit.style.cssText += ';border-radius:50%;border:1.5px solid rgba(255,255,255,.14)';
+  const CITIES = ['Hong Kong', 'Paris', 'London', 'New York', 'Tokyo', 'Singapore', 'Dubai', 'Sydney', 'Shanghai', 'Seoul'];
+  const chips = CITIES.map((t, i) => {
+    const a = $('div', 'abs', el);
+    const c = $('div', 'chip', a, `<i style="display:inline-block;width:12px;height:12px;border-radius:50%;background:${C.pink};margin-right:12px;vertical-align:1px"></i>${t}`);
+    Object.assign(c.style, { position: 'absolute', transform: 'translate(-50%,-50%)', color: [C.cyan, '#fff', C.yellow][i % 3] });
+    return { a, dot: c.querySelector('i') };
+  });
+  // the type: "Back in the room." (identical hand-off from chapter 04) → "And online, to the world."
+  const back = words(el, 'Back in the room.', 'xl', 0, 470);
+  Object.assign(back.line.style, { width: W + 'px', textAlign: 'center', fontSize: '160px', transformOrigin: '50% 0', zIndex: 1, filter: 'drop-shadow(0 6px 24px rgba(0,0,0,.8))' });
+  back.ws[3].style.color = C.orange;
+  const line = (t, y, fs, fw, col) => { const g = words(el, t, '', 0, y); Object.assign(g.line.style, { width: W + 'px', textAlign: 'center', fontSize: fs + 'px', fontWeight: fw, lineHeight: 1, whiteSpace: 'nowrap', color: col, zIndex: 1, transformOrigin: '50% 50%', filter: 'drop-shadow(0 10px 30px rgba(0,0,0,.6))' }); return g; };
+  const and = line('And online,', 330, 84, 300, '#d6d6de');
+  const world = line('to the world.', 420, 230, 400, '#fff'); world.ws[2].style.color = C.cyan;
+  const eb = $('div', 'abs eyebrow', el, 'Live streams · Hybrid events · Audiences worldwide'); place(eb, 0, 712, W);
+  Object.assign(eb.style, { textAlign: 'center', color: '#fff', zIndex: 1, textShadow: '0 2px 12px #000, 0 0 4px #000' });
+  return b => {
+    const h = b - HYB_R, OUT = ZB - .25, out = E.i3(P(h, OUT, .75)), held = h >= 2 && h < OUT;
+    // "Back in the room." lifts into a header
+    const up = E.io4(P(h, 0, 1.5));
+    T(back.line, { y: -260 * up, s: 1 - .5 * up, o: 1 - .3 * up });
+    reveal(back, h, -9, 0, 1, OUT, .08);
+    reveal(and, h, .5, .25, .9, OUT + .1, .08);
+    reveal(world, h, 1, .5, .9, OUT + .2, .1);
+    // "world." lands with colour echoes, then breathes on the kick
+    const echo = h < 2 ? 0 : (1 - E.o3(P(h, 2, 1.5))) * 60 + (held ? 8 * pulse(b, 4) : 0);
+    world.ws[2].style.textShadow = echo > .5 ? `${-echo * .6}px ${echo}px 0 ${C.pink}, ${echo * .6}px ${-echo * .5}px 0 ${C.yellow}` : 'none';
+    T(world.line, { s: 1 + .03 * (held ? pulse(b, 5) : 0) });
+    // globe + orbit. 0:37: the camera zooms into the globe until its bars fill the frame,
+    // then the bars lift off the top to reveal the room
+    const zp = P(h, ZB, 1.5), z = (1 + .015 * pulse(b, 4)) * lerp(1, 4.6, E.i3(zp)), go = E.o3(P(h, ZB, 1));
+    const lim = 1 - zp; // the sphere flattens into a solid wall of bars as it fills the screen
+    gx.clearRect(0, 0, W, H);
+    for (let x = -GR + 5; x < GR; x += PITCH) {
+      const ci = Math.round(x / PITCH) + 30, d = Math.abs(x) / GR, sx = 960 + x * z;
+      if (sx < -9 * z || sx > W + 9 * z) continue;
+      // columns grow out from the equator, centre first
+      const ap = E.oExp(P(h, 1 + d * .6 + hash(ci) * .2, .7));
+      if (ap <= 0) continue;
+      const a = Math.asin(x / GR), lon = a + h * .45, k = ((Math.floor(lon / (2 * Math.PI) * 64) % 64) + 64) % 64;
+      const half = Math.sqrt(GR * GR - x * x) * ap * z, y0 = 545 - half - E.i3(P(h, 6.8 + (sx / W) * .25 + hash(ci) * .2, .6)) * (H + 2 * half);
+      const split = clamp(.5 + .22 * Math.sin(lon * 2) + .12 * Math.sin(lon * 5 + 1), .12, .88) * (1 - .1 * pulse(b, 5) * hash(k + 3));
+      const shade = (.3 + .7 * Math.cos(a)) * lim + (1 - lim); // limb darkening sells the sphere
+      gx.globalAlpha = lerp(.42, 1, E.o2(zp)) * shade;
+      gx.fillStyle = colTop[k]; gx.fillRect(sx - 4.5 * z, y0, 9 * z, 2 * half * split);
+      gx.fillStyle = colBot[k]; gx.fillRect(sx - 4.5 * z, y0 + 2 * half * split, 9 * z, 2 * half * (1 - split));
+    }
+    gx.globalAlpha = 1;
+    T(orbit, { sx: E.io4(P(h, 1.5, 1.5)) * (1 + 1.5 * E.i3(zp)), sy: 1 + 1.5 * E.i3(zp), o: 1 - go });
+    chips.forEach(({ a, dot }, i) => {
+      const at = 2 + i * .2, p = E.oBack(P(h, at, .7), 2.2);
+      const ang = i / chips.length * Math.PI * 2 + h * .32 + .6, dz = Math.sin(ang), depth = (dz + 1) / 2;
+      const fly = 1 + 1.6 * E.i3(zp); // the cities rush outward with the zoom
+      T(a, { x: 960 + Math.cos(ang) * 860 * fly, y: 545 + dz * 300 * fly, s: Math.max(0, p) * (.7 + .3 * depth) * fly, o: P(h, at, .2) * (.35 + .65 * depth) * (1 - go) });
+      a.style.zIndex = dz > 0 ? 2 : 0;
+      dot.style.opacity = frac(b + i * .25) < .5 ? 1 : .3;
+    });
+    const tg = E.o4(P(h, 3.5, 1.5));
+    eb.style.letterSpacing = (.32 + (1 - tg) * .5) + 'em';
+    T(eb, { o: tg * (1 - out), y: -out * 30 });
+  };
+}, true);
 
 let heroVideoReady = Promise.resolve();
 /* ---------- 5 · Generative AI since 2023: prompt → variations → upscale → gallery ---------- */
