@@ -199,12 +199,15 @@ const BPM = 128, SPB = 60 / BPM;             // 0.46875 s per beat
 // authored in story beats and mapped through toStory(); the app chapter + device use real beats.
 // A second bar is inserted before story beat 112 (end of the Gen AI chapter): real beats 108–112
 // hold the story clock at 112 while the Gen AI chapter keeps running on its own clock (genClock).
-// Net length: 148 beats (37 bars = 69.4 s).
-const CUT = 44, CUT_LEN = 4, INS = 112, INS_LEN = 4;
-const toStory = b => b < CUT ? b : b < INS - CUT_LEN ? b + CUT_LEN : b < INS ? INS : b;
-const toReal = sb => sb < CUT ? sb : sb < CUT + CUT_LEN ? CUT : sb < INS ? sb - CUT_LEN : sb;
-const genClock = b => b < CUT ? b : b + CUT_LEN; // Gen AI chapter: continuous through the inserted bar
-const END = 148;                             // real beats
+// Two more bars are inserted at story beat 77.5 (0:34, right after "Back in the room."): the story
+// clock holds there while the "…and online, to the world" typography runs on real beats.
+// Net length: 156 beats (39 bars = 73.1 s).
+const CUT = 44, CUT_LEN = 4, HYB = 77.5, HYB_LEN = 8, INS = 112, INS_LEN = 4;
+const HYB_R = HYB - CUT_LEN, INS_R = INS - CUT_LEN + HYB_LEN; // real beats where the holds start
+const toStory = b => b < CUT ? b : b < HYB_R ? b + CUT_LEN : b < HYB_R + HYB_LEN ? HYB : b < INS_R ? b + CUT_LEN - HYB_LEN : b < INS_R + INS_LEN ? INS : b + CUT_LEN - HYB_LEN - INS_LEN;
+const toReal = sb => sb < CUT ? sb : sb < CUT + CUT_LEN ? CUT : sb < HYB ? sb - CUT_LEN : sb < INS ? sb - CUT_LEN + HYB_LEN : sb - CUT_LEN + HYB_LEN + INS_LEN;
+const genClock = b => b < INS_R ? toStory(b) : b + CUT_LEN - HYB_LEN; // Gen AI chapter: continuous through the inserted bar
+const END = 156;                             // real beats
 const DURATION = END * SPB;
 const W = 1920, H = 1080;
 const C = {pink:'#ff0062',cyan:'#7ce7f9',orange:'#fda602',yellow:'#ffde0b',navy:'#052675',green:'#7cf9bf',purple:'#a97cf9',gold:'#ffc93c',ink:'#0d0d10'};
@@ -989,7 +992,7 @@ function renderBG(b, rb = b) { // b = story beat, rb = real beat (for motion tha
   } else if (b >= 136 && b < 150) { // finale: stripes rise into the cover, logo lands on top
     // the bars rise as the gently rolling wave (no beat bounce), then from 1:03 morph over 3 s
     // into the exact shape of the homepage cover
-    const mc = E.io3(P(b, toStory(63 / SPB), 3 / SPB)), split = E.io3(P(b, 137.5, 2));
+    const mc = E.io3(P(b, 63 / SPB, 3 / SPB)), split = E.io3(P(b, 137.5, 2));
     stripeField(bg, b, {
       appear: i => E.oExp(P(b, 136.5 + Math.abs(i - 95.5) / 96 * 1.5 + hash(i) * .3, .8)),
       lower: i => lerp(profile(i, b) * split, COVER[i][3] / H, mc),
@@ -1096,7 +1099,8 @@ const SCORE = (() => {
   const ev = [], add = (b, fn) => {
     if (b >= CUT && b < CUT + CUT_LEN) return;                                   // cut bar
     ev.push({ t: toReal(b) * SPB, fn });
-    if (b >= INS - INS_LEN && b < INS) ev.push({ t: (b - CUT_LEN + INS_LEN) * SPB, fn }); // inserted bar repeats the groove
+    if (b >= HYB - 4 && b < HYB) for (let k = 4; k <= HYB_LEN; k += 4) ev.push({ t: (toReal(b) + k) * SPB, fn }); // held bars repeat the groove
+    if (b >= INS - INS_LEN && b < INS) ev.push({ t: (toReal(b) + INS_LEN) * SPB, fn }); // inserted bar repeats the groove
   };
   const env = (g, t, a, d, peak) => { g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(peak, t + a); g.gain.exponentialRampToValueAtTime(.0001, t + a + d); };
   const pan = (c, node, p) => { if (!p || !c.createStereoPanner) return node; const sp = c.createStereoPanner(); sp.pan.value = p; node.connect(sp); return sp; };
@@ -1280,7 +1284,7 @@ const ready = Promise.all([imgReady, logoReady, document.fonts.ready, heroVideoR
 const nextFrame = () => new Promise(r => { requestAnimationFrame(() => r()); setTimeout(r, 60); });
 const warm = ready.then(async () => { // paint every section once, invisibly, so the first play is smooth
   stage.style.opacity = .01;
-  for (const b of [2, 12, 20, 30, 40, 50, 53, 62, 75, 86, 91, 93, 102, 110, 120, 126, 134, 138, 142, 147].map(toReal)) { render(b); await nextFrame(); }
+  for (const b of [2, 12, 20, 30, 40, 50, 53, 62, 75, 86, 91, 93, 102, 110, 120, 126, 134, 138, 142, 147].map(toReal).concat(HYB_R + 4)) { render(b); await nextFrame(); }
   stage.style.opacity = '';
   render(pos / SPB); requestAnimationFrame(frame);
   LOAD.warm = 1; document.querySelector('#lbar i').style.width = '100%';
