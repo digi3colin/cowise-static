@@ -435,20 +435,19 @@ scene(0, 16.5, el => {
   const tagline = $('div', 'abs eyebrow', el, 'Creative technology · Hong Kong');
   place(tagline, 0, 780, 1920); tagline.style.textAlign = 'center'; tagline.style.color = '#fff';
   return b => {
-    const hold = 2 / SPB; // the opening line stays 2 s longer than originally
+    const hold = 1 / SPB; // the opening line stays 1 s longer than originally
     reveal(line1, b, 0, 1, .9, 3.5 + hold, .1);
     reveal(line2, b, 1.5, .5, .9, 3.6 + hold, .1);
     // logo: stroke draws on, then fills on the beat, then rushes toward camera
     const out = E.iExp(P(b, 14, 1.75));
-    // (starts after the opening line has gone: draw from beat 9, fill on beat 11)
-    T(logo, { s: (1.06 - .06 * E.o3(P(b, 9, 5))) * (1 + out * .8), o: (b >= 8.9 ? 1 : 0) * (1 - out), blur: out * 24 });
+    T(logo, { s: (1.06 - .06 * E.o3(P(b, 8, 6))) * (1 + out * .8), o: (b >= 7.5 ? 1 : 0) * (1 - out), blur: out * 24 });
     logoPaths.forEach((p, i) => {
-      const d = E.io3(P(b, 9 + i * .1, 1.4));
+      const d = E.io3(P(b, 8 + i * .12, 1.6));
       p.style.strokeDashoffset = p._len * (1 - d);
-      const f = E.o3(P(b, 11 + p._ord * .07, .5));
+      const f = E.o3(P(b, 10 + p._ord * .07, .5));
       p.style.fillOpacity = f; p.style.strokeOpacity = 1 - f * .9;
     });
-    const tg = E.o4(P(b, 11.75, 1.5));
+    const tg = E.o4(P(b, 11, 1.5));
     tagline.style.letterSpacing = (.32 + (1 - tg) * .5) + 'em';
     T(tagline, { o: tg * (1 - E.i3(P(b, 13.5, 1))), y: -E.i3(P(b, 13.5, 1)) * 30 });
   };
