@@ -533,7 +533,7 @@ scene(14.5, 36, el => {
   const tag = makeTag(el, '01', 'Web Development', C.green);
   // the headline arrives during the 0:07 bar wipe, so it lives in the overlay layer above the bars
   const ovWeb = $('div', 'abs', document.getElementById('over')); ovWeb.id = 'ovWeb'; place(ovWeb, 0, 0, W, H);
-  ovWeb.style.filter = 'drop-shadow(0 10px 30px rgba(0,0,0,.55))';
+  ovWeb.style.filter = 'drop-shadow(0 0 3px #000) drop-shadow(0 0 6px #000) drop-shadow(0 0 10px #000) drop-shadow(0 8px 22px #000)'; // same shadow as the opening line
   const h1 = words(ovWeb, 'We started', 'xl', 110, 330);
   const h2 = words(ovWeb, 'with the web.', 'xl', 110, 466);
   h2.ws.slice(2).forEach(w => w.style.color = C.green);
@@ -666,7 +666,21 @@ scene(70.9, 92, el => {
   const cv = $('canvas', '', el); cv.width = W; cv.height = H; const ctx = cv.getContext('2d');
   const shade = $('div', 'abs', el); place(shade, 0, 0, W, H); shade.style.background = 'linear-gradient(90deg,rgba(10,10,13,.94) 0%,rgba(10,10,13,.78) 42%,rgba(10,10,13,.25) 100%)';
   const tag = makeTag(el, '04', 'Event & Guest Management', C.orange);
-  const eb = $('div', 'abs eyebrow', el, '<b style="font-size:44px;font-weight:300;letter-spacing:.04em;color:#fff;margin-right:18px;vertical-align:-6px">2023</b>Back in the room'); place(eb, 110, 222); eb.style.color = C.orange;
+  // GTEF 2025 (0:41, right-hand side, after the check-in panel): one forum across two venues,
+  // stacked pins joined by a vertical link that carries a signal both ways
+  const vshade = $('div', 'abs', el); place(vshade, 0, 0, W, H); vshade.style.background = 'radial-gradient(ellipse 34% 52% at 74% 50%,rgba(10,10,13,.82),rgba(10,10,13,0))';
+  const gt = $('div', 'abs eyebrow', el, 'GTEF 2025<span style="opacity:.5;margin:0 18px">·</span>Two venues, one forum'); place(gt, 1150, 290); Object.assign(gt.style, { color: C.orange, fontSize: '27px', letterSpacing: '.2em', whiteSpace: 'nowrap', textShadow: '0 2px 14px rgba(0,0,0,.85)' });
+  const route = $('div', 'abs', el); place(route, 1150, 346);
+  route.style.cssText += ';display:flex;flex-direction:column;align-items:flex-start;gap:26px;font-size:72px;font-weight:400;line-height:1;white-space:nowrap;text-shadow:0 2px 18px rgba(0,0,0,.85)';
+  const PIN = `<i style="display:inline-block;width:22px;height:22px;border-radius:50%;background:${C.orange};margin-right:24px;vertical-align:12px;box-shadow:0 0 0 9px rgba(253,166,2,.22)"></i>`;
+  const pinA = $('span', '', route, PIN + 'Heilongjiang');
+  const LINK_H = 190;
+  const link = $('div', '', route); link.style.cssText = `position:relative;width:3px;height:${LINK_H}px;margin-left:10px;background:rgba(255,255,255,.25)`;
+  const linkFill = $('div', '', link); linkFill.style.cssText = `position:absolute;inset:0;background:${C.orange};transform-origin:50% 0`;
+  // two-way signal: one pulse each way, crossing in the middle
+  const linkDots = [C.orange, C.cyan].map(c => { const d = $('div', '', link); d.style.cssText = `position:absolute;left:-6px;top:0;width:15px;height:15px;border-radius:50%;background:#fff;box-shadow:0 0 16px 5px ${c}`; return d; });
+  const pinB = $('span', '', route, PIN + 'Macau');
+  [pinA, pinB].forEach(p => { p.style.display = 'inline-block'; p.style.transformOrigin = '0 50%'; });
   const lines = ['RSVP.', 'Check-in.', 'CRM.'].map((t, i) => {
     const g = words(el, t, 'xl', 110, 300 + i * 150);
     const u = $('div', 'abs', el); place(u, 116, 300 + i * 150 + 136, 90, 6); u.style.background = [C.orange, C.cyan, C.pink][i]; u.style.transformOrigin = '0 50%';
@@ -693,7 +707,8 @@ scene(70.9, 92, el => {
   const status = $('div', 'status', panel);
   const rowsEl = $('div', 'rows', panel);
   const GUESTS = [['Guest 0412', 'VIP'], ['Guest 0388', 'Media'], ['Guest 0157', 'Speaker'], ['Guest 0921', 'VIP'], ['Guest 0640', 'Partner'], ['Guest 0233', 'Guest']];
-  const SCANS = [82.5, 83.75, 85, 86.25, 87.25, 88.25];
+  // check-in runs 1 s earlier and quicker, wrapping up by 0:41 to hand the right side to the two venues
+  const SCANS = [79.5, 80.05, 80.6, 81.15, 81.7, 82.25];
   const rows = GUESTS.map(([n, t], i) => {
     const r = $('div', 'row', rowsEl, `<span class="av"></span><span>${n}</span><span class="pill">${t}</span><span class="ok">✓ CHECKED IN</span>`);
     r.querySelector('.av').style.background = [C.orange, C.cyan, C.pink, C.yellow, C.green, C.purple][i];
@@ -728,15 +743,25 @@ scene(70.9, 92, el => {
     // lifting; lb continues the story clock back into the hold (= b once the story resumes)
     const lb = realBeat + CUT_LEN - HYB_LEN, early = 1 / SPB;
     renderTag(tag, lb, 78.25 - early, 89);
-    fadeUp(eb, lb, 78.5 - early, 89);
+    // two venues take over the right-hand side once the check-in panel has gone (0:41)
+    const a0 = 41 / SPB + CUT_LEN - HYB_LEN, lo = E.i3(P(lb, 89, .6));
+    T(vshade, { o: E.o3(P(lb, a0 - .25, 1)) * (1 - lo) });
+    fadeUp(gt, lb, a0 - .25, 89, 24);
+    T(pinA, { s: Math.max(0, E.oBack(P(lb, a0, .6), 2)), o: P(lb, a0, .2) * (1 - lo) });
+    T(link, { o: P(lb, a0 + .25, .3) * (1 - lo) });
+    T(linkFill, { sy: E.io3(P(lb, a0 + .25, 1)) });
+    T(pinB, { s: Math.max(0, E.oBack(P(lb, a0 + 1, .6), 2)), o: P(lb, a0 + 1, .2) * (1 - lo) });
+    const tr = frac((lb - a0) / 2); // every two beats once linked: Heilongjiang → Macau and Macau → Heilongjiang
+    linkDots.forEach((d, k) => T(d, { y: (k ? 1 - tr : tr) * (LINK_H - 15), o: lb >= a0 + 1.25 ? Math.sin(tr * Math.PI) * (1 - lo) : 0 }));
     lines.forEach(({ g, u }, i) => { reveal(g, lb, 79 - early + i * .75, .5, 1, 89 + i * .1); T(u, { sx: E.oExp(P(lb, 79.5 - early + i * .75, 1)) * (1 - E.i3(P(lb, 89, .6))) }); });
     fadeUp(sub, lb, 81.25 - early, 89);
-    const pin = E.oExp(P(b, 80.5, 1.5)), pout = E.i3(P(b, 89, 1));
+    const pin = E.oExp(P(b, 79, .75)), pout = E.i3(P(b, 82.75, .7)); // lands just after "CRM." is in
+    show(panel, b < 83.5);
     T(panel, { y: (1 - pin) * 120 + pout * 80, o: pin * (1 - pout), ry: (1 - pin) * -12 });
     // scanning
     let done = 0; SCANS.forEach(s => { if (b >= s) done++; });
-    const lastScan = done ? SCANS[done - 1] : -9, ok = b - lastScan < 1.1;
-    const sweep = .5 - .5 * Math.cos(b * Math.PI);
+    const lastScan = done ? SCANS[done - 1] : -9, ok = b - lastScan < .4;
+    const sweep = .5 - .5 * Math.cos(b * 2 * Math.PI);
     T(scan, { y: 122 + sweep * 252, o: ok ? 0 : 1 });
     status.style.background = ok ? 'rgba(124,249,191,.16)' : 'rgba(255,255,255,.06)';
     status.style.color = ok ? C.green : '#bbb';
@@ -745,8 +770,8 @@ scene(70.9, 92, el => {
     rows.forEach((r, i) => {
       if (i >= done) { show(r, false); return; } show(r, true);
       const pos = done - 1 - i; // newest on top
-      const ap = E.oExp(P(b, SCANS[i], .8));
-      const prevPos = Math.max(0, pos - 1), mv = E.oExp(P(b, SCANS[done - 1], .8));
+      const ap = E.oExp(P(b, SCANS[i], .5));
+      const prevPos = Math.max(0, pos - 1), mv = E.oExp(P(b, SCANS[done - 1], .5));
       const y = lerp(prevPos, pos, i === done - 1 ? 1 : mv) * 66;
       T(r, { y: y - (1 - ap) * 30, o: ap * (pos > 3 ? 1 - (pos - 3) : 1), s: .96 + .04 * ap });
     });
@@ -762,24 +787,29 @@ scene(HYB_R, HYB_R + HYB_LEN, el => {
   const gx = globe.getContext('2d'), GR = 300, ZB = HYB_ZOOM;
   // orbit of live-stream cities around the line
   const orbit = $('div', 'abs', el); place(orbit, 100, 245, 1720, 600); orbit.style.cssText += ';border-radius:50%;border:1.5px solid rgba(255,255,255,.14)';
-  const CITIES = ['Hong Kong', 'Paris', 'London', 'New York', 'Tokyo', 'Singapore', 'Dubai', 'Sydney', 'Shanghai', 'Seoul'];
-  const chips = CITIES.map((t, i) => {
+  // audience countries from the GTE Forum 2025 global coverage,
+  // alternating regions around the ring; dot colour = region
+  const REG = { eu: C.cyan, me: C.orange, ap: C.pink, am: C.yellow, af: C.green };
+  // pop-in order: home first (Hong Kong, Macau, Harbin), then the wider audience
+  const COUNTRIES = [['Hong Kong', 'ap'], ['Macau', 'ap'], ['Harbin', 'ap'], ['Singapore', 'ap'], ['Italy', 'eu'], ['Thailand', 'ap'], ['Japan', 'ap'], ['Korea', 'ap'],
+    ['The United States', 'am'], ['Saudi Arabia', 'me'], ['France', 'eu'], ['South Africa', 'af'], ['United Arab Emirates', 'me'], ['Great Britain', 'eu'], ['Australia', 'ap'], ['Canada', 'am']];
+  const chips = COUNTRIES.map(([t, r], i) => {
     const a = $('div', 'abs', el);
-    const c = $('div', 'chip', a, `<i style="display:inline-block;width:12px;height:12px;border-radius:50%;background:${C.pink};margin-right:12px;vertical-align:1px"></i>${t}`);
-    Object.assign(c.style, { position: 'absolute', transform: 'translate(-50%,-50%)', color: [C.cyan, '#fff', C.yellow][i % 3] });
+    const c = $('div', 'chip', a, `<i style="display:inline-block;width:12px;height:12px;border-radius:50%;background:${REG[r]};margin-right:12px;vertical-align:1px"></i>${t}`);
+    Object.assign(c.style, { position: 'absolute', transform: 'translate(-50%,-50%)', color: '#fff', borderColor: REG[r] });
     return { a, dot: c.querySelector('i') };
   });
   // the type: "Back in the room." (identical hand-off from chapter 04) → "And online, to the world."
+  // same layered shadow as the opening line (.outlined) so it holds up over the globe
+  const OUTLINE = 'drop-shadow(0 0 3px #000) drop-shadow(0 0 6px #000) drop-shadow(0 0 10px #000) drop-shadow(0 8px 22px #000)';
   const back = words(el, 'Back in the room.', 'xl', 0, 470);
-  Object.assign(back.line.style, { width: W + 'px', textAlign: 'center', fontSize: '160px', transformOrigin: '50% 0', zIndex: 1, filter: 'drop-shadow(0 6px 24px rgba(0,0,0,.8))' });
+  Object.assign(back.line.style, { width: W + 'px', textAlign: 'center', fontSize: '160px', transformOrigin: '50% 0', zIndex: 1, filter: OUTLINE });
   back.ws[3].style.color = C.orange;
-  const line = (t, y, fs, fw, col) => { const g = words(el, t, '', 0, y); Object.assign(g.line.style, { width: W + 'px', textAlign: 'center', fontSize: fs + 'px', fontWeight: fw, lineHeight: 1, whiteSpace: 'nowrap', color: col, zIndex: 1, transformOrigin: '50% 50%', filter: 'drop-shadow(0 10px 30px rgba(0,0,0,.6))' }); return g; };
+  const line = (t, y, fs, fw, col) => { const g = words(el, t, '', 0, y); Object.assign(g.line.style, { width: W + 'px', textAlign: 'center', fontSize: fs + 'px', fontWeight: fw, lineHeight: 1, whiteSpace: 'nowrap', color: col, zIndex: 1, transformOrigin: '50% 50%', filter: OUTLINE }); return g; };
   const and = line('And online,', 330, 84, 300, '#d6d6de');
   const world = line('to the world.', 420, 230, 400, '#fff'); world.ws[2].style.color = C.cyan;
-  const eb = $('div', 'abs eyebrow', el, 'Live streams · Hybrid events · Audiences worldwide'); place(eb, 0, 712, W);
-  Object.assign(eb.style, { textAlign: 'center', color: '#fff', zIndex: 1, textShadow: '0 2px 12px #000, 0 0 4px #000' });
   return b => {
-    const h = b - HYB_R, OUT = ZB - .25, out = E.i3(P(h, OUT, .75)), held = h >= 2 && h < OUT;
+    const h = b - HYB_R, OUT = ZB - .25 + .75 / SPB, held = h >= 2 && h < OUT;
     // "Back in the room." lifts into a header
     const up = E.io4(P(h, 0, 1.5));
     T(back.line, { y: -260 * up, s: 1 - .5 * up, o: 1 - .3 * up });
@@ -792,7 +822,11 @@ scene(HYB_R, HYB_R + HYB_LEN, el => {
     T(world.line, { s: 1 + .03 * (held ? pulse(b, 5) : 0) });
     // globe + orbit. 0:37: the camera zooms into the globe until its bars fill the frame,
     // then the bars lift off the top to reveal the room
-    const zp = P(h, ZB, 1.5), z = (1 + .015 * pulse(b, 4)) * lerp(1, 4.6, E.i3(zp)), go = E.o3(P(h, ZB, 1));
+    // one continuous zoom from the moment the globe appears to the 0:37 rush: eased in log space
+    // (scale = 4.6^t³) so the push reads as a steady camera move that keeps accelerating, with no
+    // beat bounce; zp (0:37 onward) still drives the flattening, fade-up and the cities flying out
+    const zp = P(h, ZB, 1.5), go = E.o3(P(h, ZB, 1));
+    const z = Math.pow(4.6, P(h, 1, ZB + .5) ** 3);
     const lim = 1 - zp; // the sphere flattens into a solid wall of bars as it fills the screen
     gx.clearRect(0, 0, W, H);
     for (let x = -GR + 5; x < GR; x += PITCH) {
@@ -803,7 +837,7 @@ scene(HYB_R, HYB_R + HYB_LEN, el => {
       if (ap <= 0) continue;
       const a = Math.asin(x / GR), lon = a + h * .45, k = ((Math.floor(lon / (2 * Math.PI) * 64) % 64) + 64) % 64;
       const half = Math.sqrt(GR * GR - x * x) * ap * z, y0 = 545 - half - E.i3(P(h, 6.8 + (sx / W) * .25 + hash(ci) * .2, .6)) * (H + 2 * half);
-      const split = clamp(.5 + .22 * Math.sin(lon * 2) + .12 * Math.sin(lon * 5 + 1), .12, .88) * (1 - .1 * pulse(b, 5) * hash(k + 3));
+      const split = clamp(.5 + .22 * Math.sin(lon * 2) + .12 * Math.sin(lon * 5 + 1), .12, .88);
       const shade = (.3 + .7 * Math.cos(a)) * lim + (1 - lim); // limb darkening sells the sphere
       gx.globalAlpha = lerp(.42, 1, E.o2(zp)) * shade;
       gx.fillStyle = colTop[k]; gx.fillRect(sx - 4.5 * z, y0, 9 * z, 2 * half * split);
@@ -812,16 +846,13 @@ scene(HYB_R, HYB_R + HYB_LEN, el => {
     gx.globalAlpha = 1;
     T(orbit, { sx: E.io4(P(h, 1.5, 1.5)) * (1 + 1.5 * E.i3(zp)), sy: 1 + 1.5 * E.i3(zp), o: 1 - go });
     chips.forEach(({ a, dot }, i) => {
-      const at = 2 + i * .2, p = E.oBack(P(h, at, .7), 2.2);
-      const ang = i / chips.length * Math.PI * 2 + h * .32 + .6, dz = Math.sin(ang), depth = (dz + 1) / 2;
+      const at = 2 + i * .15, p = E.oBack(P(h, at, .7), 2.2);
+      const ang = i / chips.length * Math.PI * 2 + h * .16 + .92, dz = Math.sin(ang), depth = (dz + 1) / 2;
       const fly = 1 + 1.6 * E.i3(zp); // the cities rush outward with the zoom
       T(a, { x: 960 + Math.cos(ang) * 860 * fly, y: 545 + dz * 300 * fly, s: Math.max(0, p) * (.7 + .3 * depth) * fly, o: P(h, at, .2) * (.35 + .65 * depth) * (1 - go) });
       a.style.zIndex = dz > 0 ? 2 : 0;
       dot.style.opacity = frac(b + i * .25) < .5 ? 1 : .3;
     });
-    const tg = E.o4(P(h, 3.5, 1.5));
-    eb.style.letterSpacing = (.32 + (1 - tg) * .5) + 'em';
-    T(eb, { o: tg * (1 - out), y: -out * 30 });
   };
 }, true);
 
@@ -1039,6 +1070,53 @@ scene(130, 150, el => {
 });
 let logoB = [];
 
+/* "2023" drawn in key-visual bars: the glyphs are rasterised once, then each 10px column keeps only
+   the vertical runs that fall inside the letters. Each run is two-tone, split by the cover's wave. */
+let yearRuns = null;
+function buildYearRuns() {
+  const c = document.createElement('canvas'); c.width = W; c.height = H;
+  const g = c.getContext('2d'); g.fillStyle = '#fff'; g.textAlign = 'center'; g.textBaseline = 'middle';
+  g.font = '500 820px "Barlow Semi Condensed"'; g.fillText('2023', W / 2, H / 2 + 20);
+  const d = g.getImageData(0, 0, W, H).data;
+  yearRuns = [];
+  for (let i = 0; i < COLS; i++) {
+    const x = i * PITCH + 4, runs = []; let y0 = -1;
+    for (let y = 0; y <= H; y++) {
+      const on = y < H && d[(y * W + x) * 4 + 3] > 127;
+      if (on && y0 < 0) y0 = y; else if (!on && y0 >= 0) { runs.push([y0, y]); y0 = -1; }
+    }
+    // the space around the letters gets bars too; the letters read only by a colour change within each column
+    const gaps = []; let y = 0;
+    for (const [a, z] of runs) { if (a > y) gaps.push([y, a]); y = z; }
+    if (y < H) gaps.push([y, H]);
+    yearRuns.push({ runs, gaps });
+  }
+}
+function yearBars(ctx, b) {
+  if (!yearRuns) buildYearRuns();
+  // bars shoot up into the letters on the drop, settle back so the type on top reads,
+  // breathe on the kick, then lift off the top before the Gen AI chapter opens
+  const alpha = lerp(.75, .42, E.io3(P(b, 92.5, 1))) * lerp(1, .7, E.io3(P(b, 93.5, .75))) + .06 * pulse(b, 4) * (b < 96 ? 1 : 0);
+  for (let i = 0; i < COLS; i++) {
+    const { runs, gaps } = yearRuns[i];
+    const a = E.oExp(P(b, 92 + (i / COLS) * .6 + hash(i) * .2, .7));
+    const lift = E.iExp(P(b, 96.1 + (i / COLS) * .4 + hash(i + 5) * .3, .7)) * H * 1.1;
+    if (a <= 0 || lift >= H * 1.1) continue;
+    // every column is one key-visual bar in two of the brand colours: colTop around the letters,
+    // colBot (always a different colour) inside them. Motion: the colours stream sideways through the
+    // fixed letter shapes, with a soft light ripple travelling across
+    const k = ((i - Math.floor((b - 92) * 6)) % COLS + COLS) % COLS;
+    ctx.globalAlpha = alpha * (.8 + .2 * Math.sin(i * .12 - b * 3));
+    const fill = (segs, col) => {
+      ctx.fillStyle = col;
+      for (const [y0, y1] of segs) ctx.fillRect(i * PITCH, y1 - (y1 - y0) * a - lift, 9, (y1 - y0) * a);
+    };
+    fill(gaps, colTop[k]);
+    fill(runs, colBot[k]);
+  }
+  ctx.globalAlpha = 1;
+}
+
 /* ---------- background canvas: stripe artwork per section ---------- */
 const T2 = 2 / SPB, T2_5 = 2.5 / SPB, T4 = 4 / SPB, T7 = 7 / SPB; // intro landmarks in beats
 // beat envelope with a short attack so the dance swells into each kick instead of jumping
@@ -1069,8 +1147,8 @@ function renderBG(b, rb = b) { // b = story beat, rb = real beat (for motion tha
     bg.globalAlpha = (.16 + .06 * grow) * a;
     for (let i = 0; i < COLS; i++) { const h = lerp(40 + profile(i, t * .5) * 160, H + 40 + profile(i, t * .5) * 60, grow) * (1 - .25 * pulse(t, 5) * hash(i) * (1 - grow)); bg.fillStyle = colBot[i]; bg.fillRect(i * PITCH, H - h, 9, h); }
     bg.globalAlpha = 1;
-  } else if (b >= 92 && b < 94.5) { // stripe burst on the 2023 drop
-    stripeField(bg, b, { alpha: .9 * (1 - E.o3(P(b, 92, 2.5))), bump: pulse(b, 4) });
+  } else if (b >= 92 && b < 97.5) { // 0:45: the key-visual bars draw a giant "2023" behind "In the same year,"
+    yearBars(bg, b);
   } else if (b >= 136 && b < 150) { // finale: stripes rise into the cover, logo lands on top
     // the bars rise as the gently rolling wave (no beat bounce), then from 1:03 morph over 3 s
     // into the exact shape of the homepage cover
