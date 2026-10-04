@@ -17,6 +17,11 @@ This file tracks recent work found under `/Volumes/projects`, `/Volumes/previews
 | MO·MENTS 2025 (Ant International and GFTN) | 2025 | `/projects/moments-2025/` | Event photo and case-study copy from the 2026-09 website update brief |
 | Palace Gourmet (archive name: NY8) | 2021-2022 | `/projects/ny8-palace-gourmet/` | Full desktop designs, mobile designs, menus, locations and policy material |
 | L'Oréal Hong Kong - Macau Beauty Advisor Kickoff | 2021 | `/projects/loreal-macau-ba-kickoff/` | Event proposal (23 Feb 2021), mobile web-app screens and live-broadcast screens from `/Volumes/projects/occasions/20210210 Loreal` |
+| L'Oréal Hong Kong - Macau Beauty Advisor Kickoff 2022 | 2022 | `/projects/loreal-macau-ba-kickoff-2022/` | Live broadcast mini-site artwork (outlined AI) and Tencent LVB stream plan from `/Volumes/projects/occasions/20220315-loreal` |
+| Women Power Forum 2021 | 2021 | `/projects/women-power-forum-2021/` | Live-stream player and registration designs, trilingual copy sheet, eDM previews and stills from the recorded broadcast in `/Volumes/projects/occasions/20211006-WPF` |
+| MGM Awakening Special Exhibition opening | 2021 | `/projects/mgm-awakening/` | Desktop/mobile live broadcast mini-site designs from `/Volumes/projects/occasions/20210706-MGM-Awakening` |
+| MGM 《醒獅美高梅》 press conference | 2021 | `/projects/mgm-lion-press-conference/` | Mini-site logistics deck, host-control UX wireframes, mini-site designs and reminder eDMs from `/Volumes/projects/occasions/20210318 MGMPC` |
+| Le French May - Go for the Goal | 2024 | `/projects/french-may-go-for-the-goal/` | Shopify theme/product exports and key visuals from `/Volumes/projects/occasions/20240500-LFM` and `/Volumes/projects/occasions/LFM` (live site no longer resolves) |
 
 Dolce & Gabbana is deliberately excluded. Its archive contains only a client-supplied concept wireframe and no Cowise design or development work.
 
@@ -38,7 +43,7 @@ These archives contain runnable application code, but screenshots should be capt
 | --- | --- | --- | --- | --- |
 | 1 | Park Nova | `/Volumes/previews/www/www.parknova.com` and `/Volumes/previews/www/admin.parknova.com` | KohanaJS/Fastify, Liquid, SQLite, public site and admin | Verified desktop/mobile screenshots, final project year, approved role summary |
 | 2 | Les Maisons Nassim | `/Volumes/previews/www/www.lesmaisonsnassim.com.sg` and `/Volumes/previews/www/admin.lesmaisonsnassim.com.sg` | KohanaJS/Fastify, Liquid, SQLite, public site and admin | Verified screenshots, launch date, approved description of CMS/registration scope |
-| 3 | MGMPC | `/Volumes/previews/www/mgmpc.occasionspr.com` and `/Volumes/previews/www/mgmpc-admin.occasionspr.com` | KohanaJS/Fastify, Liquid, SQLite, public site and admin | Full project name, screenshots, project purpose and Cowise role |
+| 3 | MGMPC | `/Volumes/previews/www/mgmpc.occasionspr.com` and `/Volumes/previews/www/mgmpc-admin.occasionspr.com` | KohanaJS/Fastify, Liquid, SQLite, public site and admin | Published as the MGM 《醒獅美高梅》 press conference; live screenshots are optional additions |
 | 4 | Nova Mall campaigns | `/Volumes/previews/www/novamall.occasionspr.info` and `/Volumes/previews/www/novamall-admin.occasionspr.info` | KohanaJS/Fastify, Liquid, SQLite | Separate Summer/Christmas/CNY campaign screenshots and dates |
 | 5 | Women Power Forum Hong Kong 2021 | `/Volumes/previews/www/womenpowerforumhk/2021.womenpowerforumhk.com` | KohanaJS 6/Fastify, multilingual Liquid site, SQLite | Public and admin screenshots; confirmation that event imagery may be published |
 | 6 | Stecco Natura redemption | `/Volumes/previews/www/stecco-natura/stecco-natura.cowise.co` | KohanaJS/Fastify, CMS, queue, email and Twilio integrations | Public flow screenshots, redemption results and approved campaign summary |
@@ -51,11 +56,9 @@ These archives contain runnable application code, but screenshots should be capt
 | Project | Available material | Missing before publishing |
 | --- | --- | --- |
 | Occasions PR company website | Artwork, content, mobile layouts and update folders under `/Volumes/projects/occasions/20210200 company website` | Final launch screenshots, exact scope and confirmation that the latest redesign belongs to Cowise |
-| L'Oreal 2022 | Mini-site exports, screens and client material | Campaign name, final live output and Cowise role (the 2021 Macau BA Kickoff is published) |
-| MGM Awakening 2021 | Client material | Final output, project format, scope and publishable screenshots/video |
 | Park Peninsula 2022 | Only a sparsely named archive folder | Almost all portfolio material: brief, visuals, final output and role |
 | For Good 2023 | Email sets and supplied material | Client identity, campaign objective, final output and role |
-| Le French May 2023-2024 | Event video, LED-screen and EDM assets | Final selection, project description and approval for public use |
+| Le French May 2023 gala | LED-screen holding graphics, motion files and EDM assets | Final selection, project description and approval for public use (2024 ticketing is published) |
 | MGM 2024 | Dated project folder | Project identity, output, final visuals and role |
 | FAB Instagram AR Filter 2021 | Spark AR projects, frames, 3D bottle and water effects | Full client/campaign name and confirmation of Cowise's role |
 
