@@ -16,6 +16,7 @@ This file tracks recent work found under `/Volumes/projects`, `/Volumes/previews
 | Women Power Forum 2026 | 2026 | `/projects/women-power-forum-2026/` | Event photo and case-study copy from the 2026-09 website update brief |
 | MO·MENTS 2025 (Ant International and GFTN) | 2025 | `/projects/moments-2025/` | Event photo and case-study copy from the 2026-09 website update brief |
 | Palace Gourmet (archive name: NY8) | 2021-2022 | `/projects/ny8-palace-gourmet/` | Full desktop designs, mobile designs, menus, locations and policy material |
+| L'Oréal Hong Kong - Macau Beauty Advisor Kickoff | 2021 | `/projects/loreal-macau-ba-kickoff/` | Event proposal (23 Feb 2021), mobile web-app screens and live-broadcast screens from `/Volumes/projects/occasions/20210210 Loreal` |
 
 Dolce & Gabbana is deliberately excluded. Its archive contains only a client-supplied concept wireframe and no Cowise design or development work.
 
@@ -42,7 +43,7 @@ These archives contain runnable application code, but screenshots should be capt
 | 5 | Women Power Forum Hong Kong 2021 | `/Volumes/previews/www/womenpowerforumhk/2021.womenpowerforumhk.com` | KohanaJS 6/Fastify, multilingual Liquid site, SQLite | Public and admin screenshots; confirmation that event imagery may be published |
 | 6 | Stecco Natura redemption | `/Volumes/previews/www/stecco-natura/stecco-natura.cowise.co` | KohanaJS/Fastify, CMS, queue, email and Twilio integrations | Public flow screenshots, redemption results and approved campaign summary |
 | 7 | Art Basel RSVP 2023 | `/Volumes/projects/occasions/20230311-artbasel` | KohanaJS 6/Fastify, Liquid, four SQLite databases | Client/event identity, public RSVP screenshots, confirmation of what Cowise delivered |
-| 8 | L'Oreal campaign administration | `/Volumes/server01/18.163.255.79/2021-loreal-admin.occasionspr.info` | Server backup with admin, database and public assets | Name of campaign, public-facing counterpart, screenshots and role confirmation |
+| 8 | L'Oreal campaign administration | `/Volumes/server01/18.163.255.79/2021-loreal-admin.occasionspr.info` | Server backup with admin, database and public assets | Admin backend for the 2021 Macau BA Kickoff (now published). Admin screenshots are optional additions |
 | 9 | Event Activate | `/Volumes/server01/18.163.255.79/www.event-activate.com` | Server backup | Client/project name, launch year, screenshots and scope |
 
 ## Projects with visual material but incomplete case-study information
@@ -50,7 +51,7 @@ These archives contain runnable application code, but screenshots should be capt
 | Project | Available material | Missing before publishing |
 | --- | --- | --- |
 | Occasions PR company website | Artwork, content, mobile layouts and update folders under `/Volumes/projects/occasions/20210200 company website` | Final launch screenshots, exact scope and confirmation that the latest redesign belongs to Cowise |
-| L'Oreal 2021 and 2022 | Mini-site exports, screens and client material | Campaign names, distinction between the two projects, final live output and Cowise role |
+| L'Oreal 2022 | Mini-site exports, screens and client material | Campaign name, final live output and Cowise role (the 2021 Macau BA Kickoff is published) |
 | MGM Awakening 2021 | Client material | Final output, project format, scope and publishable screenshots/video |
 | Park Peninsula 2022 | Only a sparsely named archive folder | Almost all portfolio material: brief, visuals, final output and role |
 | For Good 2023 | Email sets and supplied material | Client identity, campaign objective, final output and role |

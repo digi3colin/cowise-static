@@ -33,6 +33,7 @@ Founded in Hong Kong, COWISE has delivered digital work across Asia Pacific for 
 - [Global Tourism Economy Forum 2020, 2023, 2025](https://cowise.com.hk/projects/gtef-registration/): Recruitment eDM and CRM, guest RSVP and onsite management, seamless QR / RFID check-in and detailed RFID tracking.
 - [Women Power Forum 2026](https://cowise.com.hk/projects/women-power-forum-2026/): Guest RSVP and onsite management, seamless check-in and a full-day side programme for 380 leaders from 27 countries.
 - [MO·MENTS 2025](https://cowise.com.hk/projects/moments-2025/): Guest RSVP, accredited check-in, RFID tracking and side programmes for a closed-door executive forum by Ant International and GFTN.
+- [L'Oréal Macau Beauty Advisor Kickoff 2021](https://cowise.com.hk/projects/loreal-macau-ba-kickoff/): Interactive mobile web app for real-time team-building games and questions, plus a live broadcast linking Hong Kong management with Macau beauty advisors.
 
 ## Projects — Web Development
 
