@@ -22,6 +22,7 @@ This file tracks recent work found under `/Volumes/projects`, `/Volumes/previews
 | MGM Awakening Special Exhibition opening | 2021 | `/projects/mgm-awakening/` | Desktop/mobile live broadcast mini-site designs from `/Volumes/projects/occasions/20210706-MGM-Awakening` |
 | MGM 《醒獅美高梅》 press conference | 2021 | `/projects/mgm-lion-press-conference/` | Mini-site logistics deck, host-control UX wireframes, mini-site designs and reminder eDMs from `/Volumes/projects/occasions/20210318 MGMPC` |
 | Le French May - Go for the Goal | 2024 | `/projects/french-may-go-for-the-goal/` | Shopify theme/product exports and key visuals from `/Volumes/projects/occasions/20240500-LFM` and `/Volumes/projects/occasions/LFM` (live site no longer resolves) |
+| MGM 2049 Symposium and Global Recruitment Kick-off | 2024 | `/projects/mgm-2049/` | Screens rendered from the `mgm2049-lvb-www` source (Liquid templates, CSS and images) with stub data; live stream and analytics blocked during capture |
 
 Dolce & Gabbana is deliberately excluded. Its archive contains only a client-supplied concept wireframe and no Cowise design or development work.
 
@@ -59,7 +60,6 @@ These archives contain runnable application code, but screenshots should be capt
 | Park Peninsula 2022 | Only a sparsely named archive folder | Almost all portfolio material: brief, visuals, final output and role |
 | For Good 2023 | Email sets and supplied material | Client identity, campaign objective, final output and role |
 | Le French May 2023 gala | LED-screen holding graphics, motion files and EDM assets | Final selection, project description and approval for public use (2024 ticketing is published) |
-| MGM 2024 | Dated project folder | Project identity, output, final visuals and role |
 | FAB Instagram AR Filter 2021 | Spark AR projects, frames, 3D bottle and water effects | Full client/campaign name and confirmation of Cowise's role |
 
 ## Preview environment plan
