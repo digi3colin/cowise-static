@@ -202,15 +202,32 @@ const BPM = 128, SPB = 60 / BPM;             // 0.46875 s per beat
 // hold the story clock at 112 while the Gen AI chapter keeps running on its own clock (genClock).
 // Two more bars are inserted at story beat 77.5 (0:34, right after "Back in the room."): the story
 // clock holds there while the "…and online, to the world" typography runs on real beats.
-// Net length: 156 beats (39 bars = 73.1 s).
-const CUT = 44, CUT_LEN = 4, HYB = 77.5, HYB_LEN = 8, INS = 112, INS_LEN = 4;
-const HYB_R = HYB - CUT_LEN, INS_R = INS - CUT_LEN + HYB_LEN; // real beats where the holds start
+// Three more bars are inserted at story beat 90 (0:44, end of the event chapter): the story clock
+// holds while the "single thread → multi-thread" scene runs on real beats.
+// Net length: 168 beats (42 bars = 78.75 s).
+const CUT = 44, CUT_LEN = 4, HYB = 77.5, HYB_LEN = 8, SGL = 90, SGL_LEN = 12, INS = 112, INS_LEN = 4;
+const HOLDS = [[HYB, HYB_LEN], [SGL, SGL_LEN], [INS, INS_LEN]]; // [story beat, real beats held]
+const HYB_R = HYB - CUT_LEN, SGL_R = SGL - CUT_LEN + HYB_LEN, INS_R = INS - CUT_LEN + HYB_LEN + SGL_LEN; // real beats where the holds start
 const HYB_ZOOM = 37 / SPB - HYB_R; // 0:37, in beats into the hold: the globe zoom starts
 let realBeat = 0;                  // current real beat, for story-clock scenes that react to the hold
-const toStory = b => b < CUT ? b : b < HYB_R ? b + CUT_LEN : b < HYB_R + HYB_LEN ? HYB : b < INS_R ? b + CUT_LEN - HYB_LEN : b < INS_R + INS_LEN ? INS : b + CUT_LEN - HYB_LEN - INS_LEN;
-const toReal = sb => sb < CUT ? sb : sb < CUT + CUT_LEN ? CUT : sb < HYB ? sb - CUT_LEN : sb < INS ? sb - CUT_LEN + HYB_LEN : sb - CUT_LEN + HYB_LEN + INS_LEN;
-const genClock = b => b < INS_R ? toStory(b) : b + CUT_LEN - HYB_LEN; // Gen AI chapter: continuous through the inserted bar
-const END = 156;                             // real beats
+function toStory(b) {
+  if (b < CUT) return b;
+  let r = CUT, s0 = CUT + CUT_LEN;  // real beat where the current story run started, and its story beat
+  for (const [s, len] of HOLDS) {
+    if (b < r + s - s0) return s0 + b - r;
+    r += s - s0; if (b < r + len) return s; r += len; s0 = s;
+  }
+  return s0 + b - r;
+}
+function toReal(sb) {               // a held story beat maps to the end of its hold
+  if (sb < CUT) return sb;
+  if (sb < CUT + CUT_LEN) return CUT;
+  let r = CUT, s0 = CUT + CUT_LEN;
+  for (const [s, len] of HOLDS) { if (sb < s) return r + sb - s0; r += s - s0 + len; s0 = s; }
+  return r + sb - s0;
+}
+const genClock = b => b < INS_R ? toStory(b) : b + CUT_LEN - HYB_LEN - SGL_LEN; // Gen AI chapter: continuous through the inserted bar
+const END = 168;                             // real beats
 const DURATION = END * SPB;
 const W = 1920, H = 1080;
 const C = {pink:'#ff0062',cyan:'#7ce7f9',orange:'#fda602',yellow:'#ffde0b',navy:'#052675',green:'#7cf9bf',purple:'#a97cf9',gold:'#ffc93c',ink:'#0d0d10'};
@@ -300,6 +317,8 @@ const SRC = {
   wall: ['projects/loreal-macau-ba-kickoff/01.webp', 'projects/loreal-macau-ba-kickoff/08.webp', 'projects/mgm-lion-press-conference/01.webp', 'projects/women-power-forum-2021/01.webp', 'projects/hennessy-artistry-photo-booth/01.webp', 'projects/mgm-awakening/01.webp', 'projects/loreal-macau-ba-kickoff-2022/01.webp', 'projects/times-square-showreel/01.webp', 'projects/mgm-2049/01.webp'],
   // chapter 04 backdrops: crowd → Moments 2025 (0:39) → GTEF stage (0:41)
   event: ['services/event.webp', 'projects/moments-2025/01.webp', 'projects/gtef-registration/gtef-2023-stage.webp'],
+  // InvestHK WGHK venue, onsite: registration, corridors, RFID gates, check-in iPads, stage (3×3 grid)
+  wghk: ['4106', '4114', '4148', '4110', '8456', '4136', '8452', '4115', '8454'].map(n => `projects/investhk-wghk/onsite/img_${n}.webp`),
   // four results from the same prompt (French Chamber gala: tricolour × Bauhinia)
   gen: ['projects/genai/web/hongkong/0_0-1.webp', 'projects/genai/web/hongkong/0_0-2.webp', 'projects/genai/web/hongkong/0_1.webp', 'projects/genai/web/hongkong/0_0.webp'],
   // lion dance leads the gallery (alternating rows: even = top, odd = bottom)
@@ -618,6 +637,14 @@ scene(51.9, 72.2, el => {
     return { t, live, ring };
   });
   const dim = $('div', 'abs', el); place(dim, 0, 0, W, H); dim.style.background = 'radial-gradient(ellipse 70% 55% at 50% 50%,rgba(8,8,12,.96) 0%,rgba(8,8,12,.88) 55%,rgba(8,8,12,.62) 100%)';
+  // the top row's and left column's LIVE badges stay at full brightness above the dim (copies that follow
+  // the wall's transform); the rest stay dimmed with their tiles so they don't pull focus
+  const liveWall = $('div', 'abs', el); place(liveWall, 0, 0, W, H); liveWall.style.transformOrigin = '960px 540px';
+  const lives = [0, 1, 2, 3, 6].map(i => {
+    const d = $('div', 'abs', liveWall, 'LIVE'); place(d, G + (i % 3) * (TW + G) + 16, G + Math.floor(i / 3) * (TH + G) + 16);
+    Object.assign(d.style, { background: C.pink, fontSize: '18px', fontWeight: 500, letterSpacing: '.14em', padding: '3px 12px 2px', borderRadius: '4px', boxShadow: '0 0 18px rgba(255,0,98,.55)' });
+    return d;
+  });
   // spotlight: the six outer broadcasts light up one by one above the dim (full-brightness copies of
   // the tiles, in a layer that follows the wall's transform)
   const SPOT = [0, 3, 2, 6, 5, 8], SPOT0 = 56 - .25 / SPB, SPOT_LEN = 2; // 0.25 s early so each one is fully lit on the beat
@@ -657,7 +684,8 @@ scene(51.9, 72.2, el => {
   return b => {
     const z = E.io4(P(b, 52, 3.25));
     const ws = lerp(3.2, 1, z) * (1 + .006 * pulse(b)), wr = (1 - z) * -2;
-    T(wall, { s: ws, r: wr }); T(spotWall, { s: ws, r: wr });
+    T(wall, { s: ws, r: wr }); T(spotWall, { s: ws, r: wr }); T(liveWall, { s: ws, r: wr });
+    lives.forEach(l => { l.style.opacity = frac(b) < .5 ? 1 : .55; });
     tiles.forEach(t => { t.live.style.opacity = frac(b) < .5 ? 1 : .35; });
     // one broadcast at a time, two beats each: pops forward at full brightness with a cyan frame
     spots.forEach(({ c, live, aud, num }, k) => {
@@ -671,7 +699,7 @@ scene(51.9, 72.2, el => {
         setText(num, Math.round(lerp(from, n, cp)) + (cp >= 1 ? plus : ''));
       }
     });
-    const dk = E.o3(P(b, 54.5, 1.5)) * (1 - E.i3(P(b, 69.5, 1.5)));
+    const dk = E.o3(P(b, 54.5, 1.5)); // stays dim until the 0:32 stripe wipe covers the wall
     T(dim, { o: dk * (1 - .08 * pulse(b, 4)) });
     const f = `brightness(${(1 - .45 * dk).toFixed(2)}) saturate(${(1 - .3 * dk).toFixed(2)})`;
     if (wall._f !== f) { wall.style.filter = f; wall._f = f; }
@@ -896,6 +924,136 @@ scene(HYB_R, HYB_R + HYB_LEN, el => {
       a.style.zIndex = dz > 0 ? 2 : 0;
       dot.style.opacity = frac(b + i * .25) < .5 ? 1 : .3;
     });
+  };
+}, true);
+
+/* ---------- 4b · single thread → multi-thread (three held bars at 0:44, real beats) ---------- */
+// Told in key-visual lines, almost without words. One dashed 10px track fills task by task, one per
+// beat (traditional: linear). As COWISE arrives it fills solid over the WGHK photos, then on the impact
+// fans out into eight parallel horizontal threads with data racing along every one at once.
+// The scene stays up two beats past the hold so the 0:50 bar wipe covers it before it leaves.
+// A0: the single-line half runs one beat (0.47 s) ahead of the hold, opening over the event chapter's exit
+const SGL_A0 = -1;
+scene(SGL_R + SGL_A0, SGL_R + SGL_LEN + 2, el => {
+  const cv = $('canvas', '', el); cv.width = W; cv.height = H; const ctx = cv.getContext('2d');
+  const OUT = 'drop-shadow(0 0 3px #000) drop-shadow(0 0 6px #000) drop-shadow(0 0 10px #000) drop-shadow(0 8px 22px #000)';
+  // multi-thread half: the same title treatment, over a soft dark band so it reads on the bar field
+  const bandB = $('div', 'abs', el); place(bandB, 0, 0, W, H); bandB.style.background = 'linear-gradient(180deg,rgba(10,10,13,.85) 0%,rgba(10,10,13,.6) 32%,rgba(10,10,13,0) 52%)';
+  const tB = words(el, 'COWISE IDEA LAB.', 'xl', 110, 140); tB.line.style.filter = OUT;
+  const uB = $('div', 'abs', el); place(uB, 116, 140 + 136, 90, 6); uB.style.background = C.cyan; uB.style.transformOrigin = '0 50%';
+  const sB = $('div', 'abs sub', el, 'Parallel workflows, instantly in sync.'); place(sB, 116, 312, 900); Object.assign(sB.style, { color: '#e8e8ee', filter: OUT });
+  // traditional half: styled like the RSVP / Check-in / CRM stack (xl title, short colour underline, sub line)
+  const tA = words(el, 'Traditional agencies.', 'xl', 110, 140);
+  const uA = $('div', 'abs', el); place(uA, 116, 140 + 136, 90, 6); uA.style.background = '#a6a6b2'; uA.style.transformOrigin = '0 50%';
+  const sA = $('div', 'abs sub', el, 'Linear workflow.'); place(sA, 116, 312, 700);
+  // task glyphs (40×40, stroked): invite, RSVP, check-in, badge, report
+  const GLYPH = ['M4 10h32v22H4zM4 10l16 13 16-13', 'M20 4a16 16 0 1 0 0.01 0M12 20l6 6 11-12', 'M4 4h12v12H4zM24 4h12v12H24zM4 24h12v12H4zM24 24h5v5h-5zM31 31h5v5h-5z', 'M8 4h24v32H8zM15 4v6h10V4M14 28h12M20 14a5 5 0 1 0 .01 0', 'M6 36h28M10 34V22M18 34V12M26 34V18M34 34V6'].map(d => new Path2D(d));
+  const TC = [C.pink, C.cyan, C.orange, C.yellow, '#3d6bff']; // task colours (navy lifted so it reads)
+  // track: the full width, 192 columns of 10px, a fifth per task; drawn dashed (odd columns only)
+  const SEG = W / 5, TY = 540, NCOL = COLS, SC = NCOL / 5;
+  const band = c => TC[Math.min(4, Math.floor(c / SC))];
+  const SEGCOLS = [0, 1, 2, 3, 4].map(k => { const a = []; for (let c = Math.ceil(k * SC); c < Math.ceil((k + 1) * SC); c++) a.push(c); return a; });
+  return b => {
+    const h = b - SGL_R, SPLIT = 6, A0 = SGL_A0;
+    const TOUT = 46 / SPB - SGL_R, B0 = TOUT + .7; // "Traditional agencies." leaves at 0:46; COWISE arrives right after
+    const pm = SRC.wghk.map(s => images[s]);
+    ctx.clearRect(0, 0, W, H);
+    // ---- photos ----
+    if (h < SPLIT + 2) { // plain dark stage (no photo), opening through stripe slots over the event chapter
+      const ra = P(h, A0, 1.25);
+      ctx.save(); ctx.beginPath();
+      for (let i = 0; i < 20; i++) { const cw = 96, d = E.io3(clamp(ra * 1.6 - (i % 5) * .12 - hash(i + 40) * .1)) * cw; ctx.rect(i * cw + (cw - d) / 2, 0, d, H); }
+      ctx.clip(); ctx.fillStyle = C.ink; ctx.fillRect(0, 0, W, H); ctx.restore();
+    }
+    const pa = E.io3(P(h, TOUT, 1.2)); // WGHK photos fade in from 0:46, under the line
+    if (pa > 0) { // the nine venue photos as a 3×3 grid: cells open one after another in a scattered order,
+      // each through vertical stripe slots (the same reveal as the 0:41 backdrop), then push in slowly
+      const CW = W / 3, CH = H / 3, GAP = 4, NS = 10, SW = CW / NS;
+      pm.forEach((img, k) => {
+        const cx = (k % 3) * CW, cy = Math.floor(k / 3) * CH, at = TOUT + hash(k * 2.9 + 4) * 1.6;
+        const rv = P(h, at, 1.4); if (rv <= 0) return;
+        ctx.save(); ctx.beginPath(); ctx.rect(cx + GAP / 2, cy + GAP / 2, CW - GAP, CH - GAP); ctx.clip();
+        ctx.beginPath();
+        for (let i = 0; i < NS; i++) { const d = E.io3(clamp(rv * 1.6 - (i % 5) * .12 - hash(i + k * 7) * .1)) * SW; ctx.rect(cx + i * SW + (SW - d) / 2, cy, d, CH); }
+        ctx.clip(); ctx.filter = 'brightness(.5) saturate(1.1)';
+        drawCover(ctx, img, cx, cy, CW, CH, 1.15 - .1 * E.o3(P(h, at, 8)));
+        ctx.filter = 'none'; ctx.restore();
+      });
+    }
+    // ---- single thread (stays on through the split, as the middle of the band) ----
+    {
+      // the line starts drawing right at 0:44 and advances slowly and steadily, one task per beat;
+      // each task's glyph lights (with its ping) as its segment completes on the next beat
+      const base = E.io3(P(h, A0, 1));
+      ctx.fillStyle = 'rgba(255,255,255,.16)';
+      for (let c = 1; c < NCOL * base; c += 2) ctx.fillRect(c * PITCH, TY - 1, 9, 2);
+      for (let k = 0; k < 5; k++) {
+        const f = P(h, A0 + k, 1), x = k * SEG, cols = SEGCOLS[k];
+        if (f > 0) { // the segment fills as 10px slices dropping into place, leading edge glowing
+          const n = Math.ceil(cols.length * f);
+          for (let j = 0; j < n; j++) {
+            const c = cols[j];
+            // dashed while traditional; when COWISE arrives the gaps drop in, sweeping left to right, and
+            // the line becomes solid just before it shatters
+            const a = c % 2 ? clamp((cols.length * f - j) * 1.5) : E.o3(P(h, B0 + .2 + c / NCOL * .7, .3));
+            if (a <= 0) continue;
+            ctx.globalAlpha = a; ctx.fillStyle = TC[k]; ctx.fillRect(c * PITCH, TY - 5 - (1 - a) * 14, PITCH, 10); // full 10px: no seams once solid
+          }
+          ctx.globalAlpha = 1;
+          if (f < 1) { const ex = x + SEG * f; const g = ctx.createRadialGradient(ex, TY, 0, ex, TY, 60); g.addColorStop(0, 'rgba(255,255,255,.9)'); g.addColorStop(.25, TC[k]); g.addColorStop(1, 'rgba(0,0,0,0)'); ctx.fillStyle = g; ctx.fillRect(ex - 60, TY - 60, 120, 120); }
+        }
+      }
+    }
+    // the task glyphs above the line: dim while waiting, pop and take the task colour when their slot is
+    // filled; they stay on through the split
+    { const base = E.io3(P(h, A0, 1));
+      for (let k = 0; k < 5; k++) {
+        const done = h >= A0 + 1 + k, pop = done ? E.oBack(P(h, A0 + 1 + k, .45), 2.6) : 0, gx = k * SEG + SEG / 2, gy = TY - 92, gs = 1 + .25 * pop * (1 - P(h, A0 + 1.45 + k, .4));
+        ctx.save(); ctx.translate(gx, gy); ctx.scale(gs, gs); ctx.translate(-20, -20);
+        ctx.globalAlpha = base * (done ? 1 : h >= A0 + k ? .65 : .22); ctx.lineWidth = 2.6; ctx.lineJoin = ctx.lineCap = 'round';
+        ctx.strokeStyle = done ? TC[k] : '#fff'; if (done) { ctx.shadowColor = TC[k]; ctx.shadowBlur = 18; }
+        ctx.stroke(GLYPH[k]); ctx.restore(); ctx.globalAlpha = 1;
+      }
+    }
+    // glow point riding the head of the solid fill sweep
+    const sw = (h - B0 - .2 - .15) / .7;
+    if (sw > 0 && sw < 1.05 && h < SPLIT + .1) {
+      const hx = clamp(sw) * W, gc = band(Math.min(NCOL - 1, Math.floor(hx / PITCH))), fade = 1 - clamp((sw - 1) / .05);
+      const g = ctx.createRadialGradient(hx, TY, 0, hx, TY, 90);
+      g.addColorStop(0, `rgba(255,255,255,${.95 * fade})`); g.addColorStop(.18, gc); g.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.globalAlpha = fade; ctx.fillStyle = g; ctx.fillRect(hx - 90, TY - 90, 180, 180); ctx.globalAlpha = 1;
+    }
+    // ---- the split: the original line stays, and eight straight, parallel threads (10px each, 1px apart,
+    // four above and four below it) draw in from left to right, each thread at its own pace ----
+    if (h >= SPLIT - .05) {
+      const LN = 8, LW = 10;
+      for (let i = 0; i < LN; i++) {
+        const j = i < 4 ? i - 4 : i - 3;                        // four threads above the line, four below
+        const yc = TY - LW / 2 + j * (LW + 1);
+        const reach = E.io3(P(h, SPLIT + hash(i * 3.7 + 1) * .9, 1.6 + hash(i * 5.1 + 2) * 1.2)) * W; // each thread starts and finishes at its own (random) moment
+        if (reach <= 0) continue;
+        // every thread carries the same five task colours as the line it came from, in the same fifths,
+        // so the blocks line up vertically across the band
+        ctx.globalAlpha = 1;
+        for (let k = 0; k < 5; k++) {
+          const x0 = Math.ceil(k * SC) * PITCH, x1 = Math.min(Math.ceil((k + 1) * SC) * PITCH, reach); // same column edges as the line
+          if (x1 > x0) { ctx.fillStyle = TC[k]; ctx.fillRect(x0, yc, x1 - x0, LW); }
+        }
+      }
+      ctx.globalAlpha = 1;
+      // the impact: white flash out of the line
+      const fl = Math.exp(-(h - SPLIT) * 6) * (h >= SPLIT ? 1 : 0);
+      if (fl > .01) { ctx.fillStyle = `rgba(255,255,255,${fl * .55})`; ctx.fillRect(0, 0, W, H); }
+    }
+    // camera: a punch on the split, then a slow push through the field
+    T(cv, { s: (1 + .035 * (h >= SPLIT ? Math.exp(-(h - SPLIT) * 4) : 0)) * (1 + .04 * E.io3(P(h, SPLIT, 8))) });
+    reveal(tA, h, A0 + .25, .5, 1, TOUT, .06);
+    T(uA, { sx: E.oExp(P(h, A0 + .75, 1)) * (1 - E.i3(P(h, TOUT, .6))) });
+    fadeUp(sA, h, A0 + 1.25, TOUT + .1);
+    T(bandB, { o: E.o3(P(h, B0, 1)) });
+    reveal(tB, h, B0, .4, 1);
+    T(uB, { sx: E.oExp(P(h, B0 + .65, 1)) });
+    fadeUp(sB, h, B0 + 1);
   };
 }, true);
 
@@ -1303,11 +1461,13 @@ const params = new URLSearchParams(location.search);
 let actx = null, buffer = null, gainNode = null, src = null, noiseBuf = null, sess = null;
 const lpFreq = b => b < 52 ? 20000 : b < 60 ? 380 : b < 70 ? 380 * Math.pow(20000 / 380, (b - 60) / 10) : 20000;
 const SCORE = (() => {
+  let realMode = false; // while true, beats passed to the instruments below are real beats
   const ev = [], add = (b, fn) => {
+    if (realMode) { ev.push({ t: b * SPB, fn }); return; }
     if (b >= CUT && b < CUT + CUT_LEN) return;                                   // cut bar
     ev.push({ t: toReal(b) * SPB, fn });
-    if (b >= HYB - 4 && b < HYB) for (let k = 4; k <= HYB_LEN; k += 4) ev.push({ t: (toReal(b) + k) * SPB, fn }); // held bars repeat the groove
-    if (b >= INS - INS_LEN && b < INS) ev.push({ t: (toReal(b) + INS_LEN) * SPB, fn }); // inserted bar repeats the groove
+    // held bars repeat the bar before them (the single/multi-thread hold has its own cue, below)
+    for (const [s, len] of HOLDS) if (s !== SGL && b >= s - 4 && b < s) for (let k = 4; k <= len; k += 4) ev.push({ t: (toReal(b) + k) * SPB, fn });
   };
   const env = (g, t, a, d, peak) => { g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(peak, t + a); g.gain.exponentialRampToValueAtTime(.0001, t + a + d); };
   const pan = (c, node, p) => { if (!p || !c.createStereoPanner) return node; const sp = c.createStereoPanner(); sp.pan.value = p; node.connect(sp); return sp; };
@@ -1352,6 +1512,13 @@ const SCORE = (() => {
   // 2023
   impact(92); groove(92, 112, { hats16: true, stabs: true, arp: 2 });
   riser(112, 116, .2); groove(112, 115, { hats16: true, arp: 2 }); for (let s = 0; s < 8; s++) clap(115 + s * .125, .15 + s * .04);
+  // 0:44 single thread → multi-thread (real beats): the groove carries straight through, and the arp
+  // doubles up when the line splits into every thread
+  realMode = true;
+  groove(SGL_R, SGL_R + 6, { hats16: true, stabs: true, arp: 1 });
+  impact(SGL_R + 6); groove(SGL_R + 6, SGL_R + 12, { hats16: true, stabs: true, arp: 2 });
+  riser(SGL_R + 9, SGL_R + 12, .2);
+  realMode = false;
   // workshops
   impact(116); groove(116, 128, { hats16: true, stabs: true });
   riser(128, 132, .2); groove(128, 131, { noBass: true }); for (let s = 0; s < 8; s++) clap(131 + s * .125, .15 + s * .04);
@@ -1491,7 +1658,7 @@ const ready = Promise.all([imgReady, logoReady, document.fonts.ready, heroVideoR
 const nextFrame = () => new Promise(r => { requestAnimationFrame(() => r()); setTimeout(r, 60); });
 const warm = ready.then(async () => { // paint every section once, invisibly, so the first play is smooth
   stage.style.opacity = .01;
-  for (const b of [2, 12, 20, 30, 40, 50, 53, 62, 75, 86, 91, 93, 102, 110, 120, 126, 134, 138, 142, 147].map(toReal).concat(HYB_R + 4)) { render(b); await nextFrame(); }
+  for (const b of [2, 12, 20, 30, 40, 50, 53, 62, 75, 86, 91, 93, 102, 110, 120, 126, 134, 138, 142, 147].map(toReal).concat(HYB_R + 4, SGL_R + 3, SGL_R + 9)) { render(b); await nextFrame(); }
   stage.style.opacity = '';
   render(pos / SPB); requestAnimationFrame(frame);
   LOAD.warm = 1; document.querySelector('#lbar i').style.width = '100%';
