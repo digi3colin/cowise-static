@@ -298,12 +298,13 @@ const SRC = {
   // live wall, 3×3: the centre column is L'Oréal 2021 "Time's up" / the Hennessy photo booth (the zoom-in
   // target) / Times Square; the sides are other live broadcasts from the pandemic years
   wall: ['projects/loreal-macau-ba-kickoff/01.webp', 'projects/loreal-macau-ba-kickoff/08.webp', 'projects/mgm-lion-press-conference/01.webp', 'projects/women-power-forum-2021/01.webp', 'projects/hennessy-artistry-photo-booth/01.webp', 'projects/mgm-awakening/01.webp', 'projects/loreal-macau-ba-kickoff-2022/01.webp', 'projects/times-square-showreel/01.webp', 'projects/mgm-2049/01.webp'],
-  event: ['services/event.webp', 'projects/gtef-registration/gtef-2023-stage.webp'],
+  // chapter 04 backdrops: crowd → Moments 2025 (0:39) → GTEF stage (0:41)
+  event: ['services/event.webp', 'projects/moments-2025/01.webp', 'projects/gtef-registration/gtef-2023-stage.webp'],
   // four results from the same prompt (French Chamber gala: tricolour × Bauhinia)
   gen: ['projects/genai/web/hongkong/0_0-1.webp', 'projects/genai/web/hongkong/0_0-2.webp', 'projects/genai/web/hongkong/0_1.webp', 'projects/genai/web/hongkong/0_0.webp'],
   // lion dance leads the gallery (alternating rows: even = top, odd = bottom)
   gallery: ['projects/genai/web/lion-dance.webp', 'projects/genai/web/liondance/liondance01.webp', 'projects/genai/web/ink-tiger.webp', 'projects/genai/web/liondance/liondance02.webp', 'projects/genai/web/liondance/liondance.webp', 'projects/genai/web/cyber-fashion.webp', 'projects/genai/web/liondance/liondance03.webp', 'projects/genai/web/immersive-waterfall.webp', 'projects/genai/web/liondance/liondance04.webp', 'projects/genai/web/ink-painting.webp', 'projects/genai/web/novel-character.webp', 'projects/genai/web/painting/0_1.webp'],
-  work: ['projects/women-power-forum-2026/01.webp', 'projects/moments-2025/01.webp', 'projects/vibe-coding/01.webp'],
+  work: ['projects/women-power-forum-2026/01.webp', 'projects/vibe-coding/02.webp', 'projects/vibe-coding/01.webp'],
 };
 const WALL_NAMES = ['L’Oréal BA Kickoff 2021', 'L’Oréal BA Kickoff 2021', 'MGM Press Conference', 'Women Power Forum', 'Hennessy Artistry', 'MGM Awakening', 'L’Oréal BA Kickoff 2022', 'Times Square', 'MGM 2049'];
 const images = {};
@@ -753,14 +754,18 @@ scene(70.9, 92, el => {
     const vis = b < 72 ? 'hidden' : ''; if (el.style.visibility !== vis) el.style.visibility = vis;
     // photography: Ken Burns + stripe-mask reveal of the second venue
     ctx.clearRect(0, 0, W, H);
-    const [a, c2] = SRC.event.map(s => images[s]);
+    const [a, mo, c2] = SRC.event.map(s => images[s]);
     drawCover(ctx, a, 0, 0, W, H, 1.05 + .12 * P(b, 71, 21), .6, .5);
-    const rv = P(b, 83.5, 2.5);
-    if (rv > 0) {
+    // each new backdrop opens through vertical stripe slots, then pushes in slowly
+    const slotReveal = (img, at, fy, flip) => {
+      const rv = P(b, at, 2.5); if (rv <= 0) return;
       ctx.save(); ctx.beginPath();
       for (let i = 0; i < 20; i++) { const cw = 96, d = E.io3(clamp(rv * 1.6 - (i % 5) * .12 - hash(i) * .1)) * cw; ctx.rect(i * cw + (cw - d) / 2, 0, d, H); }
-      ctx.clip(); drawCover(ctx, c2, 0, 0, W, H, 1.15 - .1 * P(b, 83.5, 8), .5, .85); ctx.restore();
-    }
+      ctx.clip(); if (flip) { ctx.translate(W, 0); ctx.scale(-1, 1); } // mirrored after clipping, so the slots stay put
+      drawCover(ctx, img, 0, 0, W, H, 1.15 - .1 * P(b, at, 8), .5, fy); ctx.restore();
+    };
+    slotReveal(mo, 39 / SPB + CUT_LEN - HYB_LEN, .5, true); // 0:39, flipped horizontally
+    slotReveal(c2, 83.5, .85);                       // 0:41
     // opener — 2023: digits drop in on 8ths with colour echoes, then rush the camera
     // the dark veil drops while the 0:37 globe zoom has the frame fully covered in bars,
     // so the bars lift straight off the room at full brightness
