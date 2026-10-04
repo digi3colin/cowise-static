@@ -295,7 +295,9 @@ const SRC = {
   web: ['projects/veuve-clicquot-website/01.webp', 'projects/louis-vuitton-minisites/01.webp', 'projects/berry-bros-rudd-shopify/01.webp', 'projects/towngas-low-carbon/01.webp', 'projects/scmp/01.webp', 'projects/veuve-clicquot-digital-tools/01.webp', 'projects/central-venue-management/01.webp'],
   // last app slide is the Hennessy photo booth the camera zooms into for the pandemic chapter
   app: ['projects/ruinart-art-basel/02.webp', 'projects/krug/02.webp', 'projects/cartier/01.webp', 'projects/hennessy-artistry-photo-booth/01.webp'],
-  wall: ['projects/hennessy-artistry-facebook-live/02.webp', 'projects/hennessy-artistry-facebook-live/05.webp', 'projects/hennessy-artistry-facebook-live/03.webp', 'projects/hennessy-artistry-facebook-live/06.webp', 'projects/hennessy-artistry-photo-booth/01.webp', 'projects/hennessy-artistry-facebook-live/07.webp', 'projects/hennessy-artistry-facebook-live/04.webp', 'projects/times-square-showreel/01.webp', 'projects/hennessy-artistry-facebook-live/08.webp'],
+  // live wall, 3×3: the centre column is L'Oréal 2021 "Time's up" / the Hennessy photo booth (the zoom-in
+  // target) / Times Square; the sides are other live broadcasts from the pandemic years
+  wall: ['projects/loreal-macau-ba-kickoff/01.webp', 'projects/loreal-macau-ba-kickoff/08.webp', 'projects/mgm-lion-press-conference/01.webp', 'projects/women-power-forum-2021/01.webp', 'projects/hennessy-artistry-photo-booth/01.webp', 'projects/mgm-awakening/01.webp', 'projects/loreal-macau-ba-kickoff-2022/01.webp', 'projects/times-square-showreel/01.webp', 'projects/mgm-2049/01.webp'],
   event: ['services/event.webp', 'projects/gtef-registration/gtef-2023-stage.webp'],
   // four results from the same prompt (French Chamber gala: tricolour × Bauhinia)
   gen: ['projects/genai/web/hongkong/0_0-1.webp', 'projects/genai/web/hongkong/0_0-2.webp', 'projects/genai/web/hongkong/0_1.webp', 'projects/genai/web/hongkong/0_0.webp'],
@@ -303,6 +305,7 @@ const SRC = {
   gallery: ['projects/genai/web/lion-dance.webp', 'projects/genai/web/liondance/liondance01.webp', 'projects/genai/web/ink-tiger.webp', 'projects/genai/web/liondance/liondance02.webp', 'projects/genai/web/liondance/liondance.webp', 'projects/genai/web/cyber-fashion.webp', 'projects/genai/web/liondance/liondance03.webp', 'projects/genai/web/immersive-waterfall.webp', 'projects/genai/web/liondance/liondance04.webp', 'projects/genai/web/ink-painting.webp', 'projects/genai/web/novel-character.webp', 'projects/genai/web/painting/0_1.webp'],
   work: ['projects/women-power-forum-2026/01.webp', 'projects/moments-2025/01.webp', 'projects/vibe-coding/01.webp'],
 };
+const WALL_NAMES = ['L’Oréal BA Kickoff 2021', 'L’Oréal BA Kickoff 2021', 'MGM Press Conference', 'Women Power Forum', 'Hennessy Artistry', 'MGM Awakening', 'L’Oréal BA Kickoff 2022', 'Times Square', 'MGM 2049'];
 const images = {};
 function loadImg(src) {
   return images[src] || (images[src] = Object.assign(new Image(), { decoding: 'async', src: IMG + src }));
@@ -608,18 +611,35 @@ scene(51.9, 72.2, el => {
     const t = $('div', 'tile', wall); place(t, G + (i % 3) * (TW + G), G + Math.floor(i / 3) * (TH + G), TW, TH);
     $('img', '', t).src = IMG + src;
     const live = $('div', 'live', t, 'LIVE');
-    $('div', 'nm', t, i === 7 ? 'Times Square' : 'Hennessy Artistry');
+    $('div', 'nm', t, WALL_NAMES[i]);
     const ring = $('div', 'ring', t);
     return { t, live, ring };
   });
   const dim = $('div', 'abs', el); place(dim, 0, 0, W, H); dim.style.background = 'radial-gradient(ellipse 70% 55% at 50% 50%,rgba(8,8,12,.96) 0%,rgba(8,8,12,.88) 55%,rgba(8,8,12,.62) 100%)';
-  const tag = makeTag(el, '03', 'Online Events', C.pink);
-  const rec = $('div', 'abs rec', el, '<i></i><span>REC</span><span class="tc">00:00:00</span>'); place(rec, 1530, 136); // sits under the 128 BPM counter
+  // spotlight: the six outer broadcasts light up one by one above the dim (full-brightness copies of
+  // the tiles, in a layer that follows the wall's transform)
+  const SPOT = [0, 3, 2, 6, 5, 8], SPOT0 = 56 - .25 / SPB, SPOT_LEN = 2; // 0.25 s early so each one is fully lit on the beat
+  const spotWall = $('div', 'abs', el); place(spotWall, 0, 0, W, H); spotWall.style.transformOrigin = '960px 540px';
+  // onsite guests at each broadcast event, growing from tile to tile: from just 30 up to 300+
+  // L'Oréal 2021 · WPF 2021 · MGM Press Conference · L'Oréal Kickoff 2022 · MGM Awakening · MGM 2049
+  const AUD = [[30, ''], [50, ''], [100, ''], [150, ''], [200, ''], [300, '+']];
+  const PEOPLE = '<svg viewBox="0 0 24 24" width="30" height="30" style="flex:none"><circle cx="9" cy="8" r="3.6" fill="currentColor"/><path d="M2 20c0-4 3.1-6.6 7-6.6s7 2.6 7 6.6z" fill="currentColor"/><circle cx="17" cy="9" r="2.8" fill="currentColor" opacity=".6"/><path d="M15.5 13.6c3.7.1 6.5 2.5 6.5 6.4h-4.6" fill="currentColor" opacity=".6"/></svg>';
+  const spots = SPOT.map((i, k) => {
+    const c = tiles[i].t.cloneNode(true); spotWall.appendChild(c);
+    c.style.transformOrigin = '50% 50%'; c.style.boxShadow = '0 24px 70px rgba(0,0,0,.7)';
+    const ring = c.querySelector('.ring'); ring.style.opacity = 1;
+    const aud = $('div', '', c, `${PEOPLE}<b style="font-size:46px;font-weight:500;line-height:1;font-variant-numeric:tabular-nums">0</b><span style="font-size:17px;letter-spacing:.16em;text-transform:uppercase;line-height:1.15;color:#d6d6de">Onsite<br>guests</span>`);
+    aud.style.cssText = `position:absolute;right:16px;bottom:14px;display:flex;align-items:center;gap:12px;padding:10px 18px 10px 14px;border-radius:12px;background:rgba(8,8,12,.78);box-shadow:inset 0 0 0 1.5px ${C.cyan};color:${C.cyan};transform-origin:100% 100%`;
+    return { c, live: c.querySelector('.live'), aud, num: aud.querySelector('b') };
+  });
+  const OUTLINE = 'drop-shadow(0 0 3px #000) drop-shadow(0 0 6px #000) drop-shadow(0 0 10px #000) drop-shadow(0 8px 22px #000)';
+  const tag = makeTag(el, '03', 'Online Events', C.pink); tag.el.style.filter = OUTLINE; // legible over a lit corner tile
+  const rec = $('div', 'abs rec', el, '<i></i><span>REC</span><span class="tc">00:00:00</span>'); place(rec, 1530, 136); rec.style.filter = OUTLINE; // sits under the 128 BPM counter
   const tc = rec.querySelector('.tc'), recDot = rec.querySelector('i');
   const hit = words(el, 'Then the pandemic hit.', 'xl', 0, 440); hit.line.style.width = W + 'px'; hit.line.style.textAlign = 'center';
   hit.line.style.fontSize = '172px'; hit.line.style.fontWeight = 400; hit.line.style.transformOrigin = '50% 50%';
-  hit.ws[2].style.color = C.pink;
-  const h = words(el, 'Events went online.', 'xl', 0, 420); h.line.style.width = W + 'px'; h.line.style.textAlign = 'center';
+  hit.ws[2].style.color = C.pink; hit.line.style.filter = OUTLINE;
+  const h = words(el, 'Events went online.', 'xl', 0, 420); h.line.style.width = W + 'px'; h.line.style.textAlign = 'center'; h.line.style.filter = OUTLINE;
   // typographic stack: small connective words, big keywords
   const STACK = [
     ['We partnered with', 230, 58, 300, '#d6d6de'],
@@ -629,16 +649,25 @@ scene(51.9, 72.2, el => {
     ['& online events.', 690, 156, 400, '#fff'],
   ].map(([t, y, fs, fw, col]) => {
     const g = words(el, t, '', 0, y);
-    Object.assign(g.line.style, { width: W + 'px', textAlign: 'center', fontSize: fs + 'px', fontWeight: fw, lineHeight: 1, whiteSpace: 'nowrap', color: col });
+    Object.assign(g.line.style, { width: W + 'px', textAlign: 'center', fontSize: fs + 'px', fontWeight: fw, lineHeight: 1, whiteSpace: 'nowrap', color: col, filter: OUTLINE });
     return g;
   });
   return b => {
     const z = E.io4(P(b, 52, 3.25));
-    T(wall, { s: lerp(3.2, 1, z) * (1 + .006 * pulse(b)), r: (1 - z) * -2 });
-    const active = Math.floor(hash(Math.floor(b)) * 9);
-    tiles.forEach((t, i) => {
-      t.live.style.opacity = frac(b) < .5 ? 1 : .35;
-      t.ring.style.opacity = i === active && b > 55 ? pulse(b, 2.5) : 0;
+    const ws = lerp(3.2, 1, z) * (1 + .006 * pulse(b)), wr = (1 - z) * -2;
+    T(wall, { s: ws, r: wr }); T(spotWall, { s: ws, r: wr });
+    tiles.forEach(t => { t.live.style.opacity = frac(b) < .5 ? 1 : .35; });
+    // one broadcast at a time, two beats each: pops forward at full brightness with a cyan frame
+    spots.forEach(({ c, live, aud, num }, k) => {
+      const at = SPOT0 + k * SPOT_LEN, a = E.o3(P(b, at, .4)) * (1 - E.i3(P(b, at + SPOT_LEN - .35, .35)));
+      show(c, a > 0);
+      if (a > 0) {
+        T(c, { s: 1 + .04 * E.oBack(P(b, at, .5), 2), o: a }); live.style.opacity = frac(b) < .5 ? 1 : .35;
+        // the guest badge pops in and counts up from the previous tile's figure, landing on the beat
+        const [n, plus] = AUD[k], from = k ? AUD[k - 1][0] : 0, cp = E.o3(P(b, at + .15, .7));
+        T(aud, { s: Math.max(0, E.oBack(P(b, at + .1, .45), 2.2)) });
+        setText(num, Math.round(lerp(from, n, cp)) + (cp >= 1 ? plus : ''));
+      }
     });
     const dk = E.o3(P(b, 54.5, 1.5)) * (1 - E.i3(P(b, 69.5, 1.5)));
     T(dim, { o: dk * (1 - .08 * pulse(b, 4)) });
@@ -669,13 +698,18 @@ scene(70.9, 92, el => {
   // GTEF 2025 (0:41, right-hand side, after the check-in panel): one forum across two venues,
   // stacked pins joined by a vertical link that carries a signal both ways
   const vshade = $('div', 'abs', el); place(vshade, 0, 0, W, H); vshade.style.background = 'radial-gradient(ellipse 34% 52% at 74% 50%,rgba(10,10,13,.82),rgba(10,10,13,0))';
-  const gt = $('div', 'abs eyebrow', el, 'GTEF 2025<span style="opacity:.5;margin:0 18px">·</span>Two venues, one forum'); place(gt, 1150, 290); Object.assign(gt.style, { color: C.orange, fontSize: '27px', letterSpacing: '.2em', whiteSpace: 'nowrap', textShadow: '0 2px 14px rgba(0,0,0,.85)' });
-  const route = $('div', 'abs', el); place(route, 1150, 346);
-  route.style.cssText += ';display:flex;flex-direction:column;align-items:flex-start;gap:26px;font-size:72px;font-weight:400;line-height:1;white-space:nowrap;text-shadow:0 2px 18px rgba(0,0,0,.85)';
-  const PIN = `<i style="display:inline-block;width:22px;height:22px;border-radius:50%;background:${C.orange};margin-right:24px;vertical-align:12px;box-shadow:0 0 0 9px rgba(253,166,2,.22)"></i>`;
+  // headline first: "Two venues, / one forum." big, then the two pins and their link underneath
+  const VY = 120; // vertical offset: block starts at y 290, optically centred on the RSVP / Check-in / CRM stack
+  const gt = $('div', 'abs eyebrow', el, 'GTEF 2025'); place(gt, 1150, 170 + VY); Object.assign(gt.style, { color: C.orange, fontSize: '27px', letterSpacing: '.24em', whiteSpace: 'nowrap', textShadow: '0 2px 14px rgba(0,0,0,.85)' });
+  const VOUT = 'drop-shadow(0 0 3px #000) drop-shadow(0 0 6px #000) drop-shadow(0 0 10px #000) drop-shadow(0 8px 22px #000)';
+  const venueLine = (t, y, col) => { const g = words(el, t, '', 1146, y); Object.assign(g.line.style, { fontSize: '96px', fontWeight: 400, lineHeight: 1, whiteSpace: 'nowrap', color: col, filter: VOUT }); return g; };
+  const tv1 = venueLine('Two venues,', 214 + VY, '#fff'), tv2 = venueLine('one forum.', 316 + VY, C.orange);
+  const route = $('div', 'abs', el); place(route, 1150, 466 + VY);
+  route.style.cssText += ';display:flex;flex-direction:column;align-items:flex-start;gap:20px;font-size:52px;font-weight:400;line-height:1;white-space:nowrap;text-shadow:0 2px 18px rgba(0,0,0,.85)';
+  const PIN = `<i style="display:inline-block;width:18px;height:18px;border-radius:50%;background:${C.orange};margin-right:20px;vertical-align:9px;box-shadow:0 0 0 8px rgba(253,166,2,.22)"></i>`;
   const pinA = $('span', '', route, PIN + 'Heilongjiang');
-  const LINK_H = 190;
-  const link = $('div', '', route); link.style.cssText = `position:relative;width:3px;height:${LINK_H}px;margin-left:10px;background:rgba(255,255,255,.25)`;
+  const LINK_H = 120;
+  const link = $('div', '', route); link.style.cssText = `position:relative;width:3px;height:${LINK_H}px;margin-left:8px;background:rgba(255,255,255,.25)`;
   const linkFill = $('div', '', link); linkFill.style.cssText = `position:absolute;inset:0;background:${C.orange};transform-origin:50% 0`;
   // two-way signal: one pulse each way, crossing in the middle
   const linkDots = [C.orange, C.cyan].map(c => { const d = $('div', '', link); d.style.cssText = `position:absolute;left:-6px;top:0;width:15px;height:15px;border-radius:50%;background:#fff;box-shadow:0 0 16px 5px ${c}`; return d; });
@@ -747,12 +781,15 @@ scene(70.9, 92, el => {
     const a0 = 41 / SPB + CUT_LEN - HYB_LEN, lo = E.i3(P(lb, 89, .6));
     T(vshade, { o: E.o3(P(lb, a0 - .25, 1)) * (1 - lo) });
     fadeUp(gt, lb, a0 - .25, 89, 24);
-    T(pinA, { s: Math.max(0, E.oBack(P(lb, a0, .6), 2)), o: P(lb, a0, .2) * (1 - lo) });
-    T(link, { o: P(lb, a0 + .25, .3) * (1 - lo) });
-    T(linkFill, { sy: E.io3(P(lb, a0 + .25, 1)) });
-    T(pinB, { s: Math.max(0, E.oBack(P(lb, a0 + 1, .6), 2)), o: P(lb, a0 + 1, .2) * (1 - lo) });
-    const tr = frac((lb - a0) / 2); // every two beats once linked: Heilongjiang → Macau and Macau → Heilongjiang
-    linkDots.forEach((d, k) => T(d, { y: (k ? 1 - tr : tr) * (LINK_H - 15), o: lb >= a0 + 1.25 ? Math.sin(tr * Math.PI) * (1 - lo) : 0 }));
+    reveal(tv1, lb, a0 - .25, .25, 1, 89, .06);
+    reveal(tv2, lb, a0 + .25, .25, 1, 89.1, .06);
+    const p0 = a0 + .75; // pins + link follow the headline
+    T(pinA, { s: Math.max(0, E.oBack(P(lb, p0, .6), 2)), o: P(lb, p0, .2) * (1 - lo) });
+    T(link, { o: P(lb, p0 + .25, .3) * (1 - lo) });
+    T(linkFill, { sy: E.io3(P(lb, p0 + .25, 1)) });
+    T(pinB, { s: Math.max(0, E.oBack(P(lb, p0 + 1, .6), 2)), o: P(lb, p0 + 1, .2) * (1 - lo) });
+    const tr = frac((lb - p0) / 2); // every two beats once linked: Heilongjiang → Macau and Macau → Heilongjiang
+    linkDots.forEach((d, k) => T(d, { y: (k ? 1 - tr : tr) * (LINK_H - 15), o: lb >= p0 + 1.25 ? Math.sin(tr * Math.PI) * (1 - lo) : 0 }));
     lines.forEach(({ g, u }, i) => { reveal(g, lb, 79 - early + i * .75, .5, 1, 89 + i * .1); T(u, { sx: E.oExp(P(lb, 79.5 - early + i * .75, 1)) * (1 - E.i3(P(lb, 89, .6))) }); });
     fadeUp(sub, lb, 81.25 - early, 89);
     const pin = E.oExp(P(b, 79, .75)), pout = E.i3(P(b, 82.75, .7)); // lands just after "CRM." is in
@@ -996,10 +1033,10 @@ scene(115.5, 132.2, el => {
   const chat = $('div', 'abs panel chat', el); place(chat, 1060, 150, 740, 820);
   chat.innerHTML = '<div class="chat-h"><i></i>Workshop · Live</div>';
   const MSG = [
-    { who: 'u', at: 120, text: 'What is an LLM, exactly?' },
-    { who: 'a', at: 121.5, type: 121, text: 'A model trained on huge amounts of text. It can draft, summarise and brainstorm with you.' },
-    { who: 'u', at: 124.5, text: 'Could it help with my weekly report?' },
-    { who: 'a', at: 126, type: 125.5, text: 'Yes. Let’s write the prompt together, step by step.' },
+    { who: 'u', at: 120, text: 'Is AI hard to learn?' },
+    { who: 'a', at: 121.5, type: 121, text: 'Think of a supermarket. Nobody taught you how to shop. You got good by going.' },
+    { who: 'u', at: 124.5, text: 'So I just start using it?' },
+    { who: 'a', at: 126, type: 125.5, text: 'Yes. And shop the way you always do: read the label before it goes in the basket.' },
   ];
   const bubs = MSG.map(m => { const d = $('div', 'bub ' + m.who, chat); d._full = m.text; return d; });
   const typers = MSG.map(m => { if (!m.type) return null; const t = $('div', 'bub a typing', chat, '<b></b><b></b><b></b>'); return t; });
@@ -1032,8 +1069,10 @@ scene(115.5, 132.2, el => {
 /* ---------- 7 · Outro: the whole story, then the logo ---------- */
 scene(130, 150, el => {
   // arrives during the 1:01 bar wipe, so it sits in the overlay layer above the bars
-  const h = words(document.getElementById('over'), 'From first idea to measurable impact.', 'lg', 0, 300); h.line.style.width = W + 'px'; h.line.style.textAlign = 'center';
+  const h = words(document.getElementById('over'), 'Always on the beat. Always growing.', 'lg', 0, 300); h.line.style.width = W + 'px'; h.line.style.textAlign = 'center';
   h.line.id = 'ovImpact'; h.line.style.fontWeight = 400;
+  h.ws[3].style.color = C.cyan; h.ws[5].style.color = C.gold;
+  const beatWord = h.ws[3].parentElement; beatWord.style.transformOrigin = '50% 60%';
   h.line.style.filter = 'drop-shadow(0 0 3px #000) drop-shadow(0 0 6px #000) drop-shadow(0 0 10px #000) drop-shadow(0 8px 22px #000)';
   const line = $('div', 'abs tl-line', el), fill = $('div', 'abs tl-fill', el);
   const NODES = [['Web', 'Where we started', C.green], ['Apps', 'Mobile & tablet', C.pink], ['Online events', 'Pandemic years', C.navy], ['Event tech', '2023 · RSVP · Check-in', C.orange], ['Gen AI', 'Same year, 2023', C.gold], ['Workshops', 'Now', C.cyan]];
@@ -1049,6 +1088,7 @@ scene(130, 150, el => {
   return b => {
     const leave = E.i3(P(b, 136.5, 1.25));
     reveal(h, b, 132.5 - 1 / SPB, .25, 1, 136.5, .05); // 1 s earlier than beat 132.5
+    T(beatWord, { s: 1 + .08 * (b > 132 && b < 136.5 ? pulse(b, 5) : 0) }); // "beat." kicks with the kick drum
     T(line, { sx: E.io4(P(b, 133, 2)), o: 1 - leave });
     T(fill, { sx: E.io3(P(b, 133.5, 3)) * (1 - leave) });
     nodes.forEach(({ n, l }, i) => {
