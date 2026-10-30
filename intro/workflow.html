@@ -1206,6 +1206,9 @@ scene(122.6, 137.2, el => {
     reveal(tB, b, B0, .34, 1);
     T(uB, { sx: E.oExp(P(b, B0 + .65, 1)) });
     fadeUp(sB, b, B0 + 1);
+    // the bar wipe covers the frame on the next chapter's drop: be gone by then, so the
+    // outro headline never lands on top of this one
+    el.style.opacity = 1 - E.i3(P(b, 135.2, .9));
   };
 }, SHIFT);
 
@@ -1241,7 +1244,7 @@ scene(134, 160, el => {
   t2.style.cssText += ';text-align:center;color:' + C.cyan;
   return b => {
     const leave = E.i3(P(b, 140.5, 1.25));
-    reveal(h, b, 135.4, .25, 1, 140.5, .05);
+    reveal(h, b, 136, .25, 1, 140.5, .05);
     T(lastWord, { s: 1 + .08 * (b > 136 && b < 140.5 ? pulse(b, 5) : 0) });
     T(line, { sx: E.io4(P(b, 136.4, 2)), o: 1 - leave });
     T(fill, { sx: E.io3(P(b, 136.9, 3)) * (1 - leave) });
@@ -1386,7 +1389,7 @@ function render(b) {
   renderBG(b);
   for (const s of scenes) { const on = b >= s.from && b < s.to; show(s.el, on); if (on) s.render(b - s.shift); }
   show(document.getElementById('ovA'), b >= 14.5 && b < 35);
-  show(document.getElementById('ovOut'), b >= 154 && b < 162.5);
+  show(document.getElementById('ovOut'), b >= 155.8 && b < 162.5);
   renderFX(b);
   // camera: punch on the big drops
   const hit = DROPS.reduce((m, d) => Math.max(m, b >= d && b < d + 1 ? Math.exp(-(b - d) * 5) : 0), 0);
