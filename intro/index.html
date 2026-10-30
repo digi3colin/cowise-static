@@ -937,15 +937,20 @@ const SGL_A0 = -1;
 scene(SGL_R + SGL_A0, SGL_R + SGL_LEN + 2, el => {
   const cv = $('canvas', '', el); cv.width = W; cv.height = H; const ctx = cv.getContext('2d');
   const OUT = 'drop-shadow(0 0 3px #000) drop-shadow(0 0 6px #000) drop-shadow(0 0 10px #000) drop-shadow(0 8px 22px #000)';
+  const HY = 96; // headline top (moved up); each tagline sits under its headline
   // multi-thread half: the same title treatment, over a soft dark band so it reads on the bar field
   const bandB = $('div', 'abs', el); place(bandB, 0, 0, W, H); bandB.style.background = 'linear-gradient(180deg,rgba(10,10,13,.85) 0%,rgba(10,10,13,.6) 32%,rgba(10,10,13,0) 52%)';
-  const tB = words(el, 'COWISE IDEA LAB.', 'xl', 110, 140); tB.line.style.filter = OUT;
-  const uB = $('div', 'abs', el); place(uB, 116, 140 + 136, 90, 6); uB.style.background = C.cyan; uB.style.transformOrigin = '0 50%';
-  const sB = $('div', 'abs sub', el, 'Parallel workflows, instantly in sync.'); place(sB, 116, 312, 900); Object.assign(sB.style, { color: '#e8e8ee', filter: OUT });
+  const tB = words(el, 'COWISE IDEA LAB.', 'xl', 110, HY); tB.line.style.filter = OUT;
+  const uB = $('div', 'abs', el); place(uB, 116, HY + 136, 90, 6); uB.style.background = C.cyan; uB.style.transformOrigin = '0 50%';
+  // the tagline sits under the headline
+  const sB = $('div', 'abs', el, 'Parallel workflows, instantly in sync with technology.'); place(sB, 114, HY + 162);
+  Object.assign(sB.style, { fontSize: '56px', fontWeight: 300, lineHeight: 1.2, color: '#f2f2f6', whiteSpace: 'nowrap', filter: OUT });
   // traditional half: styled like the RSVP / Check-in / CRM stack (xl title, short colour underline, sub line)
-  const tA = words(el, 'Traditional agencies.', 'xl', 110, 140);
-  const uA = $('div', 'abs', el); place(uA, 116, 140 + 136, 90, 6); uA.style.background = '#a6a6b2'; uA.style.transformOrigin = '0 50%';
-  const sA = $('div', 'abs sub', el, 'Linear workflow.'); place(sA, 116, 312, 700);
+  const tA = words(el, 'Traditional agencies.', 'xl', 110, HY);
+  const uA = $('div', 'abs', el); place(uA, 116, HY + 136, 90, 6); uA.style.background = '#a6a6b2'; uA.style.transformOrigin = '0 50%';
+  // under the headline, matching the COWISE tagline that replaces it
+  const sA = $('div', 'abs', el, 'Linear workflow.'); place(sA, 114, HY + 162);
+  Object.assign(sA.style, { fontSize: '56px', fontWeight: 300, lineHeight: 1.2, color: '#c9c9d1', whiteSpace: 'nowrap', filter: OUT });
   // task glyphs (40×40, stroked): invite, RSVP, check-in, badge, report
   const GLYPH = ['M4 10h32v22H4zM4 10l16 13 16-13', 'M20 4a16 16 0 1 0 0.01 0M12 20l6 6 11-12', 'M4 4h12v12H4zM24 4h12v12H24zM4 24h12v12H4zM24 24h5v5h-5zM31 31h5v5h-5z', 'M8 4h24v32H8zM15 4v6h10V4M14 28h12M20 14a5 5 0 1 0 .01 0', 'M6 36h28M10 34V22M18 34V12M26 34V18M34 34V6'].map(d => new Path2D(d));
   const TC = [C.pink, C.cyan, C.orange, C.yellow, '#3d6bff']; // task colours (navy lifted so it reads)
