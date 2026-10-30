@@ -608,7 +608,7 @@ scene(35.4, 60.6, el => {
   const BX = 680, BY = 588, BW = 440, BH = 300;        // published database
   const PRIV = ['users · sessions', 'drafts · versions', 'trash · media', 'audit · classes', 'plugin secrets'];
   const PUB = ['pages', 'page_tags', 'tags'];
-  const DROPPED = ['PII', 'history', 'secrets'];
+  const DROPPED = ['PHI', 'history', 'secrets'];
 
   return b => {
     renderTag(tag, b, 36.4, 57.5);
