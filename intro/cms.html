@@ -944,6 +944,33 @@ chapter(92, 36, 24, el => {
   const sub = $('div', 'abs sub', el, 'Sign in with an account you already use. The CMS uses OAuth to connect to Google, Microsoft or Apple without storing your password.');
   place(sub, 110, 304, 780);
 
+  const flowLabel = $('div', 'abs eyebrow', el, 'OAuth sign-in');
+  place(flowLabel, 110, 522);
+  flowLabel.style.color = C.cyan;
+  const steps = [
+    ['01 · You', 'Choose a sign-in provider.'],
+    ['02 · Provider', 'Sign in with Google, Microsoft or Apple.'],
+    ['03 · CMS', 'Exchanges the sign-in code for tokens.'],
+  ].map(([title, detail], i) => {
+    const x = 110 + i * 338;
+    const card = $('div', 'abs panel', el);
+    place(card, x, 574, 282, 182);
+    card.style.padding = '23px 24px';
+    const titleEl = $('div', '', card, title);
+    titleEl.style.cssText = 'font-size:32px;color:' + (i === 2 ? C.green : C.cyan);
+    const detailEl = $('div', '', card, detail);
+    detailEl.style.cssText = 'margin-top:12px;font-size:26px;line-height:1.2;color:#c9c9d1';
+    const arrow = i > 0 ? $('div', 'abs', el, '→') : null;
+    if (arrow) {
+      place(arrow, x - 46, 637);
+      arrow.style.cssText += ';font-size:34px;color:var(--cyan)';
+    }
+    return { card, arrow };
+  });
+  const password = $('div', 'abs sub', el, 'The CMS never sees or stores your password.');
+  place(password, 110, 801, 1000);
+  password.style.color = C.green;
+
   const panel = $('div', 'abs panel', el);
   place(panel, 1160, 140, 660, 600);
   const heading = $('div', 'ph', panel, '<i></i>Controls<u>enforced in code</u>');
@@ -966,6 +993,13 @@ chapter(92, 36, 24, el => {
     renderTag(tag, b, 36.4, 57.5);
     reveal(h, b, 36.6, .45, 1, 57);
     fadeUp(sub, b, 38.4, 56.8);
+    fadeUp(flowLabel, b, 40, 56.8);
+    steps.forEach(({ card, arrow }, i) => {
+      const at = 41 + i * 2;
+      if (arrow) fadeUp(arrow, b, at - .5, 56.8, 12);
+      fadeUp(card, b, at, 56.8, 24);
+    });
+    fadeUp(password, b, 47, 56.8, 24);
     const pin = E.oExp(P(b, 37.4, 1.5)), pout = E.i3(P(b, 57, 1.3));
     T(panel, { x: (1 - pin) * 220 + pout * 220, o: pin * (1 - pout), ry: (1 - pin) * -14 });
     rows.forEach((row, i) => {
