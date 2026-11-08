@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>COWISE IDEA LAB — Custom CMS &amp; Workflow</title>
-<meta name="description" content="A 128 BPM motion graphics piece on custom CMS and workflow solutions for corporations: one content model, an approval flow that matches your company, connected systems, and AI inside the loop.">
-<meta property="og:title" content="COWISE IDEA LAB — Custom CMS &amp; Workflow">
+<title>COWISE IDEA LAB — Custom CMS</title>
+<meta name="description" content="A custom CMS built around your content: secure access, multilingual JSON, collaborative editing, a lean server bundle and plugins that work with your data.">
+<meta property="og:title" content="COWISE IDEA LAB — Custom CMS">
 <meta property="og:image" content="https://cowise.com.hk/media/images/og-services.jpg">
 <link rel="icon" href="/media/favicon/favicon.ico" type="image/x-icon">
 <style>
@@ -89,48 +89,68 @@ html,body{height:100%;background:#000;color:#fff;overflow:hidden;font-family:var
 .st.dr{background:rgba(255,255,255,.07);color:#8f8f9b}
 .trow .up{font:400 16px var(--mono);color:#63636f;width:80px;text-align:right;flex:none}
 
-/* ---- 03 · workflow pipeline ---- */
-.stg{position:absolute;border-radius:20px;background:rgba(255,255,255,.035);box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.08);will-change:transform}
-.stg .sh{display:flex;align-items:center;gap:14px;height:64px;padding:0 24px;border-radius:19px 19px 0 0;font-size:23px;letter-spacing:.22em;text-transform:uppercase;font-weight:500;color:#0d0d10}
-.stg .sn{margin-left:auto;font:400 22px var(--mono);opacity:.6}
-.doc{position:absolute;width:356px;border-radius:13px;background:#1e1e26;box-shadow:0 18px 42px rgba(0,0,0,.5),inset 0 0 0 1.5px rgba(255,255,255,.1);padding:15px 18px 16px;will-change:transform}
-.doc .dt{font-size:22px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.doc .ds{height:9px;border-radius:5px;background:#33333e;margin-top:11px}
-.doc .dm{display:flex;align-items:center;gap:11px;margin-top:13px;font:400 16px var(--mono);color:#7b7b88;white-space:nowrap}
-.doc .dk{width:11px;height:11px;border-radius:50%;flex:none}
-.badge{display:inline-flex;align-items:center;gap:20px;font-size:54px;font-weight:300;white-space:nowrap}
-.badge s{text-decoration:none;color:#8a8a96}
-.badge u{text-decoration:none;color:var(--green);font-weight:400}
-.badge em{font-style:normal;color:#5d5d68;font-size:44px}
+/* ---- 02 · security checklist / 05 · feature switches ---- */
+.chk{display:flex;align-items:center;gap:20px;height:66px;padding:0 32px;font-size:26px;color:#8f8f9b;white-space:nowrap}
+.chk .bx{width:30px;height:30px;border-radius:8px;box-shadow:inset 0 0 0 2px #4e4e5a;display:grid;place-items:center;flex:none}
+.chk .bx svg{width:18px;height:18px;opacity:0}
+.chk.on{color:#fff}
+.chk.on .bx{background:var(--green);box-shadow:none}
+.chk.on .bx svg{opacity:1}
+.chk .d{margin-left:auto;font:400 17px var(--mono);color:#63636f;padding-left:24px}
+.sw{display:flex;align-items:center;gap:20px;height:58px;padding:0 30px;font-size:24px;color:#777783;white-space:nowrap}
+.sw .tg{width:58px;height:30px;border-radius:15px;background:#2f2f39;flex:none;position:relative}
+.sw .tg i{position:absolute;top:4px;left:4px;width:22px;height:22px;border-radius:50%;background:#6a6a77}
+.sw.on{color:#fff}
+.sw.on .tg{background:rgba(124,249,191,.3)}
+.sw.on .tg i{left:32px;background:var(--green)}
+.sw .d{margin-left:auto;font:400 16px var(--mono);color:#5d5d68;padding-left:22px}
 
-/* ---- 04 · console ---- */
-.con{padding:18px 30px 0;font:400 20px var(--mono);line-height:1.5}
-.con .ln{display:flex;align-items:center;gap:16px;height:52px;white-space:nowrap;color:#9a9aa6}
-.con .ln b{font-weight:400;width:74px;flex:none}
-.con .ln s{text-decoration:none;flex:1;color:#cfcfd8}
-.con .ln u{text-decoration:none;color:#63636f}
+/* ---- 03 · what you fill in / what we store ---- */
+.tabs{display:flex;align-items:center;gap:10px;padding:18px 28px 6px}
+.tabs b{font:400 23px var(--font);letter-spacing:.04em;padding:7px 18px;border-radius:9px;background:rgba(255,255,255,.06);color:#8f8f9b}
+.tabs b.on{background:rgba(255,201,60,.18);color:var(--gold)}
+.tabs em{margin-left:auto;font-style:normal;font:400 19px var(--mono);color:#5d5d68}
+.fld{display:flex;align-items:center;gap:16px;height:64px;padding:0 26px;border-bottom:1px solid rgba(255,255,255,.055);font-size:23px;white-space:nowrap}
+.fld .lb{width:206px;color:#8f8f9b;flex:none}
+.fld .vl{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis}
+.fld .tp{font:400 15px var(--mono);letter-spacing:.08em;color:#5d5d68;flex:none}
+.code{font:400 19px var(--mono);line-height:1.62;padding:22px 28px;color:#cfcfd8;white-space:pre}
+.code div{height:30.8px}
+.code .k{color:var(--cyan)}.code .s{color:var(--green)}.code .n{color:var(--gold)}.code .p{color:#5f5f6b}
 
-/* ---- 05 · AI steps ---- */
-.step{display:flex;align-items:center;gap:20px;height:64px;padding:0 34px;font-size:27px;color:#9a9aa6;white-space:nowrap}
-.step .bx{width:32px;height:32px;border-radius:9px;box-shadow:inset 0 0 0 2px #4e4e5a;display:grid;place-items:center;flex:none}
-.step .bx svg{width:19px;height:19px;opacity:0}
-.step.on{color:#fff}
-.step.on .bx{background:var(--purple);box-shadow:none}
-.step.on .bx svg{opacity:1}
-.step .ms{margin-left:auto;font:400 17px var(--mono);color:#63636f}
-.prompt{height:100px;border-radius:50px;display:flex;align-items:center;padding:0 16px 0 40px;gap:20px;font-size:32px;font-weight:300;background:rgba(20,20,26,.8);box-shadow:inset 0 0 0 2px rgba(255,201,60,.55),0 24px 60px rgba(0,0,0,.45)}
-.prompt .txt{flex:1;white-space:nowrap;overflow:hidden;color:#eee}
-.caret{display:inline-block;width:3px;height:36px;background:var(--gold);vertical-align:-6px;margin-left:3px}
-.gen{height:68px;padding:0 34px;border-radius:34px;background:var(--gold);color:#111;display:flex;align-items:center;gap:12px;font-size:27px;font-weight:500;flex:none}
-.card{border-radius:20px;overflow:hidden;background:#1b1b22;box-shadow:0 30px 80px rgba(0,0,0,.5),inset 0 0 0 1.5px rgba(255,255,255,.09);padding:22px 24px}
-.card .hd{display:flex;align-items:center;gap:14px;font-size:26px}
-.card .hd b{font:400 17px var(--font);letter-spacing:.1em;padding:4px 12px;border-radius:7px;background:rgba(169,124,249,.2);color:#d8c7ff}
-.card .pct{margin-left:auto;font-family:var(--mono);font-size:19px;color:var(--gold)}
-.card .sk{height:13px;border-radius:7px;background:#2f2f38;margin-top:16px;transform-origin:0 50%}
-.appr{display:flex;align-items:center;gap:18px;height:76px;margin:0 30px;padding:0 24px;border-radius:16px;font-size:25px}
-.appr .av{width:40px;height:40px;border-radius:50%;flex:none}
-.appr .go{margin-left:auto;font-size:20px;letter-spacing:.1em;text-transform:uppercase;padding:9px 22px;border-radius:999px;font-weight:500}
+/* ---- 04 · the stack and what it costs ---- */
+.ptile{position:absolute;border-radius:18px;background:rgba(255,255,255,.04);box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.1);padding:22px 24px;will-change:transform}
+.ptile b{display:flex;align-items:center;gap:13px;font-size:31px;font-weight:400}
+.ptile b i{width:14px;height:14px;border-radius:4px;flex:none}
+.ptile small{display:block;margin-top:9px;font-size:21px;color:#8f8f9b;white-space:nowrap}
+/* ---- 04 · co-editing, versions, trash ---- */
+.coed{position:absolute;border-radius:22px;background:#15151b;box-shadow:0 40px 110px rgba(0,0,0,.55),inset 0 0 0 1.5px rgba(255,255,255,.1);overflow:hidden;will-change:transform}
+.coed .ch{display:flex;align-items:center;gap:14px;padding:22px 28px;border-bottom:1px solid rgba(255,255,255,.07);font-size:26px;white-space:nowrap}
+.coed .who{margin-left:auto;display:flex;gap:10px}
+.coed .who b{display:flex;align-items:center;gap:9px;font:400 20px var(--font);padding:5px 14px;border-radius:999px;background:rgba(255,255,255,.06);color:#c9c9d1}
+.coed .who b i{width:11px;height:11px;border-radius:50%;flex:none}
+.coed .doc{padding:22px 28px;font-size:27px;line-height:1.45;color:#e6e6ee}
+.coed .doc p{min-height:1.45em;margin-top:4px}
+.coed .doc em{font-style:normal;font:400 19px var(--mono);color:#63636f;display:block;margin-top:5px}
+.car{display:inline-block;width:3px;height:28px;vertical-align:-5px;margin-left:2px}
+.saved{position:absolute;right:26px;bottom:22px;display:flex;align-items:center;gap:10px;font:500 22px var(--font);letter-spacing:.08em;padding:8px 18px;border-radius:999px;background:rgba(124,249,191,.16);color:var(--green)}
+.vrow{position:absolute;height:64px;display:flex;align-items:center;gap:18px;padding:0 20px;border-radius:12px;background:rgba(255,255,255,.04);font-size:23px;white-space:nowrap;will-change:transform}
+.vrow .v{font:400 23px var(--mono);color:var(--green);width:52px;flex:none}
+.vrow .t{font:400 21px var(--mono);color:#8f8f9b;width:82px;flex:none}
+.vrow .u{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;color:#c9c9d1}
+.vrow .a{font:400 19px var(--mono);color:#5d5d68;flex:none}
+.vrow .rs{font:500 15px var(--font);letter-spacing:.14em;padding:5px 13px;border-radius:999px;background:rgba(124,231,249,.18);color:var(--cyan);flex:none}
+.note{font:400 21px var(--mono);letter-spacing:.03em;color:#63636f;white-space:nowrap}
+.dep{position:absolute;border-radius:20px;background:rgba(255,255,255,.04);box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.1);padding:26px 30px;will-change:transform}
+.dep b{display:flex;align-items:center;gap:15px;font-size:38px;font-weight:400;white-space:nowrap}
+.dep b i{width:16px;height:16px;border-radius:5px;flex:none}
+.dep b u{margin-left:auto;font:500 15px var(--font);letter-spacing:.16em;padding:5px 13px;border-radius:999px;text-decoration:none}
+.dep small{display:block;margin-top:16px;font:400 23px var(--mono);color:#b9b9c4;white-space:nowrap}
+.dep span{display:block;margin-top:10px;font-size:25px;color:#8f8f9b;white-space:nowrap}
+.big{font-size:104px;font-weight:200;line-height:1;letter-spacing:-.02em;font-variant-numeric:tabular-nums;white-space:nowrap}
 
+
+.ph u{margin-left:auto;font:400 18px var(--mono);letter-spacing:.06em;color:#63636f;text-decoration:none;text-transform:none}
 /* ---- 07 · outro ---- */
 .tl-line{left:260px;top:598px;width:1400px;height:4px;background:rgba(255,255,255,.2);transform-origin:0 50%}
 .tl-fill{left:260px;top:598px;width:1400px;height:4px;transform-origin:0 50%;background:linear-gradient(90deg,var(--green),var(--orange),var(--pink),var(--navy),var(--gold),var(--cyan))}
@@ -169,7 +189,7 @@ html,body{height:100%;background:#000;color:#fff;overflow:hidden;font-family:var
 </style>
 </head>
 <body>
-<div id="view"><div id="stage" aria-label="COWISE IDEA LAB custom CMS and workflow animation">
+<div id="view"><div id="stage" aria-label="COWISE IDEA LAB custom CMS animation">
   <canvas id="bg" width="1920" height="1080"></canvas>
   <canvas id="gl" width="1920" height="1080"></canvas>
   <div id="scenes"></div>
@@ -192,7 +212,7 @@ html,body{height:100%;background:#000;color:#fff;overflow:hidden;font-family:var
 <div id="start" role="button" tabindex="0" aria-label="Play">
   <div>
     <div class="play"><svg viewBox="0 0 24 24"><path d="M6 3l15 9-15 9z"/></svg></div>
-    <h1>COWISE IDEA LAB — Custom CMS &amp; Workflow</h1>
+    <h1>COWISE IDEA LAB — Custom CMS</h1>
     <p id="startNote">Loading 0%</p>
     <div id="lbar"><i></i></div>
   </div>
@@ -201,7 +221,7 @@ html,body{height:100%;background:#000;color:#fff;overflow:hidden;font-family:var
 <script>
 "use strict";
 /* ============================================================
-   COWISE IDEA LAB — Custom CMS & Workflow
+   COWISE IDEA LAB — Custom CMS
    Same grammar as intro/index.html: everything is a pure function of
    the playhead (in beats), so the picture is locked to the 128 BPM
    grid and stays scrubbable. Unlike the story film this one runs on a
@@ -211,20 +231,22 @@ html,body{height:100%;background:#000;color:#fff;overflow:hidden;font-family:var
      00   0 – 16   intro ............ "Every process starts with a single step."
      01  16 – 36   the content problem
      02  36 – 60   one custom CMS
-     03  60 – 84   the workflow: draft → review → approve → publish
-     04  84 –104   integrations
-     05 104 –124   AI in the loop
-     06 124 –136   off-the-shelf vs built around you
-     07 136 –160   outro
+     03  60 – 76   one document, every language 00:28.125
+     04  76 – 92   versions & co-editing      00:35.625
+     05  92 –108   secure by default          00:43.125
+     06 108 –124   fast because it is small   00:50.625
+     07 124 –140   host & plugins             00:58.125
+     08 140 –156   MIT license                01:05.625
+     09 156 –180   outro                      01:13.125
    ============================================================ */
 const BPM = 128, SPB = 60 / BPM;             // 0.46875 s per beat
-const END = 160;                             // beats → 75.00 s
+const END = 180;                             // beats → 84.375 s
 const DURATION = END * SPB;
 const W = 1920, H = 1080;
 const C = {pink:'#ff0062',cyan:'#7ce7f9',orange:'#fda602',yellow:'#ffde0b',navy:'#052675',green:'#7cf9bf',purple:'#a97cf9',gold:'#ffc93c',ink:'#0d0d10'};
 const STRIPES = [C.pink, C.cyan, C.orange, C.yellow, C.navy];
 const IMG = '/media/images/';
-const DROPS = [16, 36, 60, 84, 104, 124, 136, 144];
+const DROPS = [16, 36, 60, 76, 92, 108, 124, 140, 156, 164];
 
 /* ---------- math & easing ---------- */
 const clamp = (v, a = 0, b = 1) => v < a ? a : v > b ? b : v;
@@ -436,7 +458,7 @@ scene(0, 16.5, el => {
   const line2 = words(el, 'with a single step.', 'lg outlined', 0, 0);
   [line1, line2].forEach((g, k) => { g.line.style.left = '0'; g.line.style.width = '1920px'; g.line.style.textAlign = 'center'; g.line.style.top = (408 + k * 96) + 'px'; });
   const logo = $('div', 'abs', el); logo.id = 'logoA'; place(logo, 470, 360, 980);
-  const tagline = $('div', 'abs eyebrow', el, 'Custom CMS &amp; workflow · Hong Kong');
+  const tagline = $('div', 'abs eyebrow', el, 'Custom CMS · Hong Kong');
   place(tagline, 0, 780, 1920); tagline.style.textAlign = 'center'; tagline.style.color = '#fff';
   return b => {
     const hold = .5 / SPB; // the opening line stays 0.5 s longer, then leaves slowly
@@ -682,411 +704,517 @@ scene(35.4, 60.6, el => {
   };
 });
 
-/* ---------- 03 · The workflow ---------- */
-scene(59.4, 84.6, el => {
-  const tag = makeTag(el, '03', 'Workflow', C.orange);
-  const h1 = words(el, 'From draft to live.', 'xl', 104, 150);
-  const sub = $('div', 'abs sub', el, 'Review, approval and publishing — running exactly the way your company already works.');
-  place(sub, 110, 300, 820);
-  const badge = $('div', 'abs badge', el, '<s>2 days</s><em>&rarr;</em><u>20 minutes</u>'); place(badge, 110, 416);
-
-  /* audit trail */
-  const panel = $('div', 'abs panel', el); place(panel, 1180, 124, 660, 346);
-  const ph = $('div', 'ph', panel, '<i></i>Audit trail'); ph.style.color = C.green;
-  const con = $('div', 'con', panel);
-  const LOG = [
-    ['09:02', 'katie.w', 'created draft', ''],
-    ['09:14', 'legal', 'requested change', '×2'],
-    ['09:28', 'katie.w', 'updated 3 fields', ''],
-    ['09:31', 'legal', 'approved', 'ok'],
-    ['09:33', 'system', 'published EN 繁 简', '140ms'],
-  ];
-  const logs = LOG.map(([t, who, what, tail]) => $('div', 'ln', con,
-    `<b style="color:${C.green}">${t}</b><s>${who}<u> · ${what}</u></s><u>${tail}</u>`));
-
-  /* the pipeline */
-  const SX = [100, 555, 1010, 1465], SW = 415, SY = 556, SH = 384;
-  const SNAME = ['Draft', 'Review', 'Approve', 'Publish'];
-  const SCOL = [C.cyan, C.orange, C.yellow, C.green];
-  const stages = SNAME.map((n, k) => {
-    const s = $('div', 'abs stg', el); place(s, SX[k], SY, SW, SH);
-    const hd = $('div', 'sh', s, n.toUpperCase() + '<span class="sn">0</span>');
-    hd.style.background = SCOL[k];
-    return { s, n: hd.querySelector('.sn') };
+/* Map original choreography onto four-bar chapters; seeking stays deterministic. */
+function chapter(start, sourceStart, sourceLength, build) {
+  scene(start - .4, start + 16.4, el => {
+    const draw = build(el);
+    return b => draw(sourceStart + (b - start) * sourceLength / 16);
   });
-  const DOCS = [
-    'Autumn collection — launch', 'Store opening · Causeway Bay', 'Investor update · Q3',
-    'Careers — graduate programme', 'Press kit — media centre',
+}
+const TICK = '<svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10" fill="none" stroke="#06221a" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+/* ---------- 03 · Data format: lect, where a field carries all of its languages ---------- */
+chapter(60, 60, 24, el => {
+  const tag = makeTag(el, '03', 'Data format', C.gold);
+  const h = words(el, 'One document, every language.', 'xl', 104, 150);
+  h.line.style.fontSize = '124px';
+  h.ws.slice(2).forEach(w => w.style.color = C.gold);
+  const sub = $('div', 'abs sub', el, 'Structured JSON keeps every translation inside the same field. Switch the editor’s language; the document stays together.');
+  place(sub, 110, 304, 980);
+
+  const LANGS = ['EN', '繁中', '简中'];
+  const TITLES = ['Supplier agreement', '供應商協議', '供应商协议'];
+  // the editor switches language; the record underneath never changes shape
+  const activeLang = b => b >= 77 ? 0 : b >= 74 ? 2 : b >= 71 ? 1 : 0;
+
+  const left = $('div', 'abs panel', el); place(left, 100, 430, 700, 540);
+  const lh = $('div', 'ph', left, '<i></i>What your staff fills in'); lh.style.color = C.cyan;
+  const tabs = $('div', 'tabs', left, LANGS.map(l => `<b>${l}</b>`).join('') + '<em>one record</em>');
+  const tabEls = [...tabs.querySelectorAll('b')];
+  const lw = $('div', '', left);
+  const FLD = [
+    ['Title', '', 'multilingual'],
+    ['Document no.', 'COR-PRC-2026-0142', 'attribute'],
+    ['Classification', 'Confidential', 'taxonomy'],
+    ['Attachment', 'sa-0142.pdf', 'file'],
+    ['Owner · Supplier', 'K. Wong · ACME Ltd', 'pointers'],
   ];
-  const META = [['katie.w · just now', '#8a8a96'], ['legal · reviewing', C.orange], ['approved by legal', C.yellow], ['live · EN 繁 简', C.green]];
-  const docs = DOCS.map(t => {
-    const d = $('div', 'doc', el, `<div class="dt">${t}</div><div class="ds"></div><div class="dm"><span class="dk"></span><span class="dx"></span></div>`);
-    return { el: d, sk: d.querySelector('.ds'), dk: d.querySelector('.dk'), dx: d.querySelector('.dx') };
-  });
+  const flds = FLD.map(([l, v, t]) => $('div', 'fld', lw, `<span class="lb">${l}</span><span class="vl">${v}</span><span class="tp">${t}</span>`));
+  const titleVal = flds[0].querySelector('.vl');
+
+  const right = $('div', 'abs panel', el); place(right, 860, 430, 960, 540);
+  const rh = $('div', 'ph', right, '<i></i>What we store<u>lect · JSON</u>'); rh.style.color = C.gold;
+  const code = $('div', 'code', right);
+  const K = s => `<span class="k">"${s}"</span><span class="p">:</span>`;
+  const S = s => `<span class="s">"${s}"</span>`;
+  const p_ = s => `<span class="p">${s}</span>`;
+  const CODE = [
+    p_('{'),
+    `  ${K('_type')} ${S('document')}${p_(',')}`,
+    `  ${K('title')} ${p_('{')}`,
+    `    ${K('en')} ${S('Supplier agreement')}${p_(',')}`,
+    `    ${K('zh-hant')} ${S('供應商協議')}${p_(',')}`,
+    `    ${K('zh-hans')} ${S('供应商协议')}`,
+    `  ${p_('},')}`,
+    `  ${K('doc_no')} ${S('COR-PRC-2026-0142')}${p_(',')}`,
+    `  ${K('classification')} ${S('confidential')}${p_(',')}`,
+    `  ${K('blocks')} ${p_('[')}`,
+    `    ${p_('{')} ${K('_type')} ${S('file')}${p_(',')} ${K('key')} ${S('procurement/sa-0142.pdf')} ${p_('}')}`,
+    `  ${p_('],')}`,
+    `  ${K('_pointers')} ${p_('{')} ${K('owner')} ${S('user_8812')}${p_(',')} ${K('supplier')} ${S('org_4471')} ${p_('}')}`,
+    p_('}'),
+  ];
+  const lines = CODE.map(c => $('div', '', code, c));
+  const OWNER = [0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 3, 3, 4, 4];  // which field brings each line in
+  const LANGLINE = [3, 4, 5];                                 // the three language lines of "title"
+  const LINK = [null, 7, 8, 10, 12];                          // field → the key it becomes
+
+  const foot = $('div', 'abs', el, 'Add a language and nothing else changes — no new files, no rebuild, no migration.');
+  place(foot, 104, 1004); foot.style.cssText += ';font:400 26px var(--mono);letter-spacing:.05em;color:#7b7b88';
+
   const cv = $('canvas', 'abs', el); cv.width = W; cv.height = H; const ctx = cv.getContext('2d');
   cv.style.zIndex = 0;
-  const T0 = 64, GAP = 1.6, ROWY = [636, 744, 852];
 
   return b => {
     renderTag(tag, b, 60.4, 81.5);
-    reveal(h1, b, 60.6, .45, 1, 81);
-    fadeUp(sub, b, 62, 80.8);
-    const bp = E.oBack(P(b, 76, .7), 2.6);
-    T(badge, { s: Math.max(0, bp) * (1 + .04 * (b > 76 && b < 81 ? pulse(b, 5) : 0)), o: P(b, 76, .2) * (1 - E.i3(P(b, 80.8, 1))) });
-    const pin = E.oExp(P(b, 62.4, 1.5)), pout = E.i3(P(b, 81, 1.2));
-    T(panel, { x: (1 - pin) * 200 + pout * 200, o: pin * (1 - pout), ry: (1 - pin) * -14 });
-    logs.forEach((l, i) => { const p = E.o3(P(b, 66 + i * 1.3, .7)); T(l, { x: (1 - p) * 40, o: p }); });
+    reveal(h, b, 60.6, .4, 1, 81);
+    fadeUp(sub, b, 62.2, 80.8);
+    const lin = E.oExp(P(b, 63.4, 1.5)), out = E.i3(P(b, 81, 1.3));
+    T(left, { x: (1 - lin) * -180 + out * -180, o: lin * (1 - out), ry: (1 - lin) * 12 });
+    T(right, { x: (1 - lin) * 180 + out * 180, o: lin * (1 - out), ry: (1 - lin) * -12 });
 
-    // stage columns rise one per beat
-    const sout = E.i3(P(b, 81, 1.3));
-    stages.forEach((st, k) => {
-      const p = E.oBack(P(b, 62.6 + k * .5, .8), 1.8);
-      T(st.s, { y: (1 - p) * 120 + sout * 160, o: P(b, 62.6 + k * .5, .25) * (1 - sout), s: Math.max(.6, p) * (1 + .012 * pulse(b + k * .12, 7)) });
+    const L = activeLang(b);
+    fadeUp(tabs, b, 64.4, 80.7, 20);
+    tabEls.forEach((t, i) => {
+      t.classList.toggle('on', i === L);
+      T(t, { s: 1 + .07 * (i === L ? pulse(b * .5, 4) : 0) });
     });
+    setText(titleVal, TITLES[L]);
+    titleVal.style.color = C.gold;
 
-    // the documents walk the pipeline, one stage at a time
-    const counts = [0, 0, 0, 0];
-    docs.forEach((d, i) => {
-      const t0 = T0 + i * .9, te = t0 + 3 * GAP + 2.1;
-      const on = b >= t0 - .4 && b < te + 1.6;
-      show(d.el, on); if (!on) return;
-      const u = clamp((b - t0) / GAP, 0, 3);
-      const k0 = Math.min(3, Math.floor(u)), k1 = Math.min(3, k0 + 1);
-      const f = E.io3(clamp((u - k0) / .55));
-      const x = lerp(SX[k0], SX[k1], f) + 30;
-      const row = ROWY[i % 3];
-      const hop = Math.sin(Math.PI * clamp((u - k0) / .55)) * -34 * (k1 !== k0 ? 1 : 0);
-      const land = f > .5 && k1 !== k0 ? 1 : 0;
-      const inp = E.oBack(P(b, t0, .7), 2), outp = E.i3(P(b, te, 1.1));
-      const stg = f > .5 ? k1 : k0;
-      counts[stg]++;
-      T(d.el, {
-        x: x + (1 - inp) * -70, y: row + hop - outp * 120,
-        s: Math.max(0, inp) * (1 - outp * .25) * (1 + .05 * land * pulse(b, 8)),
-        o: P(b, t0, .25) * (1 - outp),
-      });
-      d.el.style.boxShadow = `0 18px 42px rgba(0,0,0,.5),inset 0 0 0 1.5px ${stg === 3 ? 'rgba(124,249,191,.55)' : 'rgba(255,255,255,.1)'}`;
-      d.sk.style.background = SCOL[stg]; d.sk.style.opacity = .35 + .2 * stg;
-      T(d.sk, { sx: .3 + stg * .23 });
-      d.dk.style.background = SCOL[stg];
-      setText(d.dx, META[stg][0]); d.dx.style.color = META[stg][1];
+    flds.forEach((f, i) => { const p = E.o3(P(b, 65 + i * .8, .7)); T(f, { x: (1 - p) * -30, o: p }); });
+    lines.forEach((l, i) => {
+      const p = E.o3(P(b, 65.45 + OWNER[i] * .8, .5));
+      const k = LANGLINE.indexOf(i);
+      // the language the editor is looking at lights up in the record
+      const hot = k === L ? 1 : 0;
+      T(l, { x: (1 - p) * 26, o: p * (k < 0 ? 1 : .42 + .58 * hot) });
+      l.style.background = hot && k >= 0 ? 'linear-gradient(90deg,rgba(255,201,60,.14),rgba(255,201,60,0))' : 'none';
     });
-    stages.forEach((st, k) => setText(st.n, String(counts[k])));
+    fadeUp(foot, b, 78, 80.6, 24);
 
-    // connectors: dashed arrows marching between the columns
+    // one field on the left, three languages on the right
     ctx.clearRect(0, 0, W, H);
-    const ca = E.o3(P(b, 64, 1)) * (1 - E.i3(P(b, 81, 1)));
+    const ca = lin * (1 - out);
     if (ca > .01) {
-      ctx.save(); ctx.globalAlpha = ca; ctx.lineWidth = 3; ctx.lineCap = 'round';
-      for (let k = 0; k < 3; k++) {
-        const x0 = SX[k] + SW + 4, x1 = SX[k + 1] - 4, y = SY + SH / 2 + 40;
-        ctx.strokeStyle = SCOL[k + 1]; ctx.setLineDash([9, 13]); ctx.lineDashOffset = -(b * 26) % 22;
-        ctx.beginPath(); ctx.moveTo(x0, y); ctx.lineTo(x1 - 10, y); ctx.stroke();
-        ctx.setLineDash([]);
-        ctx.beginPath(); ctx.moveTo(x1 - 14, y - 9); ctx.lineTo(x1, y); ctx.lineTo(x1 - 14, y + 9); ctx.stroke();
+      ctx.save(); ctx.lineWidth = 2;
+      const curve = (y0, y1, col, a, p) => {
+        const x0 = 800, x1 = 860;
+        ctx.globalAlpha = ca * a; ctx.strokeStyle = col;
+        ctx.beginPath(); ctx.moveTo(x0, y0);
+        ctx.bezierCurveTo(x0 + 34, y0, x1 - 34, y1, lerp(x0, x1, p), lerp(y0, y1, p));
+        ctx.stroke();
+      };
+      const rowY = i => 430 + flds[i].offsetTop + flds[i].offsetHeight / 2;
+      const lineY = i => 430 + lines[i].offsetTop + lines[i].offsetHeight / 2;
+      // the hero: Title fans out into its three languages
+      const tp = E.io3(P(b, 65.3, .9));
+      if (tp > 0) LANGLINE.forEach((ln, k) => curve(rowY(0), lineY(ln), C.gold, k === L ? .95 : .3, tp));
+      // and the fields that are the same in every language
+      for (let i = 1; i < FLD.length; i++) {
+        const p = E.io3(P(b, 65.3 + i * .8, .8)); if (p <= 0) continue;
+        curve(rowY(i), lineY(LINK[i]), STRIPES[i % 5], .75, p);
       }
       ctx.restore();
     }
   };
 });
 
-/* ---------- 04 · Integrations ---------- */
-scene(83.4, 104.6, el => {
-  const tag = makeTag(el, '04', 'Integrations', C.green);
-  const h1 = words(el, 'Your systems,', 'xl', 104, 150);
-  const h2 = words(el, 'one flow.', 'xl', 104, 286); h2.ws[1].style.color = C.green;
-  const sub = $('div', 'abs sub', el, 'ERP, CRM, commerce, email, single sign-on and BI — connected once, used everywhere.');
-  place(sub, 110, 440, 620);
+/* ---------- 04 · Nothing is ever lost: co-editing, versions, trash ---------- */
+chapter(76, 84, 20, el => {
+  const tag = makeTag(el, '04', 'Versions & co-editing', C.green);
+  const h1 = words(el, 'Nothing is', 'xl', 104, 150);
+  const h2 = words(el, 'ever lost.', 'xl', 104, 286); h2.ws[1].style.color = C.green;
+  const sub = $('div', 'abs sub', el, 'Edit together. Keep previous versions. Restore deleted documents with their history intact.');
+  place(sub, 110, 444, 640);
 
-  const panel = $('div', 'abs panel', el); place(panel, 104, 606, 700, 372);
-  const ph = $('div', 'ph', panel, '<i></i>Webhooks · live'); ph.style.color = C.green;
-  const con = $('div', 'con', panel);
-  const LOG = [
-    ['POST', '/hooks/page.published → ERP', '200 · 42ms'],
-    ['SYNC', 'products ← ERP', '1,284 rows'],
-    ['PUSH', 'segment → CRM', '9,210 contacts'],
-    ['SEND', 'campaign → eDM', 'queued'],
-    ['EXPORT', 'metrics → BI', 'ok'],
+  /* two editors in the same document */
+  const coed = $('div', 'abs coed', el); place(coed, 880, 150, 940, 392);
+  const ch = $('div', 'ch', coed, 'Supplier agreement · draft' +
+    `<span class="who"><b><i style="background:${C.cyan}"></i>K. Wong</b><b><i style="background:${C.pink}"></i>Priya</b></span>`);
+  const doc = $('div', 'doc', coed);
+  const A = 'Clause 4 — Delivery', AT = 'The supplier shall deliver within thirty (30) days of the purchase order.';
+  const B = 'Payment terms', BT = '30 days from invoice date';
+  doc.innerHTML =
+    `<div style="font-size:23px;color:#8f8f9b">${A}</div><em>richtext · merges character by character</em>` +
+    `<p><span class="pa"></span><i class="car" style="background:${C.cyan}"></i></p>` +
+    `<div style="font-size:23px;color:#8f8f9b;margin-top:22px">${B}</div><em>field · last write wins</em>` +
+    `<p><span class="pb"></span><i class="car" style="background:${C.pink}"></i></p>`;
+  const pa = doc.querySelector('.pa'), pb = doc.querySelector('.pb');
+  const cars = [...doc.querySelectorAll('.car')];
+  const saved = $('div', 'saved', coed, '✓ saved · v7');
+  const dots = [...ch.querySelectorAll('.who i')];
+
+  /* the version log: append-only, newest on top */
+  const vp = $('div', 'abs panel', el); place(vp, 104, 590, 840, 410);
+  const vh = $('div', 'ph', vp, '<i></i>Versions<u>append-only</u>'); vh.style.color = C.green;
+  const VER = [
+    ['v7', '09:33', 'katie.w', 'saved just now', 0],
+    ['v6', '09:28', 'priya', 'update', 0],
+    ['v5', '09:14', 'legal', 'update', 1],
+    ['v4', '08:52', 'katie.w', 'create', 2],
   ];
-  const logs = LOG.map(([m, t, tail]) => $('div', 'ln', con, `<b style="color:${C.cyan};width:96px">${m}</b><s>${t}</s><u>${tail}</u>`));
+  const vrows = VER.map(([v, t, u, a]) => {
+    const r = $('div', 'vrow', vp, `<span class="v">${v}</span><span class="t">${t}</span><span class="u">${u} · ${a}</span><span class="rs">RESTORE</span>`);
+    place(r, 28, 0); r.style.right = '28px'; r.style.width = '';
+    return { r, rs: r.querySelector('.rs') };
+  });
 
-  const cv = $('canvas', 'abs', el); cv.width = W; cv.height = H; const ctx = cv.getContext('2d');
-  const HX = 1340, HY = 566, HR = 92, ORB = 326;
-  const SATS = [['ERP', C.pink], ['CRM', C.cyan], ['Commerce', C.orange], ['eDM', C.yellow], ['SSO', C.green], ['BI', C.purple]];
-  const SW = 196, SH = 70;
-  const sat = i => { const a = -Math.PI / 2 + i * Math.PI / 3; return [HX + Math.cos(a) * ORB, HY + Math.sin(a) * ORB]; };
+  /* the bin: a deletion is a move, not an erasure */
+  const tp = $('div', 'abs panel', el); place(tp, 984, 590, 836, 410);
+  const th = $('div', 'ph', tp, '<i></i>Trash<u>restore anything</u>'); th.style.color = C.orange;
+  const trow = $('div', 'vrow', tp, '<span class="u">Invoice INV-2026-0881</span><span class="a">4 versions kept</span><span class="rs" style="background:rgba(253,166,2,.18);color:var(--orange)">RESTORE</span>');
+  const tpill = trow.querySelector('.rs');
+  place(trow, 28, 104); trow.style.right = '28px'; trow.style.width = '';
+  const note = $('div', 'abs note', el, 'every save appends a row · a deleted page keeps its versions and its tags');
+  place(note, 104, 1018);
+
+
+
 
   return b => {
     renderTag(tag, b, 84.4, 101.5);
     reveal(h1, b, 84.6, .45, 1, 101);
     reveal(h2, b, 85.4, .45, 1, 101.2);
-    fadeUp(sub, b, 86.8, 100.8);
-    const pin = E.oExp(P(b, 87.4, 1.5)), pout = E.i3(P(b, 101, 1.2));
-    T(panel, { x: (1 - pin) * -200 + pout * -200, o: pin * (1 - pout), ry: (1 - pin) * 14 });
-    logs.forEach((l, i) => { const p = E.o3(P(b, 90 + i * 1.1, .7)); T(l, { x: (1 - p) * -40, o: p }); });
+    fadeUp(sub, b, 86.4, 100.8);
+    const out = E.i3(P(b, 101, 1.3));
+
+    // ---- both editors type at the same time ----
+    const cin = E.oExp(P(b, 86, 1.5));
+    T(coed, { x: (1 - cin) * 260 + out * 220, y: Math.sin(b * .45) * 6, o: cin * (1 - out), ry: (1 - cin) * -14 });
+    const ta = E.io3(P(b, 87, 3.2)), tbp = E.io3(P(b, 87.4, 3));
+    setText(pa, AT.slice(0, Math.round(AT.length * ta)));
+    setText(pb, BT.slice(0, Math.round(BT.length * tbp)));
+    const typing = b < 90.5;
+    cars.forEach((c, i) => T(c, { o: typing ? (frac(b * 2 + i * .3) < .55 ? 1 : .15) : 0 }));
+    dots.forEach((d, i) => T(d, { s: 1 + .35 * pulse(b + i * .5, 5) }));
+    const sv = E.oBack(P(b, 90.6, .6), 2.4);
+    T(saved, { s: Math.max(0, sv) * (1 + .06 * pulse(b, 6)), o: P(b, 90.6, .2) });
+
+    // ---- the version log ----
+    const vin = E.oExp(P(b, 89, 1.4));
+    T(vp, { y: (1 - vin) * 70 + out * 90, o: vin * (1 - out) });
+    // the save pushes the history down a row and lands v7 on top
+    const push = E.oBack(P(b, 90.9, .7), 1.6);
+    vrows.forEach(({ r, rs }, i) => {
+      const isNew = i === 0;
+      const at = isNew ? 90.9 : 89.4 + (i - 1) * .35;
+      const slot = isNew ? 0 : VER[i][4] + push;
+      const p = E.oBack(P(b, at, .7), isNew ? 2.4 : 1.6);
+      T(r, { y: 92 + slot * 74, x: (1 - p) * (isNew ? 0 : -40), s: isNew ? Math.max(0, p) : 1, o: P(b, at, .25) });
+      r.style.background = isNew ? 'rgba(124,249,191,.1)' : 'rgba(255,255,255,.04)';
+      // one older row offers itself back
+      const ra = i === 2 ? E.oBack(P(b, 95.2, .6), 2.2) : 0;
+      T(rs, { s: Math.max(0, ra) * (1 + .1 * (b > 95.2 ? pulse(b, 6) : 0)), o: ra });
+    });
+    fadeUp(note, b, 96.4, 100.6, 20);
+
+    // ---- the bin ----
+    const tin = E.oExp(P(b, 93, 1.4));
+    T(tp, { y: (1 - tin) * 70 + out * 90, o: tin * (1 - out) });
+    const drop = E.oBack(P(b, 95.8, .8), 1.8);            // the deleted page arrives
+    const back = E.io3(P(b, 99.2, 1.3));                   // and is put back, whole
+    const restored = b >= 99;
+    T(trow, { x: (1 - drop) * 260, y: -back * 64, o: P(b, 95.8, .25) * (1 - back) });
+    trow.style.background = restored ? `rgba(124,249,191,${(.1 + .2 * (1 - back)).toFixed(3)})` : 'rgba(255,255,255,.04)';
+    setText(tpill, restored ? 'RESTORED' : 'RESTORE');
+    tpill.style.background = restored ? 'rgba(124,249,191,.2)' : 'rgba(253,166,2,.18)';
+    tpill.style.color = restored ? C.green : C.orange;
+    T(tpill, { s: 1 + .12 * (b > 99 && b < 100 ? pulse(b, 6) : 0) });
+  };
+});
+
+/* ---------- 05 · Security ---------- */
+chapter(92, 36, 24, el => {
+  const tag = makeTag(el, '05', 'Security', C.green);
+  const h = words(el, 'Secure by default.', 'xl', 104, 160);
+  h.ws[2].style.color = C.green;
+  const sub = $('div', 'abs sub', el, 'Short-lived access tokens, capability-based roles and scoped plugins. Public sites read a separate published database.');
+  place(sub, 110, 304, 700);
+
+  /* the controls, ticking on */
+  const panel = $('div', 'abs panel', el); place(panel, 1180, 140, 640, 600);
+  const ph = $('div', 'ph', panel, '<i></i>Controls<u>enforced in code</u>'); ph.style.color = C.green;
+  const SEC = [
+    ['OAuth 2.1 · PKCE', 'Google · Microsoft · Apple'],
+    ['Access token', '15 min'],
+    ['Refresh token', 'rotated, hashed'],
+    ['Capability-based roles', 'checked per route'],
+    ['Private media', 'served by the Worker'],
+    ['Plugins', 'approved, scoped, pinned'],
+    ['Audit trail', 'chained seals'],
+  ];
+  const wrap = $('div', '', panel); wrap.style.cssText = 'padding-top:20px';
+  const chks = SEC.map(([t, d]) => $('div', 'chk', wrap, `<span class="bx">${TICK}</span>${t}<span class="d">${d}</span>`));
+
+  /* the split: what the public can ever reach */
+  const cv = $('canvas', 'abs', el); cv.width = W; cv.height = H; const ctx = cv.getContext('2d');
+  cv.style.zIndex = 0;
+  const AX = 100, AY = 548, AW = 440, AH = 404;        // private CMS database
+  const BX = 680, BY = 588, BW = 440, BH = 300;        // published database
+  const PRIV = ['users · sessions', 'drafts · versions', 'trash · media', 'audit · classes', 'plugin secrets'];
+  const PUB = ['pages', 'page_tags', 'tags'];
+  const DROPPED = ['sessions', 'history', 'secrets'];
+
+  return b => {
+    renderTag(tag, b, 36.4, 57.5);
+    reveal(h, b, 36.6, .45, 1, 57);
+    fadeUp(sub, b, 38.4, 56.8);
+    const pin = E.oExp(P(b, 37.4, 1.5)), pout = E.i3(P(b, 57, 1.3));
+    T(panel, { x: (1 - pin) * 220 + pout * 220, o: pin * (1 - pout), ry: (1 - pin) * -14 });
+    chks.forEach((c, i) => {
+      const at = 40 + i * 1.5, p = E.o3(P(b, at - 1, .6));
+      c.classList.toggle('on', b >= at);
+      T(c, { x: (1 - p) * 30, o: p * .55 + (b >= at ? .45 : 0) });
+    });
 
     ctx.clearRect(0, 0, W, H);
-    const ga = E.o3(P(b, 85.6, 1)) * (1 - E.i3(P(b, 101, 1.2)));
-    if (ga <= .01) return;
-    ctx.save(); ctx.globalAlpha = ga; ctx.textBaseline = 'middle'; ctx.textAlign = 'center';
-    // edges + packets
-    for (let i = 0; i < SATS.length; i++) {
-      const at = 87 + i * .5, p = E.io3(P(b, at, 1)); if (p <= 0) continue;
-      const [sx, sy] = sat(i), col = SATS[i][1];
-      const ang = Math.atan2(sy - HY, sx - HX);
-      const x0 = HX + Math.cos(ang) * (HR + 8), y0 = HY + Math.sin(ang) * (HR + 8);
-      const len = Math.hypot(sx - x0, sy - y0) - SH / 2 - 6;
-      const ex = x0 + Math.cos(ang) * len * p, ey = y0 + Math.sin(ang) * len * p;
-      ctx.strokeStyle = col; ctx.globalAlpha = ga * .4; ctx.lineWidth = 2;
-      ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(ex, ey); ctx.stroke();
-      // packets ride both ways from beat 90
-      if (b >= 90) {
-        ctx.globalAlpha = ga;
-        for (let q = 0; q < 3; q++) {
-          const t = frac(b * .55 + i * .17 + q * .34);
-          const o = q % 2 ? 1 - t : t;                 // alternate direction
-          const px_ = lerp(x0, x0 + Math.cos(ang) * len, o) * 1, py_ = lerp(y0, y0 + Math.sin(ang) * len, o);
-          if (o > p) continue;
-          ctx.fillStyle = col;
-          ctx.save(); ctx.translate(px_, py_); ctx.rotate(ang); ctx.fillRect(-7, -4.5, 14, 9); ctx.restore();
-        }
-      }
-      // satellite
-      const np = E.oBack(P(b, at + .5, .6), 2.2); if (np <= 0) continue;
-      ctx.globalAlpha = ga;
-      ctx.save(); ctx.translate(sx, sy); ctx.scale(Math.max(0, np), Math.max(0, np));
-      roundRect(ctx, -SW / 2, -SH / 2, SW, SH, 14);
-      ctx.fillStyle = 'rgba(13,13,16,.92)'; ctx.fill();
+    const da = E.o3(P(b, 44, 1.2)) * (1 - E.i3(P(b, 56.8, 1.2)));
+    if (da <= .01) return;
+    ctx.save(); ctx.globalAlpha = da; ctx.textBaseline = 'middle';
+    const box = (x, y, w, hh, col, title, lines, lock) => {
+      roundRect(ctx, x, y, w, hh, 18);
+      ctx.fillStyle = 'rgba(255,255,255,.03)'; ctx.fill();
       ctx.strokeStyle = col; ctx.lineWidth = 2; ctx.stroke();
-      ctx.fillStyle = col; ctx.font = '400 32px "Barlow Semi Condensed"';
-      ctx.fillText(SATS[i][0], 0, 1);
-      ctx.restore();
+      ctx.fillStyle = col; ctx.font = '500 27px "Barlow Semi Condensed"'; ctx.textAlign = 'left';
+      ctx.fillText(title, x + 26, y + 40);
+      if (lock) { // a padlock on the private side
+        ctx.save(); ctx.translate(x + w - 46, y + 36); ctx.strokeStyle = col; ctx.lineWidth = 2.6; ctx.lineCap = 'round';
+        ctx.strokeRect(-11, -2, 22, 16); ctx.beginPath(); ctx.arc(0, -2, 7, Math.PI, 0); ctx.stroke(); ctx.restore();
+      }
+      ctx.font = '400 24px ui-monospace,Menlo,monospace'; ctx.fillStyle = '#9a9aa6';
+      lines.forEach((l, i) => ctx.fillText(l, x + 26, y + 88 + i * 44));
+    };
+    box(AX, AY, AW, AH, C.pink, 'CMS database · private', PRIV, true);
+    box(BX, BY, BW, BH, C.green, 'Published database', PUB, false);
+    // publish arrow with the projection that drops what must not travel
+    const pa = E.io3(P(b, 47, 1.6));
+    if (pa > 0) {
+      const x0 = AX + AW + 10, x1 = BX - 10, y = BY + 60;
+      ctx.strokeStyle = C.cyan; ctx.lineWidth = 3; ctx.setLineDash([10, 12]); ctx.lineDashOffset = -(b * 26) % 22;
+      ctx.beginPath(); ctx.moveTo(x0, y); ctx.lineTo(lerp(x0, x1 - 14, pa), y); ctx.stroke(); ctx.setLineDash([]);
+      if (pa >= 1) { ctx.beginPath(); ctx.moveTo(x1 - 16, y - 10); ctx.lineTo(x1, y); ctx.lineTo(x1 - 16, y + 10); ctx.stroke(); }
+      ctx.fillStyle = C.cyan; ctx.font = '400 23px "Barlow Semi Condensed"'; ctx.textAlign = 'center';
+      ctx.fillText('publish', (x0 + x1) / 2, y - 28);
+      // fields falling out of the stream
+      ctx.font = '400 21px ui-monospace,Menlo,monospace';
+      DROPPED.forEach((t, i) => {
+        const at = 48.6 + i * .8, f = P(b, at, 2.2); if (f <= 0) return;
+        ctx.globalAlpha = da * (1 - E.i2(f)) * .95; ctx.fillStyle = C.pink;
+        ctx.fillText(t, x0 + 38 + i * 48, y + 20 + E.i2(f) * 190);
+        ctx.globalAlpha = da;
+      });
+      // the public side, below
+      const ca = E.o3(P(b, 51, 1.2));
+      if (ca > 0) {
+        ctx.globalAlpha = da * ca;
+        ctx.strokeStyle = C.green; ctx.lineWidth = 3;
+        ctx.beginPath(); ctx.moveTo(BX + BW / 2, BY + BH + 6); ctx.lineTo(BX + BW / 2, BY + BH + 44); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(BX + BW / 2 - 10, BY + BH + 30); ctx.lineTo(BX + BW / 2, BY + BH + 44); ctx.lineTo(BX + BW / 2 + 10, BY + BH + 30); ctx.stroke();
+        ctx.fillStyle = '#c9c9d1'; ctx.font = '400 27px "Barlow Semi Condensed"'; ctx.textAlign = 'center';
+        ctx.fillText('Public website · read-only', BX + BW / 2, BY + BH + 76);
+        ctx.fillStyle = '#6e6e7a'; ctx.font = '400 21px ui-monospace,Menlo,monospace';
+        ctx.fillText('no users · no sessions · no drafts', BX + BW / 2, BY + BH + 114);
+        ctx.globalAlpha = da;
+      }
     }
-    // the hub
-    const hp = E.oBack(P(b, 85.6, .9), 2);
-    ctx.globalAlpha = ga;
-    ctx.save(); ctx.translate(HX, HY); ctx.scale(Math.max(0, hp), Math.max(0, hp));
-    const ring = pulse(b, 4);
-    ctx.strokeStyle = 'rgba(124,231,249,' + (.5 * ring).toFixed(3) + ')'; ctx.lineWidth = 3;
-    ctx.beginPath(); ctx.arc(0, 0, HR + 14 + (1 - ring) * 22, 0, 7); ctx.stroke();
-    roundRect(ctx, -HR, -HR, HR * 2, HR * 2, 30);
-    ctx.fillStyle = C.cyan; ctx.fill();
-    ctx.fillStyle = '#06222a'; ctx.font = '500 46px "Barlow Semi Condensed"';
-    ctx.fillText('CMS', 0, -8);
-    ctx.font = '400 21px "Barlow Semi Condensed"'; ctx.fillText('your single source', 0, 30);
-    ctx.restore();
     ctx.restore();
   };
 });
 
-/* ---------- 05 · AI in the loop ---------- */
-scene(103.4, 124.6, el => {
-  const tag = makeTag(el, '05', 'AI in the loop', C.purple);
-  const h1 = words(el, 'Now the workflow', 'xl', 104, 140);
-  const h2 = words(el, 'thinks.', 'xl', 104, 276); h2.ws[0].style.color = C.gold;
-  const sub = $('div', 'abs sub', el, 'Draft, translate, tag and check — inside the same approval flow, never around it.');
-  place(sub, 110, 430, 640);
+/* ---------- 06 · Performance: it is fast because there is so little of it ---------- */
+/* Measured 2026-11-08: src/index.ts; esbuild bundle/minify, ESM, browser, es2022;
+   external cloudflare:* and node:*. 831067 bytes; gzip 264686 bytes.
+   Excludes separately served assets. Decimal KB; segments use metafile bytesInOutput.
+   The figures are measured from the host bundle (esbuild, minified) — re-measure and update
+   FOOT / SEG when the core changes. */
+chapter(108, 84, 20, el => {
+  const tag = makeTag(el, '06', 'Performance', C.pink);
+  const h1 = words(el, 'Fast because', 'xl', 104, 150);
+  const h2 = words(el, 'it’s small.', 'xl', 104, 286); h2.ws[1].style.color = C.pink;
+  const sub = $('div', 'abs sub', el, 'The CMS server bundle is 831 KB minified, with two runtime dependencies. Optional features keep each installation lean.');
+  place(sub, 110, 444, 640);
 
-  const prompt = $('div', 'abs prompt', el); place(prompt, 104, 552, 1000);
-  const ptxt = $('span', 'txt', prompt);
-  const gen = $('div', 'gen', prompt, 'Run');
-
-  const LOC = [['EN', 'English'], ['繁中', 'Traditional'], ['简中', 'Simplified']];
-  const cards = LOC.map(([code, name], i) => {
-    const c = $('div', 'abs card', el); place(c, 104 + i * 346, 700, 310, 286);
-    c.innerHTML = `<div class="hd"><b>${code}</b><span style="font-size:24px;color:#9a9aa6">${name}</span><span class="pct">0%</span></div>`;
-    const sks = [1, .86, .94, .72, .9, .62].map(w => { const s = $('div', 'sk', c); s.style.width = (w * 100) + '%'; return s; });
-    return { c, pct: c.querySelector('.pct'), sks };
+  /* same code, two ways to run it */
+  const eyebrow = $('div', 'abs eyebrow', el, 'Same code, two ways to run it');
+  place(eyebrow, 884, 110); eyebrow.style.color = '#8f8f9b';
+  const DEP = [
+    ['Cloudflare Workers', C.pink, 'MANAGED', 'Workers · D1 · R2 · Durable Objects', 'Nothing to provision, nothing to scale.', 168],
+    ['On-premise', C.green, 'SELF-HOSTED', 'workerd · the same open-source runtime', 'Your own data centre. The same code, not a port.', 418],
+  ];
+  const deps = DEP.map(([t, col, badge, l1, l2, y]) => {
+    const e = $('div', 'abs dep', el,
+      `<b><i style="background:${col}"></i>${t}<u style="background:${col}22;color:${col}">${badge}</u></b>` +
+      `<small>${l1}</small><span>${l2}</span>`);
+    place(e, 880, y, 940, 212);
+    return e;
   });
 
-  const panel = $('div', 'abs panel', el); place(panel, 1160, 520, 660, 466);
-  const ph = $('div', 'ph', panel, '<i></i>AI · working'); ph.style.color = C.purple;
-  const TICK = '<svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10" fill="none" stroke="#1a0b33" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-  const STEPS = [['Reading the brand guide', '1.2s'], ['Drafting 繁中', '3.4s'], ['Drafting 简中', '3.1s'], ['Checking legal wording', '0.9s'], ['Tagging, SEO &amp; GEO', '0.6s']];
-  const wrap = $('div', '', panel); wrap.style.cssText = 'padding-top:18px';
-  const steps = STEPS.map(([t, ms]) => $('div', 'step', wrap, `<span class="bx">${TICK}</span>${t}<span class="ms">${ms}</span>`));
-  const appr = $('div', 'appr', panel); place(appr, null, null);
-  appr.innerHTML = `<span class="av"></span><span class="aw">Legal · Priya</span><span class="go">Approve</span>`;
-  appr.style.marginTop = '14px';
-  const av = appr.querySelector('.av'), aw = appr.querySelector('.aw'), go = appr.querySelector('.go');
-
-  const PROMPT = 'Prepare the Q3 release for EN, 繁中 and 简中 — keep the legal wording.';
-  return b => {
-    renderTag(tag, b, 104.4, 121.5);
-    reveal(h1, b, 104.6, .45, 1, 121);
-    reveal(h2, b, 105.4, .45, 1, 121.2);
-    fadeUp(sub, b, 106.6, 120.8);
-
-    const pin = E.oBack(P(b, 106.4, .8), 1.6), pout = E.i3(P(b, 121, 1.2));
-    T(prompt, { y: (1 - pin) * 40 - pout * 40, s: Math.max(0, pin), o: P(b, 106.4, .2) * (1 - pout) });
-    const tp = P(b, 107.2, 3.4), n = Math.floor(PROMPT.length * tp);
-    ptxt.innerHTML = PROMPT.slice(0, n).replace(/ /g, ' ') + (tp < 1 && frac(b * 2) < .5 ? '<i class="caret"></i>' : '');
-    const gp = E.oBack(P(b, 110.6, .5), 2.4);
-    T(gen, { s: Math.max(0, gp) * (1 + .07 * (b > 111 && b < 113 ? pulse(b, 5) : 0)), o: P(b, 110.6, .2) });
-
-    // the three locales fill
-    cards.forEach((cd, i) => {
-      const at = 112 + i * .7, cin = E.oBack(P(b, at, .7), 1.8), cout = E.i3(P(b, 120.9 + i * .08, 1));
-      T(cd.c, { y: (1 - cin) * 60 + cout * 90, s: Math.max(0, cin), o: P(b, at, .2) * (1 - cout) });
-      const f = E.io3(P(b, at + .4, 3.2));
-      setText(cd.pct, Math.round(f * 100) + '%');
-      cd.pct.style.color = f >= 1 ? C.green : C.gold;
-      cd.sks.forEach((s, k) => {
-        const sp = E.io3(P(b, at + .4 + k * .45, .8));
-        T(s, { sx: sp });
-        s.style.background = sp >= 1 ? 'rgba(169,124,249,.5)' : '#2f2f38';
-      });
-    });
-
-    // the model's steps, one per beat
-    const nin = E.oExp(P(b, 107, 1.5));
-    T(panel, { x: (1 - nin) * 220 + pout * 220, o: nin * (1 - pout), ry: (1 - nin) * -14 });
-    steps.forEach((s, i) => {
-      const at = 110 + i * 1.3, p = E.o3(P(b, at - 1, .6));
-      const on = b >= at;
-      s.classList.toggle('on', on);
-      T(s, { x: (1 - p) * 30, o: p * .5 + (on ? .5 : 0) });
-    });
-    // and then a person decides
-    const aa = E.oBack(P(b, 117.4, .7), 2), done = b >= 119.6;
-    T(appr, { y: (1 - aa) * 30, s: Math.max(0, aa), o: P(b, 117.4, .2) });
-    appr.style.background = done ? 'rgba(124,249,191,.12)' : 'rgba(169,124,249,.14)';
-    appr.style.boxShadow = 'inset 0 0 0 1.5px ' + (done ? 'rgba(124,249,191,.5)' : 'rgba(169,124,249,.5)');
-    av.style.background = done ? C.green : C.purple;
-    setText(aw, done ? 'Approved by Legal · Priya' : 'Needs human approval');
-    aw.style.color = done ? C.green : '#e4d9ff';
-    setText(go, done ? 'Published' : 'Approve');
-    go.style.background = done ? C.green : C.purple;
-    go.style.color = done ? '#06221a' : '#1a0b33';
-    T(go, { s: 1 + .12 * (b > 119.6 && b < 121 ? pulse(b, 6) : 0) });
-  };
-});
-
-/* ---------- 06 · Off-the-shelf vs built around you ---------- */
-/* Told in key-visual lines, almost without words — the same device as the story film's
-   single-thread / multi-thread shot, re-aimed at software that bends to the company
-   instead of the other way round. */
-scene(122.6, 137.2, el => {
-  const cv = $('canvas', '', el); cv.width = W; cv.height = H; const ctx = cv.getContext('2d');
-  const HY = 96;
-  const bandB = $('div', 'abs', el); place(bandB, 0, 0, W, H);
-  bandB.style.background = 'linear-gradient(180deg,rgba(10,10,13,.85) 0%,rgba(10,10,13,.6) 32%,rgba(10,10,13,0) 52%)';
-  const tB = words(el, 'COWISE IDEA LAB.', 'xl', 110, HY); tB.line.style.filter = OUTLINE;
-  const uB = $('div', 'abs', el); place(uB, 116, HY + 136, 90, 6); uB.style.background = C.cyan; uB.style.transformOrigin = '0 50%';
-  const sB = $('div', 'abs', el, 'Built around the way your company already works.'); place(sB, 114, HY + 162);
-  Object.assign(sB.style, { fontSize: '56px', fontWeight: 300, lineHeight: 1.2, color: '#f2f2f6', whiteSpace: 'nowrap', filter: OUTLINE });
-  const tA = words(el, 'Off-the-shelf software.', 'xl', 110, HY);
-  const uA = $('div', 'abs', el); place(uA, 116, HY + 136, 90, 6); uA.style.background = '#a6a6b2'; uA.style.transformOrigin = '0 50%';
-  const sA = $('div', 'abs', el, 'You change to fit the tool.'); place(sA, 114, HY + 162);
-  Object.assign(sA.style, { fontSize: '56px', fontWeight: 300, lineHeight: 1.2, color: '#c9c9d1', whiteSpace: 'nowrap', filter: OUTLINE });
-  // stage glyphs (40×40, stroked): draft, review, approve, publish, report
-  const GLYPH = [
-    'M9 4h14l8 8v24H9zM23 4v9h8',
-    'M4 20s6-11 16-11 16 11 16 11-6 11-16 11S4 20 4 20M20 14a6 6 0 1 0 .01 0',
-    'M20 4a16 16 0 1 0 0.01 0M12 20l6 6 11-12',
-    'M20 4a16 16 0 1 0 .01 0M4 20h32M20 4c5.5 5 5.5 27 0 32M20 4c-5.5 5-5.5 27 0 32',
-    'M6 36h28M10 34V22M18 34V12M26 34V18M34 34V6',
-  ].map(d => new Path2D(d));
-  const TC = [C.pink, C.cyan, C.orange, C.yellow, '#3d6bff'];
-  const SEG = W / 5, TY = 540, NCOL = COLS, SC = NCOL / 5;
-  const SEGCOLS = [0, 1, 2, 3, 4].map(k => { const a = []; for (let c = Math.ceil(k * SC); c < Math.ceil((k + 1) * SC); c++) a.push(c); return a; });
-  const band = c => TC[Math.min(4, Math.floor(c / SC))];
-  const A0 = 123, TOUT = 128.4, B0 = 129.1, SPLIT = 130;
+  /* the footprint */
+  const FOOT = [['831', 'KB', 'minified · 265 KB gzipped', 104], ['2', '', 'dependencies · hono, yjs', 1000]];
+  const stats = FOOT.map(([v, unit, lab, x]) => {
+    const e = $('div', 'abs', el);
+    place(e, x, 676);
+    const n = $('div', 'big', e, '0' + (unit ? '&thinsp;' + unit : ''));
+    const l = $('div', '', e, lab);
+    l.style.cssText = 'margin-top:14px;font:400 24px var(--mono);letter-spacing:.04em;color:#8f8f9b;white-space:nowrap';
+    return { e, n, v: +v, unit };
+  });
+  // where the bytes actually go, measured per feature slice
+  const SEG = [
+    ['core', 32.470, C.cyan],
+    ['plugin API', 23.056, C.orange],
+    ['routes & other', 13.034, C.yellow],
+    ['dependencies', 12.122, C.purple],
+    ['other features', 19.317, '#66758b'],
+  ];
+  const BX = 104, BY = 856, BW = 1716, BH = 44;
+  const foot = $('div', 'abs', el, 'Switch a feature off and its bytes leave the bundle.');
+  place(foot, 104, 1006); foot.style.cssText += ';font:400 26px var(--mono);letter-spacing:.05em;color:#7b7b88';
+  const cv = $('canvas', 'abs', el); cv.width = W; cv.height = H; const ctx = cv.getContext('2d');
+  cv.style.zIndex = 0;
 
   return b => {
-    const pm = SRC.grid.map(s => images[s]);
+    renderTag(tag, b, 84.4, 101.5);
+    reveal(h1, b, 84.6, .45, 1, 101);
+    reveal(h2, b, 85.4, .45, 1, 101.2);
+    fadeUp(sub, b, 86.6, 100.8);
+    const out = E.i3(P(b, 101, 1.3));
+    fadeUp(eyebrow, b, 86.6, 100.6, 20);
+    deps.forEach((d, i) => {
+      const at = 87.6 + i * 1.6, p = E.oBack(P(b, at, .9), 1.8);
+      T(d, { x: (1 - p) * 260 + out * 220, o: P(b, at, .25) * (1 - out), ry: (1 - p) * -12 });
+    });
+    stats.forEach((st, i) => {
+      const at = 91.4 + i * .8, p = E.o3(P(b, at, .6)), f = E.io3(P(b, at, 2));
+      T(st.e, { y: (1 - p) * 40, o: p * (1 - out) });
+      st.n.innerHTML = Math.round(f * st.v) + (st.unit ? '&thinsp;' + st.unit : '');
+    });
+    fadeUp(foot, b, 97.6, 100.6, 24);
+
+    // the bundle, by weight
     ctx.clearRect(0, 0, W, H);
-    // the plain dark stage opens through stripe slots over the chapter before
-    if (b < SPLIT + 2) {
-      const ra = P(b, A0, 1.25);
-      ctx.save(); ctx.beginPath();
-      for (let i = 0; i < 20; i++) { const cw = 96, d = E.io3(clamp(ra * 1.6 - (i % 5) * .12 - hash(i + 40) * .1)) * cw; ctx.rect(i * cw + (cw - d) / 2, 0, d, H); }
-      ctx.clip(); ctx.fillStyle = C.ink; ctx.fillRect(0, 0, W, H); ctx.restore();
-    }
-    // the platforms we actually built, as a 3×3 wall behind the second half
-    const pa = E.io3(P(b, TOUT, 1.2));
-    if (pa > 0) {
-      const CW = W / 3, CH = H / 3, G = 4, NS = 10, SWd = CW / NS;
-      pm.forEach((img, k) => {
-        if (!img) return;
-        const cx = (k % 3) * CW, cy = Math.floor(k / 3) * CH, at = TOUT + hash(k * 2.9 + 4) * 1.4;
-        const rv = P(b, at, 1.4); if (rv <= 0) return;
-        ctx.save(); ctx.beginPath(); ctx.rect(cx + G / 2, cy + G / 2, CW - G, CH - G); ctx.clip();
-        ctx.beginPath();
-        for (let i = 0; i < NS; i++) { const d = E.io3(clamp(rv * 1.6 - (i % 5) * .12 - hash(i + k * 7) * .1)) * SWd; ctx.rect(cx + i * SWd + (SWd - d) / 2, cy, d, CH); }
-        ctx.clip(); ctx.filter = 'brightness(.46) saturate(1.1)';
-        drawCover(ctx, img, cx, cy, CW, CH, 1.14 - .1 * E.o3(P(b, at, 8)), .5, .18);
-        ctx.filter = 'none'; ctx.restore();
-      });
-    }
-    // the single rigid track: one stage per beat, dashed while it belongs to someone else's product
-    {
-      const base = E.io3(P(b, A0, 1));
-      ctx.fillStyle = 'rgba(255,255,255,.16)';
-      for (let c = 1; c < NCOL * base; c += 2) ctx.fillRect(c * PITCH, TY - 1, 9, 2);
-      for (let k = 0; k < 5; k++) {
-        const f = P(b, A0 + k, 1), x = k * SEG, cols = SEGCOLS[k];
-        if (f > 0) {
-          const n = Math.ceil(cols.length * f);
-          for (let j = 0; j < n; j++) {
-            const c = cols[j];
-            const a = c % 2 ? clamp((cols.length * f - j) * 1.5) : E.o3(P(b, B0 + .2 + c / NCOL * .7, .3));
-            if (a <= 0) continue;
-            ctx.globalAlpha = a; ctx.fillStyle = TC[k]; ctx.fillRect(c * PITCH, TY - 5 - (1 - a) * 14, PITCH, 10);
-          }
-          ctx.globalAlpha = 1;
-          if (f < 1) { const ex = x + SEG * f; const g = ctx.createRadialGradient(ex, TY, 0, ex, TY, 60); g.addColorStop(0, 'rgba(255,255,255,.9)'); g.addColorStop(.25, TC[k]); g.addColorStop(1, 'rgba(0,0,0,0)'); ctx.fillStyle = g; ctx.fillRect(ex - 60, TY - 60, 120, 120); }
+    const ba = E.o3(P(b, 93, 1)) * (1 - E.i3(P(b, 100.8, 1.2)));
+    if (ba <= .01) return;
+    ctx.save(); ctx.globalAlpha = ba; ctx.textBaseline = 'middle';
+    let x = BX;
+    SEG.forEach(([name, pct, col], i) => {
+      const w = BW * pct / 100, g = E.io3(P(b, 93 + i * .7, .9));
+      if (g > 0) {
+        ctx.fillStyle = col;
+        const first = i === 0, last = i === SEG.length - 1;
+        if (first || last) { roundRect(ctx, x, BY, w * g, BH, 10); ctx.fill(); }
+        else ctx.fillRect(x, BY, w * g, BH);
+        // the segment's own share, named under it where there is room
+        const la = E.o3(P(b, 93.5 + i * .7, .7));
+        if (la > 0 && w > 150) {
+          ctx.globalAlpha = ba * la;
+          ctx.textAlign = 'center'; ctx.fillStyle = '#e6e6ee';
+          ctx.font = '400 23px "Barlow Semi Condensed"';
+          ctx.fillText(name, x + w / 2, BY + BH + 34);
+          ctx.fillStyle = '#6e6e7a'; ctx.font = '400 19px ui-monospace,Menlo,monospace';
+          ctx.fillText(pct.toFixed(1) + '%', x + w / 2, BY + BH + 62);
+          ctx.globalAlpha = ba;
         }
       }
-    }
-    // stage glyphs above the line
-    { const base = E.io3(P(b, A0, 1));
-      for (let k = 0; k < 5; k++) {
-        const done = b >= A0 + 1 + k, pop = done ? E.oBack(P(b, A0 + 1 + k, .45), 2.6) : 0;
-        const gx = k * SEG + SEG / 2, gy = TY - 92, gs = 1 + .25 * pop * (1 - P(b, A0 + 1.45 + k, .4));
-        ctx.save(); ctx.translate(gx, gy); ctx.scale(gs, gs); ctx.translate(-20, -20);
-        ctx.globalAlpha = base * (done ? 1 : b >= A0 + k ? .65 : .22); ctx.lineWidth = 2.6; ctx.lineJoin = ctx.lineCap = 'round';
-        ctx.strokeStyle = done ? TC[k] : '#fff'; if (done) { ctx.shadowColor = TC[k]; ctx.shadowBlur = 18; }
-        ctx.stroke(GLYPH[k]); ctx.restore(); ctx.globalAlpha = 1;
-      }
-    }
-    // glow riding the head of the solid sweep
-    const sw = (b - B0 - .35) / .7;
-    if (sw > 0 && sw < 1.05 && b < SPLIT + .1) {
-      const hx = clamp(sw) * W, gc = band(Math.min(NCOL - 1, Math.floor(hx / PITCH))), fade = 1 - clamp((sw - 1) / .05);
-      const g = ctx.createRadialGradient(hx, TY, 0, hx, TY, 90);
-      g.addColorStop(0, `rgba(255,255,255,${.95 * fade})`); g.addColorStop(.18, gc); g.addColorStop(1, 'rgba(0,0,0,0)');
-      ctx.globalAlpha = fade; ctx.fillStyle = g; ctx.fillRect(hx - 90, TY - 90, 180, 180); ctx.globalAlpha = 1;
-    }
-    // the split: eight parallel flows, one per team, all moving at once
-    if (b >= SPLIT - .05) {
-      const LN = 8, LW = 10;
-      for (let i = 0; i < LN; i++) {
-        const j = i < 4 ? i - 4 : i - 3;
-        const yc = TY - LW / 2 + j * (LW + 1);
-        const reach = E.io3(P(b, SPLIT + hash(i * 3.7 + 1) * .9, 1.6 + hash(i * 5.1 + 2) * 1.2)) * W;
-        if (reach <= 0) continue;
-        for (let k = 0; k < 5; k++) {
-          const x0 = Math.ceil(k * SC) * PITCH, x1 = Math.min(Math.ceil((k + 1) * SC) * PITCH, reach);
-          if (x1 > x0) { ctx.fillStyle = TC[k]; ctx.fillRect(x0, yc, x1 - x0, LW); }
-        }
-      }
-      const fl = Math.exp(-(b - SPLIT) * 6) * (b >= SPLIT ? 1 : 0);
-      if (fl > .01) { ctx.fillStyle = `rgba(255,255,255,${fl * .55})`; ctx.fillRect(0, 0, W, H); }
-    }
-    T(cv, { s: (1 + .035 * (b >= SPLIT ? Math.exp(-(b - SPLIT) * 4) : 0)) * (1 + .04 * E.io3(P(b, SPLIT, 8))) });
-    reveal(tA, b, A0 + .25, .5, 1, TOUT, .06);
-    T(uA, { sx: E.oExp(P(b, A0 + .75, 1)) * (1 - E.i3(P(b, TOUT, .6))) });
-    fadeUp(sA, b, A0 + 1.25, TOUT + .1);
-    T(bandB, { o: E.o3(P(b, B0, 1)) });
-    reveal(tB, b, B0, .4, 1);
-    T(uB, { sx: E.oExp(P(b, B0 + .65, 1)) });
-    fadeUp(sB, b, B0 + 1);
+      x += w;
+    });
+    ctx.restore();
   };
 });
 
-/* ---------- 07 · Outro: what you end up with, then the logo ---------- */
-scene(134, 160, el => {
+/* ---------- 07 · Host and plugins ---------- */
+chapter(124, 124, 16, el => {
+  const tag = makeTag(el, '07', 'Host & plugins', C.cyan);
+  const h = words(el, 'Your data stays at home.', 'xl', 104, 150);
+  h.ws[4].style.color = C.cyan;
+  const sub = $('div', 'abs sub', el, 'The host stores and protects your data. Plugins turn that data into the tools your teams need.');
+  place(sub, 110, 310, 1300);
+  const host = $('div', 'abs panel', el); place(host, 104, 470, 620, 400);
+  $('div', 'ph', host, '<i style="color:var(--cyan)"></i>CMS HOST');
+  const data = $('div', '', host, 'Documents & translations<br>Media & relationships<br>Versions & permissions');
+  data.style.cssText = 'padding:32px 34px;font-size:38px;line-height:1.65;color:#c9c9d1';
+  const api = $('div', 'abs panel', el, 'CMS API<br><span style="font-size:23px;color:#9a9aa6">Scoped access<br>Host checks every request</span>');
+  place(api, 820, 568, 310, 200); api.style.cssText += ';padding:30px 20px;text-align:center;font-size:38px;line-height:1.4;color:var(--gold)';
+  const plugins = [['Forms', 'Collect & write data', C.pink], ['Workflow', 'Review & update data', C.orange], ['Events', 'Manage guests & RSVP', C.green]].map(([title,note,col],i) => {
+    const card = $('div', 'abs panel', el, `<div style="color:${col};font-size:38px">${title} <span style="font-size:17px;letter-spacing:.15em">PLUGIN</span></div><div style="margin-top:8px;font-size:27px;color:#9a9aa6">${note}</div>`);
+    place(card, 1250, 444 + i * 158, 566, 132); card.style.padding = '20px 30px';
+    return card;
+  });
+  const foot = $('div', 'abs sub', el, 'Add capabilities. Keep one source of truth.'); place(foot, 104, 954, 1500); foot.style.color = C.cyan; foot.style.fontSize = '42px';
+  const cv = $('canvas', 'abs', el); cv.width = W; cv.height = H; const ctx = cv.getContext('2d');
+  return b => {
+    renderTag(tag, b, 124.4, 138);
+    reveal(h, b, 124.6, .25, .8, 138);
+    fadeUp(sub, b, 126, 138);
+    fadeUp(host, b, 126.5, 138);
+    fadeUp(api, b, 128, 138);
+    plugins.forEach((card,i) => fadeUp(card, b, 128.5+i*.7, 138));
+    fadeUp(foot, b, 133, 138);
+    ctx.clearRect(0,0,W,H);
+    const alpha = E.o3(P(b,130,1)) * (1-E.i3(P(b,138,1)));
+    ctx.globalAlpha=alpha; ctx.lineWidth=3;
+    const wire=(x0,y0,x1,y1,col) => {
+      ctx.strokeStyle=col; ctx.beginPath(); ctx.moveTo(x0,y0); ctx.lineTo(x1,y1); ctx.stroke();
+      for (const reverse of [false,true]) {
+        const t=frac((b-130)*.4+(reverse?.5:0));
+        ctx.fillStyle=reverse?C.gold:col; ctx.beginPath(); ctx.arc(lerp(x0,x1,reverse?1-t:t),lerp(y0,y1,reverse?1-t:t),6,0,Math.PI*2); ctx.fill();
+      }
+    };
+    wire(724,668,820,668,C.cyan);
+    plugins.forEach((_,i)=>wire(1130,668,1250,510+i*158,[C.pink,C.orange,C.green][i]));
+  };
+});
+
+/* ---------- 08 · MIT license ---------- */
+chapter(140, 140, 16, el => {
+  const tag = makeTag(el, '08', 'Open source', C.green);
+  const title = words(el, 'MIT licensed.', 'xl', 104, 180);
+  title.line.style.fontSize = '240px';
+  title.ws[0].style.color = C.green;
+  const sub = $('div', 'abs sub', el, 'Open source. Yours to build on.');
+  place(sub, 114, 460, 1600); sub.style.fontSize = '58px';
+  const rights = [
+    ['Use.', 'For personal or commercial projects.', C.cyan],
+    ['Modify.', 'Adapt the CMS to your own needs.', C.gold],
+    ['Distribute.', 'Share your work. Build on the source.', C.green],
+  ].map(([title, note, color], i) => {
+    const card = $('div', 'abs panel', el);
+    place(card, 104 + i * 580, 620, 548, 250);
+    card.style.cssText += ';padding:30px 34px;border-top:4px solid ' + color;
+    const heading = $('div', '', card, title);
+    heading.style.cssText = 'font-size:76px;font-weight:300;color:' + color;
+    const detail = $('div', '', card, note);
+    detail.style.cssText = 'margin-top:18px;font-size:29px;line-height:1.3;color:#c9c9d1';
+    return card;
+  });
+  const note = $('div', 'abs', el, 'Keep the copyright and license notice. Software provided “as is”.');
+  place(note, 110, 950); note.style.cssText += ';font-size:28px;color:#9a9aa6';
+  return b => {
+    renderTag(tag, b, 140.4, 154);
+    reveal(title, b, 140.7, .5, 1.2, 154);
+    fadeUp(sub, b, 142.2, 154);
+    rights.forEach((card, i) => {
+      const p = E.oBack(P(b, 143.5 + i * 1.1, 1), 1.4);
+      const out = E.i3(P(b, 154, 1));
+      T(card, { y: (1 - p) * 100 - out * 40, o: clamp(p) * (1 - out) });
+    });
+    fadeUp(note, b, 148, 154, 20);
+  };
+});
+
+/* ---------- 09 · Outro ---------- */
+scene(154, 180, el => {
   // arrives during the bar wipe, so it sits in the overlay layer above the bars
   const h = words(overEl, 'Built around how you actually work.', 'lg', 0, 300);
   h.line.style.width = W + 'px'; h.line.style.textAlign = 'center';
@@ -1096,11 +1224,11 @@ scene(134, 160, el => {
   const line = $('div', 'abs tl-line', el), fill = $('div', 'abs tl-fill', el);
   const NODES = [
     ['Content model', 'Your structure', C.green],
-    ['Workflow', 'Draft → live', C.orange],
-    ['Roles', 'Who does what', C.pink],
-    ['Integrations', 'One flow', C.navy],
-    ['AI in the loop', 'Drafts, not decisions', C.gold],
-    ['Analytics', 'What actually changed', C.cyan],
+    ['JSON', 'Every language', C.pink],
+    ['Versions', 'Edit together', C.navy],
+    ['Security', 'Scoped access', C.orange],
+    ['Performance', 'Lean server bundle', C.gold],
+    ['Plugins', 'Extend your CMS', C.cyan],
   ];
   const nodes = NODES.map(([t, s, c], i) => {
     const x = 260 + i * 280;
@@ -1110,11 +1238,12 @@ scene(134, 160, el => {
     return { n, l };
   });
   const logo = $('div', 'abs', el); logo.id = 'logoB'; place(logo, 470, 330, 980);
-  const t1 = $('div', 'abs', el, 'Custom CMS and workflow, built for your company.'); place(t1, 0, 760, W);
+  const t1 = $('div', 'abs', el, 'Your content. Your data. Your custom CMS.'); place(t1, 0, 760, W);
   t1.style.cssText += ';text-align:center;font-size:40px;font-weight:300';
   const t2 = $('div', 'abs eyebrow', el, 'cowise.com.hk'); place(t2, 0, 840, W);
   t2.style.cssText += ';text-align:center;color:' + C.cyan;
-  return b => {
+  return beat => {
+    const b = beat - 20;
     const leave = E.i3(P(b, 140.5, 1.25));
     reveal(h, b, 135.4, .25, 1, 140.5, .05);
     T(workWord, { s: 1 + .08 * (b > 136 && b < 140.5 ? pulse(b, 5) : 0) });
@@ -1140,60 +1269,11 @@ scene(134, 160, el => {
 });
 let logoB = [];
 
-/* "WORKFLOW" drawn in key-visual bars: the glyphs are rasterised once, then each 10px column keeps
-   only the vertical runs that fall inside the letters. Each run is two-tone, split by the cover's
-   wave — so the word reads purely as a colour change inside the bars. */
-let wordRuns = null;
-function buildWordRuns(text) {
-  const c = document.createElement('canvas'); c.width = W; c.height = H;
-  const g = c.getContext('2d'); g.fillStyle = '#fff'; g.textAlign = 'center'; g.textBaseline = 'middle';
-  let size = 500; g.font = `500 ${size}px "Barlow Semi Condensed"`;
-  const want = W * .82, got = g.measureText(text).width;
-  if (got > 0) { size = Math.min(620, size * want / got); g.font = `500 ${size}px "Barlow Semi Condensed"`; }
-  g.fillText(text, W / 2, H / 2 + 14);
-  const d = g.getImageData(0, 0, W, H).data;
-  wordRuns = [];
-  for (let i = 0; i < COLS; i++) {
-    const x = i * PITCH + 4, runs = []; let y0 = -1;
-    for (let y = 0; y <= H; y++) {
-      const on = y < H && d[(y * W + x) * 4 + 3] > 127;
-      if (on && y0 < 0) y0 = y; else if (!on && y0 >= 0) { runs.push([y0, y]); y0 = -1; }
-    }
-    // the space around the letters gets bars too; the letters read only by a colour change within each column
-    const gaps = []; let y = 0;
-    for (const [a, z] of runs) { if (a > y) gaps.push([y, a]); y = z; }
-    if (y < H) gaps.push([y, H]);
-    wordRuns.push({ runs, gaps });
-  }
-}
-const WB = 60; // the bars spell the word on the chapter-03 drop
-function wordBars(ctx, b) {
-  if (!wordRuns) buildWordRuns('WORKFLOW');
-  // bars shoot up into the letters on the drop, settle back so the type on top reads,
-  // breathe on the kick, then lift off the top before the chapter settles
-  const alpha = lerp(.72, .4, E.io3(P(b, WB + .5, 1))) * lerp(1, .72, E.io3(P(b, WB + 1.5, .75))) + .06 * pulse(b, 4) * (b < WB + 4 ? 1 : 0);
-  for (let i = 0; i < COLS; i++) {
-    const { runs, gaps } = wordRuns[i];
-    const a = E.oExp(P(b, WB + (i / COLS) * .6 + hash(i) * .2, .7));
-    const lift = E.iExp(P(b, WB + 4.1 + (i / COLS) * .4 + hash(i + 5) * .3, .7)) * H * 1.1;
-    if (a <= 0 || lift >= H * 1.1) continue;
-    const k = ((i - Math.floor((b - WB) * 6)) % COLS + COLS) % COLS;
-    ctx.globalAlpha = alpha * (.8 + .2 * Math.sin(i * .12 - b * 3));
-    const fill = (segs, col) => {
-      ctx.fillStyle = col;
-      for (const [y0, y1] of segs) ctx.fillRect(i * PITCH, y1 - (y1 - y0) * a - lift, 9, (y1 - y0) * a);
-    };
-    fill(gaps, colTop[k]);
-    fill(runs, colBot[k]);
-  }
-  ctx.globalAlpha = 1;
-}
-
 /* ---------- background canvas: stripe artwork per section ---------- */
 const T2 = 2 / SPB, T2_5 = 2.5 / SPB, T4 = 4 / SPB, T7 = 7 / SPB; // intro landmarks in beats
 // beat envelope with a short attack so the dance swells into each kick instead of jumping
 const softPulse = x => { const f = frac(x); return x < 0 ? 0 : f < .12 ? E.o2(f / .12) : Math.exp(-(f - .12) * 4.5); };
-const BANDS = [[16, 36], [36, 60], [66.5, 84], [104, 124]];
+const BANDS = [[16, 36], [36, 60], [60, 76], [76, 92], [92, 108], [108, 124], [124, 140], [140, 156]];
 function renderBG(b) {
   bg.fillStyle = C.ink; bg.fillRect(0, 0, W, H);
   if (b < 16.2) {
@@ -1211,22 +1291,20 @@ function renderBG(b) {
       alpha: 1 - .72 * E.io3(P(b, 7.5, 1.5)) + .08 * (b > 9 ? pulse(b, 4) : 0),
       lift: i => E.iExp(P(b, 14 + (i / COLS) * .6, 1.4)) * 1.05,
     });
-  } else if (b >= WB && b < WB + 6.5) {    // 0:28 the key-visual bars spell WORKFLOW on the drop
-    wordBars(bg, b);
-  } else if (b >= 140 && b < 160) {        // finale: stripes rise into the cover, logo lands on top
-    const mc = E.io3(P(b, 140, 6)), split = E.io3(P(b, 141.5, 2));
+  } else if (b >= 160 && b < 180) {        // finale: stripes rise into the cover, logo lands on top
+    const mc = E.io3(P(b, 160, 6)), split = E.io3(P(b, 161.5, 2));
     stripeField(bg, b, {
-      appear: i => E.oExp(P(b, 140.5 + Math.abs(i - 95.5) / 96 * 1.5 + hash(i) * .3, .8)),
+      appear: i => E.oExp(P(b, 160.5 + Math.abs(i - 95.5) / 96 * 1.5 + hash(i) * .3, .8)),
       lower: i => lerp(profile(i, b) * split, COVER[i][3] / H, mc),
       tc: coverTC, bc: coverBC,
-      alpha: 1 - .74 * E.io3(P(b, 143.75, .5)) + .08 * mc,
+      alpha: 1 - .74 * E.io3(P(b, 163.75, .5)) + .08 * mc,
     });
   } else {                                  // quiet brand band along the floor
     const win = BANDS.find(([s, e]) => b >= s && b < e);
     if (win) {
       const a = E.o3(P(b, win[0] + .4, 2)) * (1 - P(b, win[1] - 2.2, 2.2));
       const grow = win[0] === 16 ? (x => x * x * (3 - 2 * x))(P(b, 22, 11)) : 0;
-      bg.globalAlpha = (.16 + .05 * grow) * a;
+      bg.globalAlpha = (b >= 60 ? .045 : .16 + .05 * grow) * a;
       for (let i = 0; i < COLS; i++) {
         const h = lerp(40 + profile(i, b * .5) * 160, H + 40 + profile(i, b * .5) * 60, grow) * (1 - .25 * pulse(b, 5) * hash(i) * (1 - grow));
         bg.fillStyle = colBot[i]; bg.fillRect(i * PITCH, H - h, 9, h);
@@ -1245,25 +1323,12 @@ function renderFX(b) {
   drew = wipe(fx, b, 16, STRIPES, .9) || drew;
   drew = wipeD(fx, b, 36, STRIPES) || drew;
   drew = wipe(fx, b, 60, [C.pink, C.navy, C.cyan, C.orange]) || drew;
-  drew = wipeH(fx, b, 84, STRIPES, 2, 1) || drew;
-  drew = wipe(fx, b, 104, STRIPES) || drew;
-  drew = wipeD(fx, b, 124, STRIPES) || drew;                                 // top-left → bottom-right
-  drew = wipeD(fx, b, 124 + .5 / SPB, STRIPES, 1, 1, -Math.PI / 4) || drew;  // bottom-left → top-right, 0.5 s later
-  drew = wipe(fx, b, 136, STRIPES) || drew;
-  // published ticks rising off the end of the pipeline
-  if (b >= 68 && b < 81) {
-    for (let k = 0; k < 40; k++) {
-      const born = 68 + k * .3, age = (b - born) * SPB;
-      if (age < 0 || age > 2.4) continue;
-      const x = 1540 + hash(k) * 300 + Math.sin(age * 3 + k) * 22, y = 980 - age * 330;
-      const s = (12 + hash(k * 2) * 12) * E.oBack(clamp(age * 4), 2.5);
-      fx.globalAlpha = clamp(1 - (age - 1.6) / .8) * .9;
-      fx.strokeStyle = [C.green, C.green, C.cyan, C.yellow][k % 4];
-      fx.lineWidth = s * .28; fx.lineCap = fx.lineJoin = 'round';
-      fx.beginPath(); fx.moveTo(x - s, y); fx.lineTo(x - s * .25, y + s * .62); fx.lineTo(x + s, y - s * .62); fx.stroke();
-    }
-    fx.globalAlpha = 1; drew = true;
-  }
+  drew = wipeH(fx, b, 76, STRIPES, 1, 1) || drew;
+  drew = wipe(fx, b, 92, STRIPES) || drew;
+  drew = wipeD(fx, b, 108, STRIPES) || drew;
+  drew = wipe(fx, b, 124, STRIPES) || drew;
+  drew = wipe(fx, b, 140, STRIPES) || drew;
+  drew = wipe(fx, b, 156, STRIPES) || drew;
   fxDirty = drew;
 }
 
@@ -1275,16 +1340,16 @@ function render(b) {
   renderBG(b);
   for (const s of scenes) { const on = b >= s.from && b < s.to; show(s.el, on); if (on) s.render(b); }
   show(document.getElementById('ovA'), b >= 14.5 && b < 35);
-  show(document.getElementById('ovOut'), b >= 134 && b < 142.5);
+  show(document.getElementById('ovOut'), b >= 154 && b < 162.5);
   renderDevice(b);
   renderFX(b);
   // camera: punch on the big drops
   const hit = DROPS.reduce((m, d) => Math.max(m, b >= d && b < d + 1 ? Math.exp(-(b - d) * 5) : 0), 0);
   T(scenesEl, { s: 1 + hit * .025 });
   // beat HUD
-  const hv = b >= 16.5 && b < 135.5; show(hud, hv);
+  const hv = b >= 16.5 && b < 155.5; show(hud, hv);
   if (hv) {
-    hud.style.opacity = E.o3(P(b, 16.5, 1)) * (1 - P(b, 134.5, 1)) * (b >= 122.5 && b < 124.5 ? .2 : 1);
+    hud.style.opacity = E.o3(P(b, 16.5, 1)) * (1 - P(b, 154.5, 1)) * (b >= 122.5 && b < 124.5 ? .2 : 1);
     const k = Math.floor(b) % 4;
     hudSq.forEach((q, i) => { q.style.background = i === k ? HUD_COL[i] : '#333'; });
     setText(hudBar, 'BAR ' + String(Math.floor(b / 4) + 1).padStart(2, '0'));
@@ -1356,27 +1421,18 @@ const SCORE = (() => {
   // 02 one CMS: the lid comes off
   impact(36); groove(36, 60, { hats16: true, stabs: true, arp: 1 });
   riser(57, 60, .2); groove(57, 59, { noClap: true }); for (let s = 0; s < 8; s++) clap(59 + s * .125, .15 + s * .04);
-  // 03 the workflow
-  impact(60); groove(60, 84, { hats16: true, stabs: true, arp: 1 });
-  riser(81, 84, .2); for (let s = 0; s < 8; s++) clap(83 + s * .125, .15 + s * .04);
-  // 04 integrations
-  impact(84); groove(84, 104, { hats16: true, stabs: true, arp: 2 });
-  riser(101, 104, .2); for (let s = 0; s < 8; s++) clap(103 + s * .125, .15 + s * .04);
-  // 05 AI in the loop
-  impact(104); groove(104, 124, { hats16: true, stabs: true, arp: 2 });
-  riser(120, 124, .25); groove(122, 123, { noClap: true });
-  for (let s = 0; s < 7; s++) kick(122 + s * .25, .5 + s * .05);
-  for (let s = 0; s < 6; s++) nz(122 + s * .25, 'bandpass', 600 + s * 900, 3, .001, .08, .3);
-  // 06 off-the-shelf → built around you: the arp doubles when the line splits
-  impact(124); groove(124, 130, { hats16: true, stabs: true, arp: 1 });
-  impact(130); groove(130, 136, { hats16: true, stabs: true, arp: 2 });
-  riser(133, 136, .2);
-  // 07 outro
-  impact(136); groove(136, 142, { hats16: true, stabs: true, arp: 1 }); groove(142, 143, { noClap: true });
-  for (let s = 0; s < 8; s++) clap(143 + s * .125, .15 + s * .04); riser(140, 144, .2);
-  impact(144); kick(144); groove(145, 148, { stabs: true });
-  [220, 261.63, 329.63, 440, 523.25].forEach((f, k) => tone(144, f, 9, 'sawtooth', .045, 2600, (k - 2) * .3));
-  tone(144, 55, 6, 'sine', .3, 300);
+  // Six four-bar chapters, with transitions aligned to the visual cuts.
+  [60, 76, 92, 108, 124, 140].forEach((at, i) => {
+    impact(at); groove(at, at + 16, { hats16: true, stabs: true, arp: i % 2 + 1 });
+    riser(at + 13, at + 16, .2);
+    for (let k = 0; k < 8; k++) clap(at + 15 + k * .125, .15 + k * .04);
+  });
+  // 09 outro
+  impact(156); groove(156, 162, { hats16: true, stabs: true, arp: 1 }); groove(162, 163, { noClap: true });
+  for (let s = 0; s < 8; s++) clap(163 + s * .125, .15 + s * .04); riser(160, 164, .2);
+  impact(164); kick(164); groove(165, 168, { stabs: true });
+  [220, 261.63, 329.63, 440, 523.25].forEach((f, k) => tone(164, f, 9, 'sawtooth', .045, 2600, (k - 2) * .3));
+  tone(164, 55, 6, 'sine', .3, 300);
   return ev.sort((a, b) => a.t - b.t);
 })();
 function stopSynth() { if (sess) { sess.out.disconnect(); sess = null; } }
@@ -1457,7 +1513,7 @@ async function setSound(on) {
 const ui = document.getElementById('ui'), scrub = document.getElementById('scrub'), timeEl = document.getElementById('time'), railfill = document.getElementById('railfill');
 const startEl = document.getElementById('start'), startNote = document.getElementById('startNote');
 scrub.max = DURATION;
-[16, 36, 60, 84, 104, 124, 136].forEach(b => { const m = $('i', 'mk', document.getElementById('track')); m.style.left = (b / END * 100) + '%'; });
+[16, 36, 60, 76, 92, 108, 124, 140, 156].forEach(b => { const m = $('i', 'mk', document.getElementById('track')); m.style.left = (b / END * 100) + '%'; });
 function syncUI() {
   document.getElementById('icoPlay').setAttribute('d', playing ? 'M6 4h4v16H6zm8 0h4v16h-4z' : 'M7 4l13 8-13 8z');
   document.getElementById('icoSound').setAttribute('d', soundOn ? 'M4 9h4l5-4v14l-5-4H4zM16 8a5 5 0 0 1 0 8M18.5 5.5a8.5 8.5 0 0 1 0 13' : 'M4 9h4l5-4v14l-5-4H4zM16 9l6 6M22 9l-6 6');
@@ -1507,7 +1563,7 @@ const ready = Promise.all([imgReady, logoReady, document.fonts.ready]);
 const nextFrame = () => new Promise(r => { requestAnimationFrame(() => r()); setTimeout(r, 60); });
 const warm = ready.then(async () => { // paint every section once, invisibly, so the first play is smooth
   stage.style.opacity = .01;
-  for (const b of [2, 12, 20, 28, 34, 38, 44, 52, 58, 64, 72, 80, 88, 96, 102, 108, 116, 122, 126, 132, 138, 142, 146, 152]) { render(b); await nextFrame(); }
+  for (const b of [2, 12, 20, 28, 34, 38, 44, 52, 58, 64, 72, 80, 88, 96, 102, 108, 116, 122, 126, 132, 138, 142, 146, 152, 158, 164, 172]) { render(b); await nextFrame(); }
   stage.style.opacity = '';
   render(pos / SPB); requestAnimationFrame(frame);
   LOAD.warm = 1; document.querySelector('#lbar i').style.width = '100%';
@@ -1568,9 +1624,9 @@ let shown = null;
 const vis = on => { if (shown !== on) { cv.style.display = on ? '' : 'none'; shown = on; } };
 function burst(b, at, from = .02) { return lerp(from, 1, E.oExp(P(b, at, 2.5))); }
 function render(b) {
-  const intro = b >= 9.9 && b < 16.2, ai = b >= 103.9 && b < 124, outro = b >= 143.9 && b < 160;
-  vis(intro || ai || outro);
-  if (!(intro || ai || outro)) return;
+  const intro = b >= 9.9 && b < 16.2, outro = b >= 163.9 && b < 180;
+  vis(intro || outro);
+  if (!(intro || outro)) return;
   let opacity = 1, size = 2.4;
   if (intro) { // dust bursts as the logo fills, then the camera warps through it with the exit
     const s = burst(b, 10);
@@ -1580,18 +1636,12 @@ function render(b) {
     orbit((b - 10) * 2, lerp(170, 6, warp));
     opacity = lerp(.9, .55, E.o3(P(b, 11, 2))) + warp * .45;
     size = lerp(4, 2, E.o3(P(b, 10, 2))) + warp * 2;
-  } else if (ai) {
-    points.scale.setScalar(burst(b, 104) * (1 + .04 * pulse(b, 4)));
-    points.rotation.set(Math.sin(b * .07) * .2, b * .06, 0);
-    size = lerp(5, 2.2, E.oExp(P(b, 104, 2.5)));
-    opacity = b < 106 ? 1 : lerp(1, .28, E.o3(P(b, 106, 2)));
-    orbit((b - 104) * 1.2, 150);
   } else if (outro) { // burst on the logo slam
-    points.scale.setScalar(burst(b, 144) * (1 + .03 * pulse(b, 4)));
+    points.scale.setScalar(burst(b, 164) * (1 + .03 * pulse(b, 4)));
     points.rotation.set(-.1, -b * .04, 0);
-    size = lerp(5, 2.2, E.oExp(P(b, 144, 2.5)));
-    opacity = lerp(1, .5, E.o3(P(b, 145, 3)));
-    orbit(-(b - 144) * 1.5, 160);
+    size = lerp(5, 2.2, E.oExp(P(b, 164, 2.5)));
+    opacity = lerp(1, .5, E.o3(P(b, 165, 3)));
+    orbit(-(b - 164) * 1.5, 160);
   }
   mat.size = size; mat.opacity = clamp(opacity);
   renderer.render(scene, camera);
