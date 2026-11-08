@@ -228,7 +228,7 @@ html,body{height:100%;background:#000;color:#fff;overflow:hidden;font-family:var
    single straight beat clock — no cut bars, no holds.
 
    CHAPTERS (beats · 4 beats = 1 bar = 1.875 s)
-     00   0 – 16   intro ............ "Every process starts with a single step."
+     00   0 – 16   intro ............ "Build big. Start simple."
      01  16 – 36   the content problem
      02  36 – 60   one custom CMS
      03  60 – 76   one document, every language 00:28.125
@@ -453,19 +453,20 @@ const overEl = document.getElementById('over');
 const scenes = [];
 function scene(from, to, build) { const el = $('div', 'scene', scenesEl); const s = { from, to, el, render: build(el) }; scenes.push(s); return s; }
 
-/* ---------- 00 · Intro: every process starts with a single step ---------- */
+/* ---------- 00 · Intro: build big, start simple ---------- */
 let logoPaths = [];
 scene(0, 16.5, el => {
-  const line1 = words(el, 'Every process starts', 'lg outlined', 0, 0);
-  const line2 = words(el, 'with a single step.', 'lg outlined', 0, 0);
+  const line1 = words(el, 'Build big.', 'lg outlined', 0, 0);
+  const line2 = words(el, 'Start simple.', 'lg outlined', 0, 0);
   [line1, line2].forEach((g, k) => { g.line.style.left = '0'; g.line.style.width = '1920px'; g.line.style.textAlign = 'center'; g.line.style.top = (408 + k * 96) + 'px'; });
   const logo = $('div', 'abs', el); logo.id = 'logoA'; place(logo, 470, 360, 980);
   const tagline = $('div', 'abs eyebrow', el, 'Custom CMS · Hong Kong');
   place(tagline, 0, 780, 1920); tagline.style.textAlign = 'center'; tagline.style.color = '#fff';
   return b => {
-    const hold = .5 / SPB; // the opening line stays 0.5 s longer, then leaves slowly
-    reveal(line1, b, 0, 1, .9, 3.5 + hold, .15, 1.4);
-    reveal(line2, b, 1.5, .5, .9, 3.6 + hold, .15, 1.4);
+    // one word per kick: Build(0) big(1) Start(2) simple(3) — each lands with
+    // its intro note; then they leave one per 16th hat, from beat 5, slowly
+    reveal(line1, b, 0, 1, .9, 5, .25, 1.4);
+    reveal(line2, b, 2, 1, .9, 5.5, .25, 1.4);
     // logo: stroke draws on, then fills on the beat, then rushes toward camera
     const out = E.iExp(P(b, 14, 1.75));
     T(logo, { s: (1.06 - .06 * E.o3(P(b, 8, 6))) * (1 + out * .8), o: (b >= 7.5 ? 1 : 0) * (1 - out), blur: out * 24 });
