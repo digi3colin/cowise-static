@@ -233,21 +233,22 @@ html,body{height:100%;background:#000;color:#fff;overflow:hidden;font-family:var
      02  36 – 60   one custom CMS
      03  60 – 76   one document, every language 00:28.125
      04  76 – 92   versions & co-editing      00:35.625
-     05  92 –108   secure by design           00:43.125
-     06 108 –124   privacy                    00:50.625
-     07 124 –140   fast because it is small   00:58.125
-     08 140 –156   host & plugins             01:05.625
-     09 156 –172   MIT license                01:13.125
-     10 172 –196   outro                      01:20.625
+     05  92 –108   secure by default          00:43.125
+     06 108 –124   separate domains and defenses 00:50.625
+     07 124 –140   privacy                    00:58.125
+     08 140 –156   fast because it is small   01:05.625
+     09 156 –172   host & plugins             01:13.125
+     10 172 –188   MIT license                01:20.625
+     11 188 –212   outro                      01:28.125
    ============================================================ */
 const BPM = 128, SPB = 60 / BPM;             // 0.46875 s per beat
-const END = 196;                             // beats → 91.875 s
+const END = 212;                             // beats → 99.375 s
 const DURATION = END * SPB;
 const W = 1920, H = 1080;
 const C = {pink:'#ff0062',cyan:'#7ce7f9',orange:'#fda602',yellow:'#ffde0b',navy:'#052675',green:'#7cf9bf',purple:'#a97cf9',gold:'#ffc93c',ink:'#0d0d10'};
 const STRIPES = [C.pink, C.cyan, C.orange, C.yellow, C.navy];
 const IMG = '/media/images/';
-const DROPS = [16, 36, 60, 76, 92, 108, 124, 140, 156, 172, 180];
+const DROPS = [16, 36, 60, 76, 92, 108, 124, 140, 156, 172, 188, 196];
 
 /* ---------- math & easing ---------- */
 const clamp = (v, a = 0, b = 1) => v < a ? a : v > b ? b : v;
@@ -935,13 +936,55 @@ chapter(76, 84, 20, el => {
   };
 });
 
-/* ---------- 05 · Security ---------- */
+/* ---------- 05 · Secure by default ---------- */
 chapter(92, 36, 24, el => {
   const tag = makeTag(el, '05', 'Security', C.green);
-  const h = words(el, 'Secure by design.', 'xl', 104, 160);
+  const h = words(el, 'Secure by default.', 'xl', 104, 160);
   h.ws[2].style.color = C.green;
+  const sub = $('div', 'abs sub', el, 'Sign in with an account you already use. The CMS uses OAuth to connect to Google, Microsoft or Apple without storing your password.');
+  place(sub, 110, 304, 780);
+
+  const panel = $('div', 'abs panel', el);
+  place(panel, 1160, 140, 660, 600);
+  const heading = $('div', 'ph', panel, '<i></i>Controls<u>enforced in code</u>');
+  heading.style.color = C.green;
+  const controls = [
+    ['OAuth 2.1 · PKCE', 'Google · Microsoft · Apple'],
+    ['Access token', '15 min'],
+    ['Refresh token', 'rotated, hashed'],
+    ['Capability-based roles', 'checked per route'],
+    ['Private media', 'served by the Worker'],
+    ['Plugins', 'approved, scoped, pinned'],
+    ['Audit trail', 'chained seals'],
+  ];
+  const wrap = $('div', '', panel);
+  wrap.style.paddingTop = '20px';
+  const rows = controls.map(([label, detail]) =>
+    $('div', 'chk', wrap, `<span class="bx">${TICK}</span>${label}<span class="d">${detail}</span>`));
+
+  return b => {
+    renderTag(tag, b, 36.4, 57.5);
+    reveal(h, b, 36.6, .45, 1, 57);
+    fadeUp(sub, b, 38.4, 56.8);
+    const pin = E.oExp(P(b, 37.4, 1.5)), pout = E.i3(P(b, 57, 1.3));
+    T(panel, { x: (1 - pin) * 220 + pout * 220, o: pin * (1 - pout), ry: (1 - pin) * -14 });
+    rows.forEach((row, i) => {
+      const at = 40 + i * 1.5;
+      const p = E.o3(P(b, at - 1, .6));
+      row.classList.toggle('on', b >= at);
+      T(row, { x: (1 - p) * 30, o: p * .55 + (b >= at ? .45 : 0) });
+    });
+  };
+});
+
+/* ---------- 06 · Separate domains. Separate defenses. ---------- */
+chapter(108, 36, 24, el => {
+  const tag = makeTag(el, '06', 'Security infrastructure', C.green);
+  const h1 = words(el, 'Separate domains.', 'lg', 104, 144);
+  const h2 = words(el, 'Separate defenses.', 'lg', 104, 234);
+  h2.ws.forEach(word => { word.style.color = C.green; });
   const sub = $('div', 'abs sub', el, 'The private CMS admin and public website run on separate domains. Each can have its own security infrastructure.');
-  place(sub, 110, 304, 1400);
+  place(sub, 110, 340, 1400);
 
   const domains = [
     {
@@ -979,7 +1022,8 @@ chapter(92, 36, 24, el => {
 
   return b => {
     renderTag(tag, b, 36.4, 57.5);
-    reveal(h, b, 36.6, .45, 1, 57);
+    reveal(h1, b, 36.6, .45, 1, 57);
+    reveal(h2, b, 37.6, .45, 1, 57);
     fadeUp(sub, b, 38.4, 56.8);
     domains.forEach(({ panel, rows }, i) => {
       const at = 39.5 + i * 1.2;
@@ -992,9 +1036,9 @@ chapter(92, 36, 24, el => {
   };
 });
 
-/* ---------- 06 · Privacy ---------- */
-chapter(108, 36, 24, el => {
-  const tag = makeTag(el, '06', 'Privacy', C.gold);
+/* ---------- 07 · Privacy ---------- */
+chapter(124, 36, 24, el => {
+  const tag = makeTag(el, '07', 'Privacy', C.gold);
   const h = words(el, 'Privacy by design.', 'xl', 104, 160);
   h.ws[2].style.color = C.gold;
   const sub = $('div', 'abs sub', el, 'The CMS classifies personal data (PII) and health data (PHI). The audit trail records who reads classified data. PHI is blocked from publishing.');
@@ -1087,14 +1131,14 @@ chapter(108, 36, 24, el => {
   };
 });
 
-/* ---------- 07 · Performance: it is fast because there is so little of it ---------- */
+/* ---------- 08 · Performance: it is fast because there is so little of it ---------- */
 /* Measured 2026-11-08: src/index.ts; esbuild bundle/minify, ESM, browser, es2022;
    external cloudflare:* and node:*. 831067 bytes; gzip 264686 bytes.
    Excludes separately served assets. Decimal KB; segments use metafile bytesInOutput.
    The figures are measured from the host bundle (esbuild, minified) — re-measure and update
    FOOT / SEG when the core changes. */
-chapter(124, 84, 20, el => {
-  const tag = makeTag(el, '07', 'Performance', C.pink);
+chapter(140, 84, 20, el => {
+  const tag = makeTag(el, '08', 'Performance', C.pink);
   const h1 = words(el, 'Fast because', 'xl', 104, 150);
   const h2 = words(el, 'it’s small.', 'xl', 104, 286); h2.ws[1].style.color = C.pink;
   const sub = $('div', 'abs sub', el, 'The CMS server bundle is 831 KB minified, with two runtime dependencies. Optional features keep each installation lean.');
@@ -1188,9 +1232,9 @@ chapter(124, 84, 20, el => {
   };
 });
 
-/* ---------- 08 · Host and plugins ---------- */
-chapter(140, 140, 16, el => {
-  const tag = makeTag(el, '08', 'Host & plugins', C.cyan);
+/* ---------- 09 · Host and plugins ---------- */
+chapter(156, 156, 16, el => {
+  const tag = makeTag(el, '09', 'Host & plugins', C.cyan);
   const h = words(el, 'Your data stays at home.', 'xl', 104, 150);
   h.ws[4].style.color = C.cyan;
   const sub = $('div', 'abs sub', el, 'The host stores and protects your data. Plugins turn that data into the tools your teams need.');
@@ -1209,20 +1253,20 @@ chapter(140, 140, 16, el => {
   const foot = $('div', 'abs sub', el, 'Add capabilities. Keep one source of truth.'); place(foot, 104, 954, 1500); foot.style.color = C.cyan; foot.style.fontSize = '42px';
   const cv = $('canvas', 'abs', el); cv.width = W; cv.height = H; const ctx = cv.getContext('2d');
   return b => {
-    renderTag(tag, b, 140.4, 154);
-    reveal(h, b, 140.6, .25, .8, 154);
-    fadeUp(sub, b, 142, 154);
-    fadeUp(host, b, 142.5, 154);
-    fadeUp(api, b, 144, 154);
-    plugins.forEach((card,i) => fadeUp(card, b, 144.5+i*.7, 154));
-    fadeUp(foot, b, 149, 154);
+    renderTag(tag, b, 156.4, 170);
+    reveal(h, b, 156.6, .25, .8, 170);
+    fadeUp(sub, b, 158, 170);
+    fadeUp(host, b, 158.5, 170);
+    fadeUp(api, b, 160, 170);
+    plugins.forEach((card,i) => fadeUp(card, b, 160.5+i*.7, 170));
+    fadeUp(foot, b, 165, 170);
     ctx.clearRect(0,0,W,H);
-    const alpha = E.o3(P(b,146,1)) * (1-E.i3(P(b,154,1)));
+    const alpha = E.o3(P(b,162,1)) * (1-E.i3(P(b,170,1)));
     ctx.globalAlpha=alpha; ctx.lineWidth=3;
     const wire=(x0,y0,x1,y1,col) => {
       ctx.strokeStyle=col; ctx.beginPath(); ctx.moveTo(x0,y0); ctx.lineTo(x1,y1); ctx.stroke();
       for (const reverse of [false,true]) {
-        const t=frac((b-146)*.4+(reverse?.5:0));
+        const t=frac((b-162)*.4+(reverse?.5:0));
         ctx.fillStyle=reverse?C.gold:col; ctx.beginPath(); ctx.arc(lerp(x0,x1,reverse?1-t:t),lerp(y0,y1,reverse?1-t:t),6,0,Math.PI*2); ctx.fill();
       }
     };
@@ -1231,9 +1275,9 @@ chapter(140, 140, 16, el => {
   };
 });
 
-/* ---------- 09 · MIT license ---------- */
-chapter(156, 156, 16, el => {
-  const tag = makeTag(el, '09', 'Open source', C.green);
+/* ---------- 10 · MIT license ---------- */
+chapter(172, 172, 16, el => {
+  const tag = makeTag(el, '10', 'Open source', C.green);
   const title = words(el, 'MIT licensed.', 'xl', 104, 180);
   title.line.style.fontSize = '240px';
   title.ws[0].style.color = C.green;
@@ -1256,20 +1300,20 @@ chapter(156, 156, 16, el => {
   const note = $('div', 'abs', el, 'Keep the copyright and license notice. Software provided “as is”.');
   place(note, 110, 950); note.style.cssText += ';font-size:28px;color:#9a9aa6';
   return b => {
-    renderTag(tag, b, 156.4, 170);
-    reveal(title, b, 156.7, .5, 1.2, 170);
-    fadeUp(sub, b, 158.2, 170);
+    renderTag(tag, b, 172.4, 186);
+    reveal(title, b, 172.7, .5, 1.2, 186);
+    fadeUp(sub, b, 174.2, 186);
     rights.forEach((card, i) => {
-      const p = E.oBack(P(b, 159.5 + i * 1.1, 1), 1.4);
-      const out = E.i3(P(b, 170, 1));
+      const p = E.oBack(P(b, 175.5 + i * 1.1, 1), 1.4);
+      const out = E.i3(P(b, 186, 1));
       T(card, { y: (1 - p) * 100 - out * 40, o: clamp(p) * (1 - out) });
     });
-    fadeUp(note, b, 164, 170, 20);
+    fadeUp(note, b, 180, 186, 20);
   };
 });
 
-/* ---------- 10 · Outro ---------- */
-scene(170, 196, el => {
+/* ---------- 11 · Outro ---------- */
+scene(186, 212, el => {
   // arrives during the bar wipe, so it sits in the overlay layer above the bars
   const h = words(overEl, 'Built around how you actually work.', 'lg', 0, 300);
   h.line.style.width = W + 'px'; h.line.style.textAlign = 'center';
@@ -1281,7 +1325,7 @@ scene(170, 196, el => {
     ['Content model', 'Your structure', C.green],
     ['JSON', 'Every language', C.pink],
     ['Versions', 'Edit together', C.navy],
-    ['Security', 'Separate domains', C.orange],
+    ['Security', 'Controls & domains', C.orange],
     ['Privacy', 'Classified data', C.green],
     ['Performance', 'Lean server bundle', C.gold],
     ['Plugins', 'Extend your CMS', C.cyan],
@@ -1299,7 +1343,7 @@ scene(170, 196, el => {
   const t2 = $('div', 'abs eyebrow', el, 'cowise.com.hk'); place(t2, 0, 840, W);
   t2.style.cssText += ';text-align:center;color:' + C.cyan;
   return beat => {
-    const b = beat - 36;
+    const b = beat - 52;
     const leave = E.i3(P(b, 140.5, 1.25));
     reveal(h, b, 135.4, .25, 1, 140.5, .05);
     T(workWord, { s: 1 + .08 * (b > 136 && b < 140.5 ? pulse(b, 5) : 0) });
@@ -1329,7 +1373,7 @@ let logoB = [];
 const T2 = 2 / SPB, T2_5 = 2.5 / SPB, T4 = 4 / SPB, T7 = 7 / SPB; // intro landmarks in beats
 // beat envelope with a short attack so the dance swells into each kick instead of jumping
 const softPulse = x => { const f = frac(x); return x < 0 ? 0 : f < .12 ? E.o2(f / .12) : Math.exp(-(f - .12) * 4.5); };
-const BANDS = [[16, 36], [36, 60], [60, 76], [76, 92], [92, 108], [108, 124], [124, 140], [140, 156], [156, 172]];
+const BANDS = [[16, 36], [36, 60], [60, 76], [76, 92], [92, 108], [108, 124], [124, 140], [140, 156], [156, 172], [172, 188]];
 function renderBG(b) {
   bg.fillStyle = C.ink; bg.fillRect(0, 0, W, H);
   if (b < 16.2) {
@@ -1347,13 +1391,13 @@ function renderBG(b) {
       alpha: 1 - .72 * E.io3(P(b, 7.5, 1.5)) + .08 * (b > 9 ? pulse(b, 4) : 0),
       lift: i => E.iExp(P(b, 14 + (i / COLS) * .6, 1.4)) * 1.05,
     });
-  } else if (b >= 176 && b < 196) {        // finale: stripes rise into the cover, logo lands on top
-    const mc = E.io3(P(b, 176, 6)), split = E.io3(P(b, 177.5, 2));
+  } else if (b >= 192 && b < 212) {        // finale: stripes rise into the cover, logo lands on top
+    const mc = E.io3(P(b, 192, 6)), split = E.io3(P(b, 193.5, 2));
     stripeField(bg, b, {
-      appear: i => E.oExp(P(b, 176.5 + Math.abs(i - 95.5) / 96 * 1.5 + hash(i) * .3, .8)),
+      appear: i => E.oExp(P(b, 192.5 + Math.abs(i - 95.5) / 96 * 1.5 + hash(i) * .3, .8)),
       lower: i => lerp(profile(i, b) * split, COVER[i][3] / H, mc),
       tc: coverTC, bc: coverBC,
-      alpha: 1 - .74 * E.io3(P(b, 179.75, .5)) + .08 * mc,
+      alpha: 1 - .74 * E.io3(P(b, 195.75, .5)) + .08 * mc,
     });
   } else {                                  // quiet brand band along the floor
     const win = BANDS.find(([s, e]) => b >= s && b < e);
@@ -1386,6 +1430,7 @@ function renderFX(b) {
   drew = wipe(fx, b, 140, STRIPES) || drew;
   drew = wipe(fx, b, 156, STRIPES) || drew;
   drew = wipe(fx, b, 172, STRIPES) || drew;
+  drew = wipe(fx, b, 188, STRIPES) || drew;
   fxDirty = drew;
 }
 
@@ -1397,16 +1442,16 @@ function render(b) {
   renderBG(b);
   for (const s of scenes) { const on = b >= s.from && b < s.to; show(s.el, on); if (on) s.render(b); }
   show(document.getElementById('ovA'), b >= 14.5 && b < 35);
-  show(document.getElementById('ovOut'), b >= 170 && b < 178.5);
+  show(document.getElementById('ovOut'), b >= 186 && b < 194.5);
   renderDevice(b);
   renderFX(b);
   // camera: punch on the big drops
   const hit = DROPS.reduce((m, d) => Math.max(m, b >= d && b < d + 1 ? Math.exp(-(b - d) * 5) : 0), 0);
   T(scenesEl, { s: 1 + hit * .025 });
   // beat HUD
-  const hv = b >= 16.5 && b < 171.5; show(hud, hv);
+  const hv = b >= 16.5 && b < 187.5; show(hud, hv);
   if (hv) {
-    hud.style.opacity = E.o3(P(b, 16.5, 1)) * (1 - P(b, 170.5, 1)) * (b >= 138.5 && b < 140.5 ? .2 : 1);
+    hud.style.opacity = E.o3(P(b, 16.5, 1)) * (1 - P(b, 186.5, 1)) * (b >= 154.5 && b < 156.5 ? .2 : 1);
     const k = Math.floor(b) % 4;
     hudSq.forEach((q, i) => { q.style.background = i === k ? HUD_COL[i] : '#333'; });
     setText(hudBar, 'BAR ' + String(Math.floor(b / 4) + 1).padStart(2, '0'));
@@ -1478,18 +1523,18 @@ const SCORE = (() => {
   // 02 one CMS: the lid comes off
   impact(36); groove(36, 60, { hats16: true, stabs: true, arp: 1 });
   riser(57, 60, .2); groove(57, 59, { noClap: true }); for (let s = 0; s < 8; s++) clap(59 + s * .125, .15 + s * .04);
-  // Seven four-bar chapters, with transitions aligned to the visual cuts.
-  [60, 76, 92, 108, 124, 140, 156].forEach((at, i) => {
+  // Eight four-bar chapters, with transitions aligned to the visual cuts.
+  [60, 76, 92, 108, 124, 140, 156, 172].forEach((at, i) => {
     impact(at); groove(at, at + 16, { hats16: true, stabs: true, arp: i % 2 + 1 });
     riser(at + 13, at + 16, .2);
     for (let k = 0; k < 8; k++) clap(at + 15 + k * .125, .15 + k * .04);
   });
-  // 10 outro
-  impact(172); groove(172, 178, { hats16: true, stabs: true, arp: 1 }); groove(178, 179, { noClap: true });
-  for (let s = 0; s < 8; s++) clap(179 + s * .125, .15 + s * .04); riser(176, 180, .2);
-  impact(180); kick(180); groove(181, 184, { stabs: true });
-  [220, 261.63, 329.63, 440, 523.25].forEach((f, k) => tone(180, f, 9, 'sawtooth', .045, 2600, (k - 2) * .3));
-  tone(180, 55, 6, 'sine', .3, 300);
+  // 11 outro
+  impact(188); groove(188, 194, { hats16: true, stabs: true, arp: 1 }); groove(194, 195, { noClap: true });
+  for (let s = 0; s < 8; s++) clap(195 + s * .125, .15 + s * .04); riser(192, 196, .2);
+  impact(196); kick(196); groove(197, 200, { stabs: true });
+  [220, 261.63, 329.63, 440, 523.25].forEach((f, k) => tone(196, f, 9, 'sawtooth', .045, 2600, (k - 2) * .3));
+  tone(196, 55, 6, 'sine', .3, 300);
   return ev.sort((a, b) => a.t - b.t);
 })();
 function stopSynth() { if (sess) { sess.out.disconnect(); sess = null; } }
@@ -1570,7 +1615,7 @@ async function setSound(on) {
 const ui = document.getElementById('ui'), scrub = document.getElementById('scrub'), timeEl = document.getElementById('time'), railfill = document.getElementById('railfill');
 const startEl = document.getElementById('start'), startNote = document.getElementById('startNote');
 scrub.max = DURATION;
-[16, 36, 60, 76, 92, 108, 124, 140, 156, 172].forEach(b => { const m = $('i', 'mk', document.getElementById('track')); m.style.left = (b / END * 100) + '%'; });
+[16, 36, 60, 76, 92, 108, 124, 140, 156, 172, 188].forEach(b => { const m = $('i', 'mk', document.getElementById('track')); m.style.left = (b / END * 100) + '%'; });
 function syncUI() {
   document.getElementById('icoPlay').setAttribute('d', playing ? 'M6 4h4v16H6zm8 0h4v16h-4z' : 'M7 4l13 8-13 8z');
   document.getElementById('icoSound').setAttribute('d', soundOn ? 'M4 9h4l5-4v14l-5-4H4zM16 8a5 5 0 0 1 0 8M18.5 5.5a8.5 8.5 0 0 1 0 13' : 'M4 9h4l5-4v14l-5-4H4zM16 9l6 6M22 9l-6 6');
@@ -1620,7 +1665,7 @@ const ready = Promise.all([imgReady, logoReady, document.fonts.ready]);
 const nextFrame = () => new Promise(r => { requestAnimationFrame(() => r()); setTimeout(r, 60); });
 const warm = ready.then(async () => { // paint every section once, invisibly, so the first play is smooth
   stage.style.opacity = .01;
-  for (const b of [2, 12, 20, 28, 34, 38, 44, 52, 58, 64, 72, 80, 88, 96, 102, 108, 116, 122, 126, 132, 138, 142, 146, 152, 158, 164, 172, 180, 188]) { render(b); await nextFrame(); }
+  for (const b of [2, 12, 20, 28, 34, 38, 44, 52, 58, 64, 72, 80, 88, 96, 102, 108, 116, 122, 126, 132, 138, 142, 146, 152, 158, 164, 172, 180, 188, 196, 204]) { render(b); await nextFrame(); }
   stage.style.opacity = '';
   render(pos / SPB); requestAnimationFrame(frame);
   LOAD.warm = 1; document.querySelector('#lbar i').style.width = '100%';
@@ -1681,7 +1726,7 @@ let shown = null;
 const vis = on => { if (shown !== on) { cv.style.display = on ? '' : 'none'; shown = on; } };
 function burst(b, at, from = .02) { return lerp(from, 1, E.oExp(P(b, at, 2.5))); }
 function render(b) {
-  const intro = b >= 9.9 && b < 16.2, outro = b >= 179.9 && b < 196;
+  const intro = b >= 9.9 && b < 16.2, outro = b >= 195.9 && b < 212;
   vis(intro || outro);
   if (!(intro || outro)) return;
   let opacity = 1, size = 2.4;
@@ -1694,11 +1739,11 @@ function render(b) {
     opacity = lerp(.9, .55, E.o3(P(b, 11, 2))) + warp * .45;
     size = lerp(4, 2, E.o3(P(b, 10, 2))) + warp * 2;
   } else if (outro) { // burst on the logo slam
-    points.scale.setScalar(burst(b, 180) * (1 + .03 * pulse(b, 4)));
+    points.scale.setScalar(burst(b, 196) * (1 + .03 * pulse(b, 4)));
     points.rotation.set(-.1, -b * .04, 0);
-    size = lerp(5, 2.2, E.oExp(P(b, 180, 2.5)));
-    opacity = lerp(1, .5, E.o3(P(b, 181, 3)));
-    orbit(-(b - 180) * 1.5, 160);
+    size = lerp(5, 2.2, E.oExp(P(b, 196, 2.5)));
+    opacity = lerp(1, .5, E.o3(P(b, 197, 3)));
+    orbit(-(b - 196) * 1.5, 160);
   }
   mat.size = size; mat.opacity = clamp(opacity);
   renderer.render(scene, camera);
