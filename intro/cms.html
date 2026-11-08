@@ -954,21 +954,32 @@ chapter(92, 36, 24, el => {
   ].map(([title, detail], i) => {
     const x = 110 + i * 338;
     const card = $('div', 'abs panel', el);
-    place(card, x, 574, 282, 182);
+    place(card, x, 574, 282, 205);
     card.style.padding = '23px 24px';
     const titleEl = $('div', '', card, title);
     titleEl.style.cssText = 'font-size:32px;color:' + (i === 2 ? C.green : C.cyan);
     const detailEl = $('div', '', card, detail);
     detailEl.style.cssText = 'margin-top:12px;font-size:26px;line-height:1.2;color:#c9c9d1';
+    const credential = i === 1 ? $('div', 'abs chip', card, 'Password stays here') : null;
+    if (credential) {
+      place(credential, 24, 150);
+      credential.style.cssText += ';padding:6px 10px;font-size:16px;color:var(--gold)';
+    }
     const arrow = i > 0 ? $('div', 'abs', el, '→') : null;
     if (arrow) {
       place(arrow, x - 46, 637);
       arrow.style.cssText += ';font-size:34px;color:var(--cyan)';
     }
-    return { card, arrow };
+    return { card, arrow, credential };
   });
+  const tokenPath = $('div', 'abs', el);
+  place(tokenPath, 588, 777, 340, 40);
+  tokenPath.style.cssText += ';border:2px dashed var(--cyan);border-top:0;border-radius:0 0 16px 16px';
+  const token = $('div', 'abs chip', el, 'TOKEN');
+  place(token, 528, 796, 120);
+  token.style.cssText += ';padding:8px 0;text-align:center;font-size:18px;color:var(--cyan);background:#101e25';
   const password = $('div', 'abs sub', el, 'The CMS never sees or stores your password.');
-  place(password, 110, 801, 1000);
+  place(password, 110, 865, 1000);
   password.style.color = C.green;
 
   const panel = $('div', 'abs panel', el);
@@ -994,11 +1005,17 @@ chapter(92, 36, 24, el => {
     reveal(h, b, 36.6, .45, 1, 57);
     fadeUp(sub, b, 38.4, 56.8);
     fadeUp(flowLabel, b, 40, 56.8);
-    steps.forEach(({ card, arrow }, i) => {
+    steps.forEach(({ card, arrow, credential }, i) => {
       const at = 41 + i * 2;
       if (arrow) fadeUp(arrow, b, at - .5, 56.8, 12);
       fadeUp(card, b, at, 56.8, 24);
+      if (credential) fadeUp(credential, b, at + 1.5, Infinity, 10);
     });
+    fadeUp(tokenPath, b, 45.6, 56.8, 10);
+    const travel = E.io3(P(b, 47, 3.5));
+    const received = E.o3(P(b, 50.5, 1));
+    T(token, { x: 340 * travel, y: -72 * received, o: E.o3(P(b, 46.6, .4)) * (1 - E.i3(P(b, 56.8, .75))) });
+    token.style.color = received >= 1 ? C.green : C.cyan;
     fadeUp(password, b, 47, 56.8, 24);
     const pin = E.oExp(P(b, 37.4, 1.5)), pout = E.i3(P(b, 57, 1.3));
     T(panel, { x: (1 - pin) * 220 + pout * 220, o: pin * (1 - pout), ry: (1 - pin) * -14 });
