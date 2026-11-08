@@ -227,23 +227,29 @@ html,body{height:100%;background:#000;color:#fff;overflow:hidden;font-family:var
    grid and stays scrubbable. Unlike the story film this one runs on a
    single straight beat clock — no cut bars, no holds.
 
-   CHAPTERS (beats · 4 beats = 1 bar = 1.875 s)
+   CHAPTERS (authored beats · 4 beats = 1 bar = 1.875 s · film time)
      00   0 – 16   intro ............ "Build big. Start simple."
      01  16 – 36   the content problem
-     02  36 – 60   one custom CMS
-     03  60 – 76   one document, every language 00:28.125
-     04  76 – 92   versions & co-editing      00:35.625
-     05  92 –108   secure by default          00:43.125
-     06 108 –124   separate domains and defenses 00:50.625
-     07 124 –140   privacy                    00:58.125
-     08 140 –156   fast because it is small   01:05.625
-     09 156 –172   host & plugins             01:13.125
-     10 172 –188   MIT license                01:20.625
-     11 188 –212   outro                      01:28.125
+     02  36 – 60   one custom CMS (authored 52–56 is cut, exits 00:24.75)
+     03  60 – 76   one document, every language 00:26.250
+     04  76 – 92   versions & co-editing      00:33.750
+     05  92 –108   secure by default          00:41.250
+     06 108 –124   separate domains and defenses 00:48.750
+     07 124 –140   privacy                    00:56.250
+     08 140 –156   fast because it is small   01:03.750
+     09 156 –172   host & plugins             01:11.250
+     10 172 –188   MIT license                01:18.750
+     11 188 –212   outro                      01:26.250
    ============================================================ */
 const BPM = 128, SPB = 60 / BPM;             // 0.46875 s per beat
-const END = 212;                             // beats → 99.375 s
-const DURATION = END * SPB;
+const END = 212;                             // authored beats
+// Chapter 02 is fully built by beat ~51.5, then just held. The film skips one
+// bar of that hold (authored beats 52–56), so 02 exits at 00:25 and everything
+// after slides a bar earlier. Cues stay in authored beats; only the clock maps.
+const CUT_AT = 52, CUT = 4;
+const toSrc = fb => fb < CUT_AT ? fb : fb + CUT;                                // film → authored
+const toFilm = b => b < CUT_AT ? b : b < CUT_AT + CUT ? CUT_AT : b - CUT;      // authored → film
+const DURATION = (END - CUT) * SPB;          // 208 film beats → 97.5 s
 const W = 1920, H = 1080;
 const C = {pink:'#ff0062',cyan:'#7ce7f9',orange:'#fda602',yellow:'#ffde0b',navy:'#052675',green:'#7cf9bf',purple:'#a97cf9',gold:'#ffc93c',ink:'#0d0d10'};
 const STRIPES = [C.pink, C.cyan, C.orange, C.yellow, C.navy];
@@ -656,7 +662,7 @@ scene(35.4, 60.6, el => {
 
     // admin window
     const ain = E.oExp(P(b, 37.4, 1.6)), aout = E.i3(P(b, 57, 1.5));
-    T(adm, { x: (1 - ain) * 260 + aout * 220, y: Math.sin(b * .42) * 7, o: ain * (1 - aout), s: .98 + .02 * ain, ry: (1 - ain) * -16 });
+    T(adm, { x: (1 - ain) * 260 + aout * 220, y: Math.sin(toFilm(b) * .42) * 7, o: ain * (1 - aout), s: .98 + .02 * ain, ry: (1 - ain) * -16 });
     const u = 'cms.yourcompany.com/admin/pages';
     setText(aurl, u.slice(0, Math.floor(u.length * P(b, 38.6, 1.6))) + (b < 46 && frac(b * 2) < .5 ? '|' : ''));
     navs.forEach((n, i) => { const p = E.o3(P(b, 39.4 + i * .3, .6)); T(n, { x: (1 - p) * -40, o: p }); });
@@ -1458,7 +1464,7 @@ function renderBG(b) {
       const grow = win[0] === 16 ? (x => x * x * (3 - 2 * x))(P(b, 22, 11)) : 0;
       bg.globalAlpha = (b >= 60 ? .045 : .16 + .05 * grow) * a;
       for (let i = 0; i < COLS; i++) {
-        const h = lerp(40 + profile(i, b * .5) * 160, H + 40 + profile(i, b * .5) * 60, grow) * (1 - .25 * pulse(b, 5) * hash(i) * (1 - grow));
+        const h = lerp(40 + profile(i, toFilm(b) * .5) * 160, H + 40 + profile(i, toFilm(b) * .5) * 60, grow) * (1 - .25 * pulse(b, 5) * hash(i) * (1 - grow));
         bg.fillStyle = colBot[i]; bg.fillRect(i * PITCH, H - h, 9, h);
       }
       bg.globalAlpha = 1;
@@ -1490,7 +1496,8 @@ function renderFX(b) {
 const hud = document.getElementById('hud'), hudSq = [...hud.querySelectorAll('i')], hudBar = document.getElementById('bar');
 const grain = document.getElementById('grain');
 const HUD_COL = [C.pink, C.cyan, C.orange, C.yellow];
-function render(b) {
+function render(fb) {
+  const b = toSrc(fb);
   renderBG(b);
   for (const s of scenes) { const on = b >= s.from && b < s.to; show(s.el, on); if (on) s.render(b); }
   show(document.getElementById('ovA'), b >= 14.5 && b < 35);
@@ -1506,7 +1513,7 @@ function render(b) {
     hud.style.opacity = E.o3(P(b, 16.5, 1)) * (1 - P(b, 186.5, 1)) * (b >= 154.5 && b < 156.5 ? .2 : 1);
     const k = Math.floor(b) % 4;
     hudSq.forEach((q, i) => { q.style.background = i === k ? HUD_COL[i] : '#333'; });
-    setText(hudBar, 'BAR ' + String(Math.floor(b / 4) + 1).padStart(2, '0'));
+    setText(hudBar, 'BAR ' + String(Math.floor(fb / 4) + 1).padStart(2, '0'));
   }
   grain.style.transform = `translate(${Math.floor(hash(Math.floor(b * 12)) * 60)}px,${Math.floor(hash(Math.floor(b * 12) + 3) * 60)}px)`;
 }
@@ -1539,7 +1546,7 @@ let actx = null, buffer = null, gainNode = null, src = null, noiseBuf = null, se
 // chapter 01 (the mess) plays behind a closed filter; the lid comes off when the CMS lands at 36
 const lpFreq = b => b < 20 ? 20000 : b < 24 ? 20000 * Math.pow(420 / 20000, (b - 20) / 4) : b < 32 ? 420 : b < 36 ? 420 * Math.pow(20000 / 420, (b - 32) / 4) : 20000;
 const SCORE = (() => {
-  const ev = [], add = (b, fn) => { ev.push({ t: b * SPB, fn }); };
+  const ev = [], add = (b, fn) => { if (b < CUT_AT || b >= CUT_AT + CUT) ev.push({ t: toFilm(b) * SPB, fn }); };
   const env = (g, t, a, d, peak) => { g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(peak, t + a); g.gain.exponentialRampToValueAtTime(.0001, t + a + d); };
   const pan = (c, node, p) => { if (!p || !c.createStereoPanner) return node; const sp = c.createStereoPanner(); sp.pan.value = p; node.connect(sp); return sp; };
   const kick = (b, amp = 1) => add(b, (c, o, t) => { const s = c.createOscillator(), g = c.createGain(); s.frequency.setValueAtTime(160, t); s.frequency.exponentialRampToValueAtTime(42, t + .13); env(g, t, .002, .38, amp); s.connect(g).connect(o.lp); s.start(t); s.stop(t + .5); });
@@ -1667,7 +1674,7 @@ async function setSound(on) {
 const ui = document.getElementById('ui'), scrub = document.getElementById('scrub'), timeEl = document.getElementById('time'), railfill = document.getElementById('railfill');
 const startEl = document.getElementById('start'), startNote = document.getElementById('startNote');
 scrub.max = DURATION;
-[16, 36, 60, 76, 92, 108, 124, 140, 156, 172, 188].forEach(b => { const m = $('i', 'mk', document.getElementById('track')); m.style.left = (b / END * 100) + '%'; });
+[16, 36, 60, 76, 92, 108, 124, 140, 156, 172, 188].forEach(b => { const m = $('i', 'mk', document.getElementById('track')); m.style.left = (toFilm(b) / (END - CUT) * 100) + '%'; });
 function syncUI() {
   document.getElementById('icoPlay').setAttribute('d', playing ? 'M6 4h4v16H6zm8 0h4v16h-4z' : 'M7 4l13 8-13 8z');
   document.getElementById('icoSound').setAttribute('d', soundOn ? 'M4 9h4l5-4v14l-5-4H4zM16 8a5 5 0 0 1 0 8M18.5 5.5a8.5 8.5 0 0 1 0 13' : 'M4 9h4l5-4v14l-5-4H4zM16 9l6 6M22 9l-6 6');
@@ -1717,7 +1724,7 @@ const ready = Promise.all([imgReady, logoReady, document.fonts.ready]);
 const nextFrame = () => new Promise(r => { requestAnimationFrame(() => r()); setTimeout(r, 60); });
 const warm = ready.then(async () => { // paint every section once, invisibly, so the first play is smooth
   stage.style.opacity = .01;
-  for (const b of [2, 12, 20, 28, 34, 38, 44, 52, 58, 64, 72, 80, 88, 96, 102, 108, 116, 122, 126, 132, 138, 142, 146, 152, 158, 164, 172, 180, 188, 196, 204]) { render(b); await nextFrame(); }
+  for (const b of [2, 12, 20, 28, 34, 38, 44, 52, 58, 64, 72, 80, 88, 96, 102, 108, 116, 122, 126, 132, 138, 142, 146, 152, 158, 164, 172, 180, 188, 196, 204]) { render(toFilm(b)); await nextFrame(); }
   stage.style.opacity = '';
   render(pos / SPB); requestAnimationFrame(frame);
   LOAD.warm = 1; document.querySelector('#lbar i').style.width = '100%';
