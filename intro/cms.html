@@ -175,6 +175,18 @@ html,body{height:100%;background:#000;color:#fff;overflow:hidden;font-family:var
 #rail{position:absolute;left:0;right:0;height:4px;top:13px;background:rgba(255,255,255,.22);border-radius:2px;overflow:hidden}
 #railfill{height:100%;width:0;background:linear-gradient(90deg,var(--green),var(--pink),var(--orange),var(--gold),var(--cyan))}
 .mk{position:absolute;top:9px;width:2px;height:12px;background:rgba(255,255,255,.5);z-index:1;pointer-events:none}
+#ui #bVO{width:auto;padding:0 12px;border-radius:20px;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.55)}
+#bVO span{font:600 13px var(--mono);letter-spacing:.06em;white-space:nowrap}
+#voWrap{position:relative}
+#voMenu{position:absolute;right:0;bottom:50px;min-width:170px;padding:6px;border-radius:14px;background:#17171c;box-shadow:0 18px 50px rgba(0,0,0,.6),inset 0 0 0 1px rgba(255,255,255,.1);display:flex;flex-direction:column;gap:2px}
+#voMenu[hidden]{display:none}
+#ui #voMenu button{width:auto;height:auto;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:10px 14px;border-radius:9px;font:400 16px var(--font);letter-spacing:.02em;color:#c9c9d1}
+#ui #voMenu button:hover{background:rgba(255,255,255,.08);color:#fff}
+#ui #voMenu button[aria-checked="true"]{color:#fff}
+#voMenu button::after{content:"";width:8px;height:8px;border-radius:50%;background:transparent}
+#voMenu button[aria-checked="true"]::after{background:var(--gold)}
+#ui #bVO.off{box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.2)}
+#bVO.off span{opacity:.45;text-decoration:line-through}
 #time{font:400 14px var(--mono);color:#ccc;min-width:118px;text-align:right;letter-spacing:.04em}
 #start{position:fixed;inset:0;z-index:30;display:grid;place-items:center;background:rgba(5,5,8,.72);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);cursor:pointer;text-align:center}
 #start.hide{display:none}
@@ -206,6 +218,14 @@ html,body{height:100%;background:#000;color:#fff;overflow:hidden;font-family:var
   <div id="track"><div id="rail"><div id="railfill"></div></div><input id="scrub" type="range" min="0" max="1000" step="0.01" value="0" aria-label="Timeline"></div>
   <span id="time">00:00 · BAR 01</span>
   <button id="bSound" aria-label="Sound on / off (M)"><svg viewBox="0 0 24 24"><path id="icoSound" d="M4 9h4l5-4v14l-5-4H4zM16 8a5 5 0 0 1 0 8M18.5 5.5a8.5 8.5 0 0 1 0 13" stroke="currentColor" stroke-width="2" fill="none"/></svg></button>
+  <div id="voWrap">
+    <button id="bVO" aria-haspopup="menu" aria-expanded="false" title="Voice-over language (V)"><span>VO</span></button>
+    <div id="voMenu" role="menu" aria-label="Voice-over" hidden>
+      <button role="menuitemradio" data-vo="en">English</button>
+      <button role="menuitemradio" data-vo="yue" lang="yue">廣東話</button>
+      <button role="menuitemradio" data-vo="off">Off</button>
+    </div>
+  </div>
   <button id="bFull" aria-label="Fullscreen (F)"><svg viewBox="0 0 24 24"><path d="M4 4h6v2H6v4H4zm10 0h6v6h-2V6h-4zM4 14h2v4h4v2H4zm14 0h2v6h-6v-2h4z"/></svg></button>
 </div>
 
@@ -1622,13 +1642,98 @@ setInterval(schedule, 25);
 async function initAudio() {
   if (actx) return;
   actx = new (window.AudioContext || window.webkitAudioContext)();
-  gainNode = actx.createGain(); gainNode.connect(actx.destination);
+  // music and voice meet in a brick-wall limiter, so the peaks never clip
+  const lim = makeLimiter(actx);
+  gainNode = actx.createGain(); gainNode.connect(lim);
   noiseBuf = actx.createBuffer(1, actx.sampleRate, actx.sampleRate);
   const d = noiseBuf.getChannelData(0); for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+  voGain = actx.createGain(); voGain.gain.value = voOn() ? VO_LEVEL : 0; voGain.connect(lim);
+  await decodeVO(actx);
   const custom = params.get('track');
   if (custom) { try { buffer = await actx.decodeAudioData(await (await fetch(custom)).arrayBuffer()); } catch (e) { console.warn('track failed, using synth', e); } }
 }
 const trackOffset = +(params.get('offset') || 0);
+
+/* ============================================================
+   VOICE-OVER — 12 recorded lines (media/audio/cms-vo), one per chapter plus two for the outro,
+   each cued to a moment on the beat clock, so it stays in sync however the film is seeked.
+   Cues are in authored beats like everything else; toFilm maps them past the cut bar.
+   The voice has its own gain (it is not faded with the music), and the music dips under every
+   line. Toggle with the VO button or V; ?vo=en|yue|0 picks one, and the choice is remembered.
+   ============================================================ */
+const VO_DIR = '/media/audio/cms-vo/';             // one folder per language, the same file names in each
+const VO_LANGS = { en: { label: 'English', short: 'EN' }, yue: { label: '廣東話', short: '粵' } };
+const VO_CUES = [
+  // (no line over the intro: "Build big. Start simple.", logo and music only)
+  ['01_content_everywhere', 17.5],                   // the content problem, as the first site slides in
+  ['02_built_around_you', 37.5],                     // "Built around you." lands
+  ['03_every_language', 60.75],                      // each chapter: just after its headline lands
+  ['04_never_lost', 76.75],
+  ['05_sign_in', 92.75],
+  ['06_separate_domains', 108.75],
+  ['07_privacy', 124.75],
+  ['08_fast_small', 140.75],
+  ['09_data_home', 156.75],
+  ['10_mit', 172.75],
+  ['11_how_you_work', 187.5],                        // outro headline; ends before the logo slam at 196
+  ['12_your_cms', 198.5],                            // the tagline under the logo
+];
+const VO = Object.fromEntries(Object.keys(VO_LANGS).map(lang => [lang, VO_CUES.map(([name, beat]) => ({
+  name, t: toFilm(beat) * SPB, buf: null,
+  raw: fetch(`${VO_DIR}${lang}/${name}.mp3`).then(r => r.ok ? r.arrayBuffer() : null).catch(() => null),
+}))]));
+const voReady = Promise.all(Object.values(VO).flat().map(v => v.raw));
+// the voice: 'en', 'yue' or 'off'. ?vo=en|yue|0 wins, then this device's last choice, then the browser's language
+const VO_KEY = 'cms-vo';
+const voParse = x => x == null ? null : /^(0|off|none)$/i.test(x) ? 'off' : /^(yue|zh|hk|canto)/i.test(x) ? 'yue' : /^(en|1)/i.test(x) ? 'en' : null;
+let voLang = voParse(params.get('vo'));
+if (!voLang) try { voLang = voParse(localStorage.getItem(VO_KEY)); } catch (e) {}
+if (!voLang) voLang = /^(zh-HK|yue)/i.test(navigator.language || '') ? 'yue' : 'en';
+const voOn = () => voLang !== 'off';
+const voList = (lang = voLang) => VO[lang] || [];
+let voGain = null, voSrcs = [];
+async function decodeVO(c, langs = Object.keys(VO)) {
+  await Promise.all(langs.flatMap(l => VO[l] || []).map(async v => {
+    const raw = await v.raw;
+    if (raw) try { v.buf = await c.decodeAudioData(raw.slice(0)); } catch (e) { console.warn('VO decode failed', v.name, e); }
+  }));
+}
+function stopVO() { voSrcs.forEach(s => { try { s.stop(); } catch (e) {} s.disconnect(); }); voSrcs = []; }
+// play every line that is still to come (or under way) from film time `at`, film time `at` sounding at `when`
+function startVO(c, dest, at, when, list = voList()) {
+  const out = [];
+  for (const v of list) {
+    if (!v.buf || v.t + v.buf.duration <= at) continue;
+    const s = c.createBufferSource(); s.buffer = v.buf; s.connect(dest);
+    if (v.t >= at) s.start(when + v.t - at); else s.start(when, at - v.t);
+    out.push(s);
+  }
+  return out;
+}
+// levels, measured: the lines average about -24.5 dB RMS in both languages (peaks -4.5 dB), the same
+// as the e-form recordings, so the same mix: voice lifted ~3 dB, music dipping ~11 dB under it
+const VO_LEVEL = 1.4, DUCK = .28;
+function makeLimiter(c, dest = c.destination) {
+  const l = c.createDynamicsCompressor();
+  l.threshold.value = -2; l.knee.value = 0; l.ratio.value = 20; l.attack.value = .001; l.release.value = .08;
+  l.connect(dest); return l;
+}
+// the music eases down 0.2 s before a line and back up over 0.4 s after; lines closer than 0.6 s share one dip
+function duckPlan(g, at, when, full, list = voList()) {
+  const low = full * DUCK, spans = [];
+  for (const v of list) {
+    if (!v.buf) continue;
+    const s = when + v.t - at, e = s + v.buf.duration, last = spans[spans.length - 1];
+    if (e <= when) continue;
+    if (last && s - .6 <= last[1]) last[1] = e; else spans.push([s, e]);
+  }
+  g.setValueAtTime(full, when);
+  for (const [s, e] of spans) {
+    if (s <= when) g.setValueAtTime(low, when);
+    else { g.setValueAtTime(full, Math.max(when, s - .2)); g.linearRampToValueAtTime(low, s); }
+    g.setValueAtTime(low, e); g.linearRampToValueAtTime(full, e + .4);
+  }
+}
 
 /* ============================================================
    CLOCK & PLAYBACK
@@ -1637,7 +1742,7 @@ let playing = false, pos = 0, t0 = 0, soundOn = !params.has('muted'), loop = par
 const audioLive = () => soundOn && actx && actx.state === 'running';
 const now = () => audioLive() ? actx.currentTime : performance.now() / 1000;
 const getPos = () => playing ? Math.max(pos, pos + (now() - t0)) : pos;
-function stopSrc() { stopSynth(); if (src) { try { src.stop(); } catch (e) {} src.disconnect(); src = null; } }
+function stopSrc() { stopSynth(); stopVO(); if (src) { try { src.stop(); } catch (e) {} src.disconnect(); src = null; } }
 // starts audio at `at` seconds and returns the clock time that position plays at
 function startSrc(at) {
   stopSrc(); if (!audioLive()) return now();
@@ -1648,6 +1753,7 @@ function startSrc(at) {
     const off = at + trackOffset; when = actx.currentTime + .03;
     if (off < buffer.duration) src.start(when, Math.max(0, off));
   }
+  if (voOn()) { voSrcs = startVO(actx, voGain, at, when); if (sess) duckPlan(sess.out.gain, at, when, .9); }
   fadeOut(at, when);
   return when;
 }
@@ -1663,6 +1769,15 @@ function fadeOut(at, when) {
 function play() { if (getPos() >= DURATION - .01) pos = 0; playing = true; t0 = startSrc(pos); syncUI(); }
 function pause() { pos = getPos(); playing = false; stopSrc(); syncUI(); }
 function seek(sec) { pos = clamp(sec, 0, DURATION); if (playing) t0 = startSrc(pos); }
+// voice-over language ('en' | 'yue' | 'off'): re-cue from the current position so the music dip follows too
+function setVO(lang) {
+  voLang = lang;
+  try { localStorage.setItem(VO_KEY, lang); } catch (e) {}
+  if (voGain) voGain.gain.setTargetAtTime(voOn() ? VO_LEVEL : 0, actx.currentTime, .03);
+  if (playing && audioLive()) { pos = getPos(); t0 = startSrc(pos); }
+  syncUI();
+}
+const VO_CYCLE = [...Object.keys(VO_LANGS), 'off'];
 async function setSound(on) {
   const p = getPos(); soundOn = on;
   if (on) { await initAudio(); if (actx.state !== 'running') await actx.resume(); }
@@ -1677,6 +1792,11 @@ scrub.max = DURATION;
 [16, 36, 60, 76, 92, 108, 124, 140, 156, 172, 188].forEach(b => { const m = $('i', 'mk', document.getElementById('track')); m.style.left = (toFilm(b) / (END - CUT) * 100) + '%'; });
 function syncUI() {
   document.getElementById('icoPlay').setAttribute('d', playing ? 'M6 4h4v16H6zm8 0h4v16h-4z' : 'M7 4l13 8-13 8z');
+  const bVO = document.getElementById('bVO');
+  bVO.classList.toggle('off', !voOn());
+  bVO.querySelector('span').textContent = voOn() ? 'VO · ' + VO_LANGS[voLang].short : 'VO';
+  bVO.setAttribute('aria-label', 'Voice-over: ' + (voOn() ? VO_LANGS[voLang].label : 'off') + ' (V)');
+  document.querySelectorAll('#voMenu [data-vo]').forEach(b => b.setAttribute('aria-checked', b.dataset.vo === voLang));
   document.getElementById('icoSound').setAttribute('d', soundOn ? 'M4 9h4l5-4v14l-5-4H4zM16 8a5 5 0 0 1 0 8M18.5 5.5a8.5 8.5 0 0 1 0 13' : 'M4 9h4l5-4v14l-5-4H4zM16 9l6 6M22 9l-6 6');
 }
 let scrubbing = false;
@@ -1685,6 +1805,12 @@ scrub.addEventListener('change', () => { scrubbing = false; });
 document.getElementById('bPlay').onclick = () => playing ? pause() : play();
 document.getElementById('bRestart').onclick = () => { seek(0); if (!playing) play(); };
 document.getElementById('bSound').onclick = () => setSound(!soundOn);
+// the voice-over menu: English / 廣東話 / Off
+const voMenu = document.getElementById('voMenu'), bVOel = document.getElementById('bVO');
+const voMenuOpen = open => { voMenu.hidden = !open; bVOel.setAttribute('aria-expanded', open); if (open) wake(); };
+bVOel.onclick = e => { e.stopPropagation(); voMenuOpen(voMenu.hidden); };
+voMenu.querySelectorAll('[data-vo]').forEach(b => b.onclick = e => { e.stopPropagation(); setVO(b.dataset.vo); voMenuOpen(false); });
+addEventListener('pointerdown', e => { if (!voMenu.hidden && !voMenu.contains(e.target) && e.target !== bVOel && !bVOel.contains(e.target)) voMenuOpen(false); });
 document.getElementById('bFull').onclick = () => document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen?.();
 addEventListener('keydown', e => {
   if (!startEl.classList.contains('hide')) { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); begin(); } return; }
@@ -1692,10 +1818,13 @@ addEventListener('keydown', e => {
   else if (e.key === 'ArrowRight') seek(getPos() + 4 * SPB);
   else if (e.key === 'ArrowLeft') seek(getPos() - 4 * SPB);
   else if (e.key === 'm' || e.key === 'M') setSound(!soundOn);
+  else if (e.key === 'v' || e.key === 'V') setVO(VO_CYCLE[(VO_CYCLE.indexOf(voLang) + 1) % VO_CYCLE.length]);
+  else if (e.key === 'Escape') voMenuOpen(false);
   else if (e.key === 'f' || e.key === 'F') document.getElementById('bFull').click();
 });
 let idleT; const wake = () => { ui.classList.remove('idle'); document.body.style.cursor = ''; clearTimeout(idleT); idleT = setTimeout(() => { if (playing) { ui.classList.add('idle'); document.body.style.cursor = 'none'; } }, 2200); };
 addEventListener('pointermove', wake); wake();
+syncUI();                                            // show the chosen voice-over before anything plays
 
 /* stage fit */
 const stage = document.getElementById('stage');
@@ -1720,7 +1849,7 @@ function frame() {
 const hashBeat = +(new URLSearchParams(location.hash.slice(1)).get('b') || 0);
 pos = hashBeat * SPB;
 let booted = false;
-const ready = Promise.all([imgReady, logoReady, document.fonts.ready]);
+const ready = Promise.all([imgReady, logoReady, document.fonts.ready, voReady]);
 const nextFrame = () => new Promise(r => { requestAnimationFrame(() => r()); setTimeout(r, 60); });
 const warm = ready.then(async () => { // paint every section once, invisibly, so the first play is smooth
   stage.style.opacity = .01;
@@ -1744,7 +1873,15 @@ if (params.has('autoplay')) { // silent autoplay for embeds; sound can be switch
   warm.then(() => { syncUI(); play(); });
 }
 /* test hook */
-window.__cowise = { seekBeat: b => { pos = b * SPB; playing = false; render(b); }, render };
+window.__cowise = {
+  seekBeat: b => { pos = b * SPB; playing = false; render(b); }, render,
+  // for the MP4 exporter: lay the voice-over into an OfflineAudioContext and dip the music gain under it
+  offlineVO: async (c, musicGain, full, dest = c.destination, lang = voLang) => {
+    if (!VO[lang]) return;
+    await decodeVO(c, [lang]); const g = c.createGain(); g.gain.value = VO_LEVEL; g.connect(dest);
+    startVO(c, g, 0, 0, VO[lang]); duckPlan(musicGain, 0, 0, full, VO[lang]);
+  },
+};
 </script>
 <script type="module">
 /* ============================================================
