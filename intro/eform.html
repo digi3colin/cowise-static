@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>COWISE IDEA LAB — E-form Plugin</title>
-<meta name="description" content="How an e-form gets approved with the COWISE CMS e-form plugin: fill in and submit, department approval, further approvers, team checklists and a signed PDF — shown step by step on a real request.">
-<meta property="og:title" content="COWISE IDEA LAB — E-form Plugin">
+<title>COWISE IDEA LAB — Enterprise-form Plugin</title>
+<meta name="description" content="How an e-form gets approved with the COWISE CMS enterprise-form plugin: fill in and submit, department approval, further approvers, team checklists and a signed PDF — shown step by step on a real request.">
+<meta property="og:title" content="COWISE IDEA LAB — Enterprise-form Plugin">
 <meta property="og:image" content="https://cowise.com.hk/media/images/og-services.jpg">
 <link rel="icon" href="/media/favicon/favicon.ico" type="image/x-icon">
 <style>
@@ -95,7 +95,20 @@ html,body{height:100%;background:#000;color:#fff;overflow:hidden;font-family:var
 .scr{position:absolute;left:0;top:0;border-radius:20px;overflow:hidden;background:#000;box-shadow:0 44px 130px rgba(0,0,0,.6);transform-origin:50% 50%;will-change:transform,opacity}
 .scr .cam{position:absolute;left:0;top:0;width:1280px;height:832px;transform-origin:0 0;will-change:transform}
 .scr .cam img{position:absolute;left:0;top:0;width:100%;height:100%}
-.scr .edge{position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.12);pointer-events:none;z-index:4}
+.scr .edge{position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 3px color-mix(in srgb,var(--pc,#fff) 70%,transparent);pointer-events:none;z-index:4}
+/* whose screen this is */
+.vas{z-index:2;display:flex;align-items:center;gap:12px;padding:6px 20px 6px 6px;border-radius:999px;background:#15151b;box-shadow:inset 0 0 0 2px var(--pc),0 12px 30px rgba(0,0,0,.5);font-size:21px;color:#c9c9d1;white-space:nowrap;transform-origin:0 50%}
+.vas .av{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-size:14px;letter-spacing:-.02em;font-weight:500;color:#0d0d10}
+.vas b{font-weight:500;color:#fff}
+.vas small{font:400 16px var(--mono);color:#8f8f9b;margin-left:4px}
+/* handover card */
+.hav{border-radius:50%;display:grid;place-items:center;font-size:104px;font-weight:400;color:#0d0d10;box-shadow:0 30px 80px rgba(0,0,0,.6);transform-origin:50% 50%}
+.hav.sm{font-size:46px;filter:saturate(.6)}
+.hring{border-radius:50%;border:4px solid;transform-origin:50% 50%}
+.harr svg{width:100%;height:100%;display:block}
+.hname{font-size:96px;font-weight:300;line-height:1.02;white-space:nowrap}
+.hprev{font-size:24px;line-height:1.2;color:#9a9aa6;text-align:center}
+.hdoes{font-size:34px;font-weight:300;color:#c9c9d1}
 .ring{position:absolute;left:0;top:0;z-index:3;border:3px solid var(--rc);border-radius:12px;box-shadow:0 0 0 6px color-mix(in srgb,var(--rc) 22%,transparent),0 0 40px color-mix(in srgb,var(--rc) 55%,transparent);pointer-events:none;transform-origin:50% 50%}
 .ring.rip{box-shadow:none;border-width:2px}
 .spot{position:absolute;left:0;top:0;z-index:2;border-radius:12px;box-shadow:0 0 0 3000px rgba(6,6,10,.42);pointer-events:none}
@@ -106,7 +119,7 @@ html,body{height:100%;background:#000;color:#fff;overflow:hidden;font-family:var
 .ttl{font-size:64px;font-weight:300;line-height:1.04;letter-spacing:-.01em;width:480px;white-space:normal}
 .cbody{font-size:29px;font-weight:300;line-height:1.36;color:#c9c9d1;width:462px}
 .who{display:flex;align-items:center;gap:16px;white-space:nowrap}
-.who .av{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;font-size:26px;font-weight:500;color:#0d0d10;flex:none}
+.who .av{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;font-size:22px;font-weight:500;color:#0d0d10;flex:none}
 .who b{display:block;font-size:28px;font-weight:400}
 .who small{display:block;font:400 17px var(--mono);color:#8f8f9b;letter-spacing:.04em;margin-top:2px}
 .where{font:400 18px var(--mono);color:#9a9aa6;padding:7px 15px;border-radius:999px;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.14);white-space:nowrap}
@@ -136,6 +149,18 @@ html,body{height:100%;background:#000;color:#fff;overflow:hidden;font-family:var
 #rail{position:absolute;left:0;right:0;height:4px;top:13px;background:rgba(255,255,255,.22);border-radius:2px;overflow:hidden}
 #railfill{height:100%;width:0;background:linear-gradient(90deg,var(--cyan),var(--green),var(--purple),var(--blue),var(--gold))}
 .mk{position:absolute;top:9px;width:2px;height:12px;background:rgba(255,255,255,.5);z-index:1;pointer-events:none}
+#ui #bVO{width:auto;padding:0 12px;border-radius:20px;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.55)}
+#bVO span{font:600 13px var(--mono);letter-spacing:.06em;white-space:nowrap}
+#voWrap{position:relative}
+#voMenu{position:absolute;right:0;bottom:50px;min-width:170px;padding:6px;border-radius:14px;background:#17171c;box-shadow:0 18px 50px rgba(0,0,0,.6),inset 0 0 0 1px rgba(255,255,255,.1);display:flex;flex-direction:column;gap:2px}
+#voMenu[hidden]{display:none}
+#ui #voMenu button{width:auto;height:auto;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:10px 14px;border-radius:9px;font:400 16px var(--font);letter-spacing:.02em;color:#c9c9d1}
+#ui #voMenu button:hover{background:rgba(255,255,255,.08);color:#fff}
+#ui #voMenu button[aria-checked="true"]{color:#fff}
+#voMenu button::after{content:"";width:8px;height:8px;border-radius:50%;background:transparent}
+#voMenu button[aria-checked="true"]::after{background:var(--gold)}
+#ui #bVO.off{box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.2)}
+#bVO.off span{opacity:.45;text-decoration:line-through}
 #time{font:400 14px var(--mono);color:#ccc;min-width:118px;text-align:right;letter-spacing:.04em}
 #start{position:fixed;inset:0;z-index:30;display:grid;place-items:center;background:rgba(5,5,8,.72);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);cursor:pointer;text-align:center}
 #start.hide{display:none}
@@ -161,7 +186,7 @@ html,body{height:100%;background:#000;color:#fff;overflow:hidden;font-family:var
     <symbol id="i-tick" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10" fill="none" stroke="#0d0d10" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
   </defs>
 </svg>
-<div id="view"><div id="stage" aria-label="COWISE IDEA LAB e-form plugin animation">
+<div id="view"><div id="stage" aria-label="COWISE IDEA LAB enterprise-form plugin animation">
   <canvas id="bg" width="1920" height="1080"></canvas>
   <canvas id="gl" width="1920" height="1080"></canvas>
   <div id="scenes"></div>
@@ -178,13 +203,21 @@ html,body{height:100%;background:#000;color:#fff;overflow:hidden;font-family:var
   <div id="track"><div id="rail"><div id="railfill"></div></div><input id="scrub" type="range" min="0" max="1000" step="0.01" value="0" aria-label="Timeline"></div>
   <span id="time">00:00 · BAR 01</span>
   <button id="bSound" aria-label="Sound on / off (M)"><svg viewBox="0 0 24 24"><path id="icoSound" d="M4 9h4l5-4v14l-5-4H4zM16 8a5 5 0 0 1 0 8M18.5 5.5a8.5 8.5 0 0 1 0 13" stroke="currentColor" stroke-width="2" fill="none"/></svg></button>
+  <div id="voWrap">
+    <button id="bVO" aria-haspopup="menu" aria-expanded="false" title="Voice-over language (V)"><span>VO</span></button>
+    <div id="voMenu" role="menu" aria-label="Voice-over" hidden>
+      <button role="menuitemradio" data-vo="en">English</button>
+      <button role="menuitemradio" data-vo="yue" lang="yue">廣東話</button>
+      <button role="menuitemradio" data-vo="off">Off</button>
+    </div>
+  </div>
   <button id="bFull" aria-label="Fullscreen (F)"><svg viewBox="0 0 24 24"><path d="M4 4h6v2H6v4H4zm10 0h6v6h-2V6h-4zM4 14h2v4h4v2H4zm14 0h2v6h-6v-2h4z"/></svg></button>
 </div>
 
 <div id="start" role="button" tabindex="0" aria-label="Play">
   <div>
     <div class="play"><svg viewBox="0 0 24 24"><path d="M6 3l15 9-15 9z"/></svg></div>
-    <h1>COWISE IDEA LAB — E-form Plugin</h1>
+    <h1>COWISE IDEA LAB — Enterprise-form Plugin</h1>
     <p id="startNote">Loading 0%</p>
     <div id="lbar"><i></i></div>
   </div>
@@ -193,26 +226,29 @@ html,body{height:100%;background:#000;color:#fff;overflow:hidden;font-family:var
 <script>
 "use strict";
 /* ============================================================
-   COWISE IDEA LAB — E-form plugin
+   COWISE IDEA LAB — Enterprise-form plugin
    Same grammar as intro/cms.html: everything is a pure function of the
    playhead (in beats), locked to a 128 BPM grid and scrubbable.
 
    CHAPTERS (beats · 4 beats = 1 bar = 1.875 s)
      00   0 – 16   intro ............ "Fill in. Sign off." + logo
-     01  16 – 40   approval flow, first impression (form-flow-slide)
-     02  40 – 60   the same flow in detail (form-flow-slide-detailed);
-                   the steps then fold into the progress rail
-     03  60 –172   live demo: one real request, screenshot by screenshot
-     04 172 –192   outro
+     01  16 – 36   the basic approval flow, three steps (form-flow-slide-basic)
+     02  36 – 52   extended: + further approvers (36, with the chapter hit), + team checklists (~40);
+                   then back to the three basic steps, folded into the progress rail
+     03  52 –192   live demo of the basic flow: one real request, screenshot by screenshot,
+                   with a one-bar handover card every time a different person takes over
+     04 192 –212   outro (OUT)
    ============================================================ */
 const BPM = 128, SPB = 60 / BPM;             // 0.46875 s per beat
-const END = 192;                         // authored beats (grows as chapters are added)
+const OUT = 192;                       // outro starts here; the demo ends exactly on it
+const SLAM = OUT + 8;                    // logo lands
+const END = OUT + 20;                    // authored beats
 const DURATION = END * SPB;
 const W = 1920, H = 1080;
 const C = {pink:'#ff0062',cyan:'#7ce7f9',orange:'#fda602',yellow:'#ffde0b',navy:'#052675',green:'#7cf9bf',purple:'#a97cf9',blue:'#7c9ef9',gold:'#ffc93c',ink:'#0d0d10'};
 const STRIPES = [C.pink, C.cyan, C.orange, C.yellow, C.navy];
 const IMG = '/media/images/';
-const DROPS = [16, 40, 60, 172, 180];
+const DROPS = [16, 36, 52, OUT, SLAM];
 
 /* ---------- math & easing ---------- */
 const clamp = (v, a = 0, b = 1) => v < a ? a : v > b ? b : v;
@@ -361,7 +397,7 @@ function wipe(ctx, b, B, palette, len = 1) {
   return true;
 }
 
-window.__G = { E, P, clamp, lerp, pulse, hash, profile, colTop, colBot, colRank, COLS, STRIPES };
+window.__G = { E, P, clamp, lerp, pulse, hash, profile, colTop, colBot, colRank, COLS, STRIPES, SLAM };
 
 /* ============================================================
    SCENES
@@ -378,7 +414,7 @@ scene(0, 16.5, el => {
   const line2 = words(el, 'Sign off.', 'lg outlined', 0, 0);
   [line1, line2].forEach((g, k) => { g.line.style.left = '0'; g.line.style.width = '1920px'; g.line.style.textAlign = 'center'; g.line.style.top = (408 + k * 96) + 'px'; });
   const logo = $('div', 'abs', el); logo.id = 'logoA'; place(logo, 470, 360, 980);
-  const tagline = $('div', 'abs eyebrow', el, 'E-form plugin · COWISE CMS');
+  const tagline = $('div', 'abs eyebrow', el, 'Enterprise-form plugin · COWISE CMS');
   place(tagline, 0, 780, 1920); tagline.style.textAlign = 'center'; tagline.style.color = '#fff';
   return b => {
     // one word per kick: Fill(0) in(1) Sign(2) off(3); they leave one per 16th hat from beat 5
@@ -401,17 +437,25 @@ scene(0, 16.5, el => {
 
 /* ---------- 01 / 02 · the approval flow ----------
    One set of step panels lives from beat 16 to the end of the demo:
-   four steps (overview) → five steps (detail) → a compact progress rail (demo). */
+   the basic three steps (form-flow-slide-basic) → + further approvers (form-flow-slide)
+   → + team checklists (form-flow-slide-detailed) → back to a three-step progress rail for the demo,
+   which runs the basic flow. */
 const ROLE = ['Applicant', 'Department head', 'Further approvers', 'Teams', 'Done'];
 const RCOL = [C.cyan, C.green, C.purple, C.blue, C.gold];
+const STEPNO = ['01', '02', '', '', '03'];          // step numbers in the basic flow the demo follows
 const FX0 = 104, FW = 1712, FY = 430, FH = 360;
 const row = (n, gap, y = FY, h = FH) => { const w = (FW - (n - 1) * gap) / n; return [...Array(n)].map((_, i) => ({ x: FX0 + i * (w + gap), y, w, h })); };
-const OV4 = row(4, 52), DT5 = row(5, 40), RAIL5 = row(5, 40, 976, 64);
-// overview: Teams is not there yet; it waits, collapsed, in the gap between 03 and Done
-const OVR = [OV4[0], OV4[1], OV4[2], { x: OV4[2].x + OV4[2].w + 26, y: FY + FH / 2, w: 0, h: 0 }, OV4[3]];
+const B3 = row(3, 52), OV4 = row(4, 52), DT5 = row(5, 40), R3 = row(3, 52, 976, 64);
+// a step that is not in a layout waits, collapsed, in the gap where it will open
+const gapAt = (r, y) => ({ x: r.x + r.w + 26, y, w: 0, h: 0 });
+const cB = gapAt(B3[1], FY + FH / 2), cF = gapAt(OV4[2], FY + FH / 2), cR = gapAt(R3[1], R3[0].y + R3[0].h / 2);
+const BASIC = [B3[0], B3[1], cB, cB, B3[2]];
+const FOUR = [OV4[0], OV4[1], OV4[2], cF, OV4[3]];
+const FIVE = DT5;
+const RAIL = [R3[0], R3[1], cR, cR, R3[2]];
 const linkX = rs => rs.slice(0, -1).map((r, i) => (r.x + r.w + rs[i + 1].x) / 2);
-const OVL = linkX(OV4); OVL.push(OVL[2]);
-const DTL = linkX(DT5), RLL = linkX(RAIL5);
+const pad4 = a => [...a, ...Array(4 - a.length).fill(a[a.length - 1])];
+const BLX = pad4(linkX(B3)), OLX = pad4(linkX(OV4)), DLX = linkX(DT5), RLX = pad4(linkX(R3));
 const lerpRect = (a, b, t) => ({ x: lerp(a.x, b.x, t), y: lerp(a.y, b.y, t), w: lerp(a.w, b.w, t), h: lerp(a.h, b.h, t) });
 
 const FLOW = [
@@ -419,16 +463,22 @@ const FLOW = [
   { cls: 'dept', ico: 'i-sign', h: 'Department approval', li: ['Department head signs'], verdict: 1 },
   { cls: 'extra opt', ico: 'i-sign', h: 'Additional approval', li: ['Only when the form needs it'], verdict: 1, chip: 'if needed' },
   { cls: 'tasks opt', ico: 'i-check', h: 'Checklist', li: ['Teams tick off their items'], chip: 'if needed' },
-  { cls: 'done', ico: 'i-done', h: 'Completed', li: ['HR may assign a <b>Central Number</b>', 'Applicant gets the <b>signed PDF</b>'] },
+  { cls: 'done', ico: 'i-done', h: 'Completed', li: ['HR Admin may assign a <b>Central Number</b>', 'Applicant gets the <b>signed PDF</b>'] },
 ];
 
-scene(15.5, 172.5, el => {
+scene(15.5, OUT + .5, el => {
   const tag1 = makeTag(el, '01', 'Approval flow', C.cyan);
+  const tag2 = makeTag(el, '02', 'Workflow definition', C.purple);
   const mq = $('div', 'abs marquee', el, 'APPROVED'); place(mq, 900, 800);
   const h1 = words(el, 'How an e-form gets approved', 'lg', 104, 150);
   h1.ws[4].style.color = C.green;
-  const sub = $('div', 'abs sub', el, 'When it is their turn, everyone is emailed a link, or can log in to the system.');
-  place(sub, 108, 262, 1300);
+  // chapter 02 has its own headline: the same flow, adjusted and extended per form
+  const h2 = words(el, 'Adjust and extend the workflow', 'lg', 104, 150);
+  h2.ws[0].style.color = C.purple; h2.ws[2].style.color = C.purple;
+  const sub1 = $('div', 'abs sub', el, 'When it is their turn, everyone is emailed a link, or can log in to the system.');
+  place(sub1, 108, 262, 1300);
+  const sub2 = $('div', 'abs sub', el, 'When a form needs more, add further approvers or team checklists to its workflow.');
+  place(sub2, 108, 262, 1300);
 
   const steps = FLOW.map((f, k) => {
     const p = $('div', 'fstep ' + f.cls, el); p.style.setProperty('--c', RCOL[k]);
@@ -443,185 +493,258 @@ scene(15.5, 172.5, el => {
       (f.verdict ? '<div class="verdict"><span class="y">Approve</span><span class="n">Reject</span></div>' : ''));
     const chip = f.chip ? $('span', 'fchip', p, f.chip) : null;
     const num = ph.querySelector('.num b'), ok = ph.querySelector('.ok');
-    if (k === 4) num.innerHTML = '04<br>05';   // Done is 04 in the overview, 05 once Teams joins
+    if (k === 4) num.innerHTML = '03<br>04<br>05';   // Done counts up as steps are added, and back to 03 for the demo
     return { p, glow, inn, bd, chip, num, ok };
   });
   const links = [0, 1, 2, 3].map(() => $('div', 'flink', el, '<svg><use href="#i-arrow"/></svg>'));
   const revw = $('div', 'revw', el, '<span class="ic"><svg><use href="#i-eye"/></svg></span><p><strong>Reviewers</strong>Comment and endorse until the form is approved, but never approve.</p>');
 
-  // 02 · steps 02–04 come from each form's workflow definition
-  const tag2 = makeTag(el, '02', 'Workflow definition', C.purple);
+  // steps 02–04 come from each form's workflow definition
   const cust = $('div', 'cust', el);
   const custLab = $('span', 'clab', el, 'Set per form in the workflow definition <code>{ JSON }</code>');
-  const routeNote = $('div', 'abs note', el, 'this demo’s route · department head → HR assigns a Central Number → done');
+  const routeNote = $('div', 'abs note', el, 'the demo runs the basic flow · applicant → department head → done');
   place(routeNote, 104, 984);
 
-  // overview entrance: one panel per half bar, in reading order
-  const ENTER = [18.5, 20, 21.5, null, 23];
-  // first impression: the form runs through the four steps once
-  const RUN = [[0, 28], [1, 29.5], [2, 31], [4, 32.5]];
-  // in detail: the route the demo is about to take (Teams is not used by this form)
-  const ROUTE = [[0, 50], [1, 50.8], [2, 51.6], [4, 53.2]];
-  const SKIP = 3, SKIP_AT = 52.4;
+  // the basic flow lands one panel per half bar
+  const ENTER = [18.5, 20, 37.2, 40.4, 21.5];
+  // first impression: the form runs through the three steps once
+  const RUN = [[0, 26], [1, 27.5], [4, 29]];
+  // each added step gets a moment in the light
+  const NEW = [[2, 38.4], [3, 41.6]];
+  // before the demo: the basic route lights, the optional steps step back
+  const ROUTE = [[0, 45], [1, 45.75], [4, 46.5]];
+  const OPT_DIM = 45.4;
 
   return b => {
-    const m = E.io4(P(b, 40, 2));          // overview → detail
-    const mt = E.io3(P(b, 41, 1.1));       // Teams opens its slot
-    const r = E.io4(P(b, 56.5, 2.5));      // detail → progress rail
-    const fold = E.i3(P(b, 56, 1));        // everything that is not a step leaves
-    const gone = b >= 170 ? E.i3(P(b, 170, 1.5)) : 0;
+    const m1 = E.io4(P(b, 36, 2));           // 3 → 4: further approvers
+    const mt1 = E.io3(P(b, 37, 1.1));        //   … opens its slot
+    const m2 = E.io4(P(b, 39.6, 1.6));           // 4 → 5: team checklists
+    const mt2 = E.io3(P(b, 40.2, 1));        //   … opens its slot
+    const r = E.io4(P(b, 48.5, 2.5));        // → three-step progress rail
+    const fold = E.i3(P(b, 48, 1));          // everything that is not a step leaves
+    const optOut = E.i3(P(b, 48.4, .9));     // the optional steps leave the rail
+    const gone = b >= OUT - 2 ? E.i3(P(b, OUT - 2, 1.5)) : 0;
 
-    renderTag(tag1, b, 16.4, 39.5);
-    renderTag(tag2, b, 40.4, 59.4);
-    reveal(h1, b, 16.8, .3, 1, 56, .08);
-    fadeUp(sub, b, 17.6, 56);
+    renderTag(tag1, b, 16.4, 35.5);
+    renderTag(tag2, b, 36.4, 51.4);
+    reveal(h1, b, 16.8, .3, 1, 35.4, .08);
+    reveal(h2, b, 36.6, .3, 1, 48, .08);
+    fadeUp(sub1, b, 17.6, 35.6);
+    fadeUp(sub2, b, 36.6, 48);
     T(mq, { x: -((b - 16) * 10) % 600, o: E.o3(P(b, 18, 2)) * (1 - fold) });
 
-    const demo = b >= 59 ? demoState(b) : null;
+    const demo = b >= D0 - 1 ? demoState(b) : null;
     steps.forEach((s, k) => {
-      const at = ENTER[k];
-      const base = k === 3 ? lerpRect(OVR[3], DT5[3], mt) : lerpRect(OVR[k], DT5[k], m);
-      const rc = lerpRect(base, RAIL5[k], r);
+      const opt = k === 2 || k === 3;
+      const p1 = k === 2 ? mt1 : m1, p2 = k === 3 ? mt2 : m2;
+      const rc = lerpRect(lerpRect(lerpRect(BASIC[k], FOUR[k], p1), FIVE[k], p2), RAIL[k], r);
       geo(s.p, rc.x, rc.y, rc.w, rc.h);
       setStyle(s.p, 'borderRadius', lerp(24, 16, r).toFixed(1) + 'px');
       setStyle(s.inn, 'top', lerp(22, 10, r).toFixed(1) + 'px');
-      // Teams pops into its slot; the rest land one per half bar in the overview
-      const pin = k === 3 ? E.oBack(P(b, 41.2, .9), 1.6) : E.oBack(P(b, at, .9), 1.6);
-      const vis = k === 3 ? P(b, 41.2, .3) : P(b, at, .3);
-      const dim = k === SKIP ? lerp(1, .34, E.o3(P(b, SKIP_AT, .6))) : 1;
-      T(s.p, { y: (1 - pin) * 80 + gone * 60, s: .94 + .06 * clamp(pin), o: vis * dim * (1 - gone), ry: (1 - clamp(pin)) * -10 });
-      T(s.bd, { o: 1 - P(b, 56.3, 1) });
-      if (s.chip) T(s.chip, { o: (k === 3 ? P(b, 41.8, .4) : 1) * (1 - P(b, 56.3, .8)) });
-      // Done: 04 → 05 once Teams joins
-      if (k === 4) T(s.num, { y: -44 * E.io3(P(b, 41.6, .7)) });
+      const pin = E.oBack(P(b, ENTER[k], .9), 1.6);
+      const vis = P(b, ENTER[k], .3) * (opt ? 1 - optOut : 1);
+      const dim = opt ? lerp(1, .34, E.o3(P(b, OPT_DIM, .6))) : 1;
+      const bump = demo ? demo.bump[k] : 0;
+      T(s.p, { y: (1 - pin) * 80 + gone * 60, s: (.94 + .06 * clamp(pin)) * (1 + .07 * bump), o: vis * dim * (1 - gone), ry: (1 - clamp(pin)) * -10 });
+      T(s.bd, { o: 1 - P(b, 48.3, 1) });
+      if (s.chip) T(s.chip, { o: P(b, ENTER[k] + .6, .4) * (1 - P(b, 48.3, .8)) });
+      // Done: 03 → 04 → 05 as steps join, then back to 03 for the basic demo
+      if (k === 4) T(s.num, { y: -44 * (E.io3(P(b, 37.6, .7)) + E.io3(P(b, 40.8, .7))) + 88 * E.io3(P(b, 49, .8)) });
 
       let g = 0;
-      RUN.forEach(([kk, t], i) => { if (kk === k) g = E.o3(P(b, t, .35)) * (i === RUN.length - 1 ? 1 - E.i3(P(b, 36, 1.5)) : 1 - E.i3(P(b, t + 1.5, .8))); });
-      ROUTE.forEach(([kk, t]) => { if (kk === k) g = Math.max(g, E.o3(P(b, t, .35)) * (1 - E.i3(P(b, 56.5, 1.5)))); });
+      RUN.forEach(([kk, t], i) => { if (kk === k) g = E.o3(P(b, t, .35)) * (i === RUN.length - 1 ? 1 - E.i3(P(b, 33.5, 1.5)) : 1 - E.i3(P(b, t + 1.5, .8))); });
+      NEW.forEach(([kk, t]) => { if (kk === k) g = Math.max(g, E.o3(P(b, t, .4)) * (1 - E.i3(P(b, t + 2.4, .8)))); });
+      ROUTE.forEach(([kk, t]) => { if (kk === k) g = Math.max(g, E.o3(P(b, t, .35)) * (1 - E.i3(P(b, 48.5, 1.5)))); });
       let ok = 0;
       if (demo) { g = Math.max(g, demo.glow[k]); ok = demo.ok[k]; }
       T(s.glow, { o: g });
+      if (k === 4) setStyle(s.glow, 'background', demo && demo.lit ? 'color-mix(in srgb,var(--gold) 22%,transparent)' : '');
       T(s.ok, { o: ok, s: .6 + .4 * ok });
     });
     links.forEach((l, i) => {
-      const xd = i === 2 || i === 3 ? lerp(OVL[i], DTL[i], mt) : lerp(OVL[i], DTL[i], m);
-      const x = lerp(xd, RLL[i], r), y = lerp(FY + FH / 2, RAIL5[0].y + RAIL5[0].h / 2, r);
+      const x = lerp(lerp(lerp(BLX[i], OLX[i], m1), DLX[i], m2), RLX[i], r);
+      const y = lerp(FY + FH / 2, R3[0].y + R3[0].h / 2, r);
       geo(l, x, y, 40, 40);
-      const at = i < 2 ? ENTER[i + 1] : ENTER[4];
-      const a = (i === 3 ? E.o3(P(b, 41.6, .5)) : E.o3(P(b, at - .2, .5))) * (1 - gone);
+      const a = i === 0 ? E.o3(P(b, 19.8, .5)) : i === 1 ? E.o3(P(b, 21.3, .5))
+        : E.o3(P(b, i === 2 ? 37.6 : 40.8, .5)) * (1 - E.i3(P(b, 48.4, .8)));
       // the arrow brightens as the run crosses it
-      const t = RUN[i] ? RUN[i][1] + .9 : 0;
-      const hot = i < 3 ? E.o3(P(b, t, .3)) * (1 - E.i3(P(b, t + 1.2, .6))) : 0;
+      const t = i < 2 ? RUN[i][1] + .9 : 0;
+      const hot = i < 2 ? E.o3(P(b, t, .3)) * (1 - E.i3(P(b, t + 1.2, .6))) : 0;
       l.style.color = hot > .02 ? RCOL[RUN[i + 1][0]] : '#4e4e5a';
-      T(l, { x: (1 - a) * -16, o: a, s: (1 + .25 * hot) * lerp(1, .7, r) });
+      T(l, { x: (1 - a) * -16, o: a * (1 - gone), s: (1 + .25 * hot) * lerp(1, .7, r) });
     });
-    const rl = lerp(OV4[1].x, DT5[1].x, m), rr = lerp(OV4[2].x + OV4[2].w, DT5[2].x + DT5[2].w, m);
-    geo(revw, rl, 846, rr - rl, 102);
-    fadeUp(revw, b, 25, 56, 30);
+    // reviewers sit under the approval steps: step 2, then steps 2–3
+    const rl = lerp(lerp(B3[1].x, OV4[1].x, m1), DT5[1].x, m2);
+    const rr = lerp(lerp(B3[1].x + B3[1].w, OV4[2].x + OV4[2].w, m1), DT5[2].x + DT5[2].w, m2);
+    setStyle(revw, 'left', rl.toFixed(1) + 'px'); setStyle(revw, 'top', '846px'); setStyle(revw, 'width', (rr - rl).toFixed(1) + 'px');
+    fadeUp(revw, b, 23, 48, 30);
 
     // the dashed frame around the configurable steps
     const cl = DT5[1].x - 20, cr = DT5[3].x + DT5[3].w + 20, ct = FY - 62, cb = FY + FH + 22;
     geo(cust, cl, ct, cr - cl, cb - ct);
-    const ca = E.oExp(P(b, 43.4, 1.4));
+    const ca = E.oExp(P(b, 42.4, 1.4));
     T(cust, { sx: ca, o: ca * (1 - fold) });
-    geo(custLab, (cl + cr) / 2, ct, 0, 0);
-    const la = E.oBack(P(b, 44.2, .8), 1.8);
-    T(custLab, { x: '-50%', y: '-50%', s: Math.max(0, la), o: P(b, 44.2, .3) * (1 - fold) });
-    fadeUp(routeNote, b, 53.6, 56.2, 16);
+    // anchor only: the pill keeps its own size so the -50% shift centres it on the frame's top edge
+    setStyle(custLab, 'left', ((cl + cr) / 2).toFixed(1) + 'px'); setStyle(custLab, 'top', ct.toFixed(1) + 'px');
+    const la = E.oBack(P(b, 43.2, .8), 1.8);
+    T(custLab, { x: '-50%', y: '-50%', s: Math.max(0, la), o: P(b, 43.2, .3) * (1 - fold) });
+    fadeUp(routeNote, b, 46.8, 48.2, 16);
   };
 });
 /* during the demo the rail reports which step the request is on; set by chapter 03 */
 let demoState = () => null;
 
-/* ---------- 03 · Live demo: one real request, REQ-2026-0002 ----------
-   Screenshots are 2560×1664 desktop captures (CMS left, approver and HR mail on the right).
-   Regions below are in a 1280×832 frame: [x, y, w, h]. Each shot is two bars long. */
+/* ---------- 03 · Live demo: one real request, REQ-2026-0002, on the basic flow ----------
+   Screenshots are 2560×1664 desktop captures (CMS left, approver and HR Admin mail on the right).
+   Regions below are in a 1280×832 frame: [x, y, w, h]. Each shot is two bars long.
+   Every time a different person takes over there is a one-bar HANDOVER: the screen blurs and dims,
+   a card names who acts now, then the screen comes back as seen by them.
+   HR Admin's Central Number belongs to Done: once it is assigned, the Done step lights up. */
+// [avatar initials, who, what they do in this flow, colour] — roles, not named people
 const PEOPLE = {
-  A: ['S', 'Sammy Chan', 'Applicant · staff', C.cyan],
-  M: ['M', 'Mandy Lau', 'Department head · management', C.green],
-  H: ['H', 'Helen Chan', 'HR', C.purple],
+  A: ['S', 'Staff', 'Applicant', C.cyan],
+  M: ['DH', 'Department Head (Management)', 'Approver', C.green],
+  H: ['HR', 'HR Admin', 'Completes the form', C.purple],   // one HR & Admin department
 };
-const SHOTS = [
-  { rail: 0, who: 'A', where: 'cms.cowise.com.hk · new form', title: 'Fill in and submit',
-    body: 'Sammy fills in an e-procurement request and ticks the department heads who should review it. The route is shown before sending.',
-    f1: [150, 300, 490, 250], r1: [180, 372, 440, 138], l1: 'Choose approvers', f2At: 4.5, f2: [150, 575, 500, 245], r2: [183, 620, 354, 100], l2: 'Route preview' },
-  { rail: 0, who: 'A', where: 'cms.cowise.com.hk · form page', title: 'Submitted',
-    body: 'The request becomes REQ-2026-0002. Step 1 now waits for the department head.',
+const HO_LEN = 4, SHOT_LEN = 8, D0 = 52;
+const SEQ = [
+  { ho: 'A', rail: 0, does: 'Fills in a request and sends it for approval.' },
+  { img: 1, rail: 0, who: 'A', where: 'cms.cowise.com.hk · new form', title: 'Fill in and submit',
+    body: 'The form shows the whole approval flow up front. Staff tick the department heads who should review it, then submit.',
+    len: 12, foci: [
+      [0, [150, 575, 500, 245], [180, 588, 358, 222], 'The full flow'],
+      [4, [150, 300, 490, 250], [180, 372, 440, 138], 'Choose approvers'],
+      [8, [140, 480, 330, 130], [171, 548, 43, 20], 'Submit'],
+    ] },
+  { img: 2, rail: 0, who: 'A', where: 'cms.cowise.com.hk · form page', title: 'Submitted',
+    body: 'The request becomes REQ-2026-0002. It now waits for the department head.',
     f1: [160, 70, 480, 200], r1: [183, 181, 130, 63], l1: 'Waiting' },
-  { rail: 1, who: 'M', where: 'Outlook · department head', title: 'The approver is emailed',
+  { ho: 'M', rail: 1, does: 'Reviews the request, then approves and signs it.' },
+  { img: 3, rail: 1, who: 'M', where: 'Outlook · department head', title: 'The approver is emailed',
     body: 'Seconds later, the department head gets an “Approval needed” email.',
     f1: [790, 70, 490, 130], r1: [1076, 82, 198, 50], l1: 'Approval needed' },
-  { rail: 1, who: 'M', where: 'Outlook · department head', title: 'Decide from the email',
+  { img: 4, rail: 1, who: 'M', where: 'Outlook · department head', title: 'Decide from the email',
     body: 'One button opens a personal approval page. No password needed.',
     f1: [975, 115, 230, 300], r1: [1010, 281, 90, 24], l1: 'Review and decide' },
-  { rail: 1, who: 'M', where: 'cms.cowise.com.hk · dashboard', title: 'Or log in to the CMS',
-    body: 'Signed in, Mandy sees the same request under “Waiting for you”.',
+  { img: 5, rail: 1, who: 'M', where: 'cms.cowise.com.hk · dashboard', title: 'Or log in to the CMS',
+    body: 'Signed in, the department head sees the same request under “Waiting for you”.',
     f1: [795, 60, 480, 320], r1: [812, 141, 452, 40], l1: 'Waiting for you' },
-  { rail: 1, who: 'M', where: 'approve.cowise.com.hk · personal link', title: 'A page for this approver',
+  { img: 6, rail: 1, who: 'M', where: 'approve.cowise.com.hk · personal link', title: 'A page for this approver',
     body: 'The personal link shows the whole form and its procedure, with this step highlighted.',
     f1: [770, 55, 420, 300], r1: [786, 147, 147, 64], l1: 'Your step' },
-  { rail: 1, rail2: 2, who: 'M', who2: 'H', where: 'approve.cowise.com.hk → Outlook · HR', title: 'Approved. Next step.',
-    body: 'Mandy signs and approves. The form moves on to HR, who is emailed straight away.',
-    f1: [770, 120, 420, 170], r1: [788, 160, 370, 28], l1: 'Approved', f2: [700, 470, 440, 280], r2: [800, 529, 175, 40], l2: 'HR is emailed' },
-  { rail: 2, who: 'H', where: 'Outlook · HR', title: 'HR gets their task',
-    body: 'HR’s email has its own button: Assign Central Number.',
+  // 15 / 16 are 2000×1300 captures, the same shape, so the same 1280×832 frame applies
+  { img: 15, rail: 1, who: 'M', where: 'approve.cowise.com.hk · personal link', title: 'Comment, or ask others',
+    body: 'Before deciding, the department head can leave a comment, or ask others to review. Reviewers comment and endorse, but never approve.',
+    f1: [770, 215, 420, 200], r1: [790, 234, 370, 152], l1: 'Comment' },
+  { img: 16, rail: 1, who: 'M', where: 'approve.cowise.com.hk · personal link', title: 'Sign and approve',
+    body: 'They sign on screen, or upload a signature image, then approve. Rejecting needs a reason.',
+    foci: [
+      [0, [770, 90, 420, 270], [797, 138, 205, 74], 'Signature'],
+      [4, [770, 200, 330, 160], [797, 307, 55, 25], 'Approve'],
+    ] },
+  { img: 7, rail: 1, who: 'M', where: 'approve.cowise.com.hk · personal link', title: 'Approved',
+    body: 'Signed and approved. The department head’s part is done.',
+    f1: [770, 120, 420, 170], r1: [788, 160, 370, 28], l1: 'Approved' },
+  { ho: 'H', rail: 4, step: 'Done · HR Admin', does: 'Completes the form by assigning a Central Number.' },
+  { img: 7, rail: 4, step: 'Done · HR Admin', who: 'H', where: 'Outlook · HR Admin', title: 'Over to HR Admin',
+    body: 'To complete the form, HR Admin is emailed to assign a Central Number.',
+    f1: [700, 470, 440, 280], r1: [800, 529, 175, 40], l1: 'Central Number needed' },
+  { img: 8, rail: 4, step: 'Done · HR Admin', who: 'H', where: 'Outlook · HR Admin', title: 'HR Admin gets the task',
+    body: 'HR Admin’s email has its own button: Assign Central Number. It opens their personal page.',
     f1: [978, 500, 220, 300], r1: [1014, 656, 106, 25], l1: 'Assign Central Number' },
-  { rail: 2, who: 'H', where: 'cms.cowise.com.hk · form page', title: 'Every step on one page',
-    body: 'Signed in as HR, Helen sees step 1 approved and step 2 waiting for her.',
-    f1: [800, 450, 470, 300], r1: [970, 540, 86, 55], l1: 'Waiting for HR' },
-  { rail: 2, who: 'H', where: 'cms.cowise.com.hk · form page', title: 'Every action on record',
-    body: 'The task sits above a history of every email, approval and signature.',
-    f1: [805, 480, 465, 140], r1: [812, 494, 452, 105], l1: 'HR’s task', f2: [810, 610, 460, 200], r2: [826, 700, 250, 42], l2: 'Signed approval' },
-  { rail: 2, who: 'H', where: 'approve.cowise.com.hk · personal link', title: 'Same task, from the email',
-    body: 'Opened from the email link instead, HR sees the same form and procedure.',
-    f1: [775, 445, 420, 200], r1: [789, 536, 147, 62], l1: 'Waiting for HR' },
-  { rail: 2, who: 'H', where: 'approve.cowise.com.hk · personal link', title: 'Central Number assigned',
-    body: 'HR enters CN002. The procedure moves to its last step.',
-    f1: [780, 590, 390, 210], r1: [797, 632, 354, 24], l1: 'CN002' },
-  { rail: 4, who: 'A', who2: 'H', where: 'Gmail · applicant  /  Outlook · HR', title: 'Completed',
-    body: 'Sammy is told the form is complete. HR receives the signed PDF with Central Number CN002.',
-    f1: [160, 105, 460, 120], r1: [188, 116, 290, 18], l1: 'Applicant notified', f2: [980, 500, 215, 280], r2: [1013, 583, 135, 26], l2: 'Signed PDF attached' },
-  { rail: 4, who: 'H', where: 'REQ-2026-0002 Electronic form setup.pdf', title: 'The signed PDF',
-    body: 'One document: the form, the department head’s signature and HR’s Central Number.',
-    f1: [860, 490, 220, 285], r1: [866, 497, 208, 262], l1: 'Generated PDF', f2At: 3, f2: [890, 590, 180, 120], r2: [936, 651, 50, 30], l2: 'Signature' },
+  { id: 'cn', img: 12, rail: 4, step: 'Done · HR Admin', who: 'H', where: 'approve.cowise.com.hk · personal link', title: 'Assign the Central Number',
+    body: 'On that page, HR Admin enters CN002 and clicks Assign Central Number. The form is complete.',
+    foci: [
+      [0, [780, 590, 390, 210], [797, 632, 354, 24], 'CN002'],
+      [4, [760, 600, 330, 140], [797, 658, 110, 24], 'Assign Central Number', 'below'],   // keep CN002 visible above
+    ] },
+  { img: 13, rail: 4, step: 'Done · HR Admin', who: 'H', where: 'Outlook · HR Admin', title: 'The completed form',
+    body: 'HR Admin receives the completed form with the signed PDF attached and Central Number CN002.',
+    f1: [980, 500, 215, 280], r1: [1013, 583, 135, 26], l1: 'Signed PDF attached' },
+  { img: 14, rail: 4, step: 'Done · HR Admin', who: 'H', where: 'REQ-2026-0002 Electronic form setup.pdf', title: 'The signed PDF',
+    body: 'One document: the form, the department head’s signature and HR Admin’s Central Number.',
+    f1: [860, 490, 220, 285], r1: [866, 497, 208, 262], l1: 'Generated PDF', f2At: 3.5, f2: [890, 590, 180, 120], r2: [936, 651, 50, 30], l2: 'Signature' },
+  { ho: 'A', rail: 4, step: 'Done', does: 'Gets the result.' },
+  { img: 13, rail: 4, step: 'Done', who: 'A', where: 'Gmail · applicant', title: 'The applicant is told',
+    body: 'Staff get a “Completed” email with a link back to the form.',
+    f1: [160, 105, 460, 120], r1: [188, 116, 290, 18], l1: 'Completed' },
 ];
-const D0 = 60, SHOT_LEN = 8;
-SHOTS.forEach((s, i) => {
-  s.n = String(i + 1).padStart(2, '0'); s.src = `eform/${s.n}.webp`;
-  s.at = D0 + i * SHOT_LEN; s.f2At = s.f2At || 4;
-  s.m1 = s.at + (i === 0 ? 1.5 : 0);            // the first shot holds wide while the screen arrives
-});
-SRC.shots = SHOTS.map(s => s.src);
+const SHOTS = SEQ.filter(s => !s.ho), HANDOVERS = SEQ.filter(s => s.ho);
+{
+  let t = D0, prev = null;
+  SEQ.forEach(s => {
+    s.at = t;
+    if (s.ho) { s.from = prev; prev = s.ho; t += HO_LEN; }
+    else {
+      s.len = s.len || SHOT_LEN;
+      s.foci = s.foci || [[0, s.f1, s.r1, s.l1], ...(s.f2 ? [[s.f2At || 4, s.f2, s.r2, s.l2]] : [])];
+      s.F = s.foci.map(([o, f, r, l, pos]) => ({ t0: s.at + o, f, r, l, below: pos === 'below' }));
+      t += s.len;
+    }
+  });
+  if (t !== OUT) console.warn(`demo ends at ${t}, outro starts at ${OUT}`);
+}
+SHOTS.forEach((s, i) => { s.n = String(i + 1).padStart(2, '0'); s.src = `eform/${String(s.img).padStart(2, '0')}.webp`; });
+SRC.shots = [...new Set(SHOTS.map(s => s.src))];
 SRC.shots.forEach(loadImg); LOAD.imgTotal = Object.keys(images).length;
+// who is acting at beat b (switches under the handover wipe)
+const HO_SWAP = .6;
+const personAt = b => { let p = HANDOVERS[0]; HANDOVERS.forEach(h => { if (b >= h.at + HO_SWAP) p = h; }); return p; };
+// how far the screen is set aside for a handover card (0 = in use, 1 = blurred and dimmed)
+const handoverDim = b => {
+  for (const h of HANDOVERS) if (b >= h.at && b < h.at + HO_LEN) return E.io3(P(b, h.at, HO_SWAP)) * (1 - E.io3(P(b, h.at + 3.1, .9)));
+  return 0;
+};
 
-// which rail step is current, as a list of moments
+// which rail step is current, as a list of moments (a handover moves the rail)
 const RAIL_EV = [];
-SHOTS.forEach(s => { RAIL_EV.push({ t: s.at, k: s.rail }); if (s.rail2 != null) RAIL_EV.push({ t: s.at + s.f2At, k: s.rail2 }); });
-const DONE_AT = SHOTS[13].at + 2;
+SEQ.forEach(s => RAIL_EV.push({ t: s.ho ? s.at + HO_SWAP : s.at, k: s.rail }));
+// Done lights up the moment HR clicks Assign Central Number (as that ring lands)
+const DONE_AT = (cn => cn.F[cn.F.length - 1].t0 + 1.6)(SEQ.find(s => s.id === 'cn'));
 demoState = b => {
-  const glow = [0, 0, 0, 0, 0], ok = [0, 0, 0, 0, 0];
+  const glow = [0, 0, 0, 0, 0], ok = [0, 0, 0, 0, 0], bump = [0, 0, 0, 0, 0];
   let j = -1; RAIL_EV.forEach((e, i) => { if (b >= e.t) j = i; });
-  const fade = b >= 170 ? 1 - E.i3(P(b, 170, 1.5)) : 1;
+  const fade = b >= OUT - 2 ? 1 - E.i3(P(b, OUT - 2, 1.5)) : 1;
   if (j >= 0) {
-    const cur = RAIL_EV[j], prev = RAIL_EV[j - 1], p = E.o3(P(b, cur.t, .4));
+    let i0 = j; while (i0 > 0 && RAIL_EV[i0 - 1].k === RAIL_EV[j].k) i0--;   // when this step became current
+    const cur = RAIL_EV[i0], prev = RAIL_EV[i0 - 1], p = E.o3(P(b, cur.t, .4));
     glow[cur.k] = p;
-    if (prev && prev.k !== cur.k) glow[prev.k] = Math.max(glow[prev.k], 1 - p);
-    for (let k = 0; k < 3; k++) {
+    if (prev) glow[prev.k] = Math.max(glow[prev.k], 1 - p);
+    for (const k of [0, 1]) {
       const first = RAIL_EV.find(e => e.k > k);
       if (first && b >= first.t) ok[k] = E.oBack(P(b, first.t, .5), 2);
     }
   }
+  // while HR works, Done is in progress (half lit); with the Central Number it completes
+  const lit = b >= DONE_AT;
+  glow[4] = lit ? 1 : glow[4] * .5;
   ok[4] = E.oBack(P(b, DONE_AT, .5), 2);
-  return { glow: glow.map(g => g * fade), ok: ok.map(o => Math.max(0, o) * fade) };
+  bump[4] = lit && b < DONE_AT + 2 ? Math.exp(-(b - DONE_AT) * 3) : 0;
+  return { glow: glow.map(g => g * fade), ok: ok.map(o => Math.max(0, o) * fade), bump, lit: lit && fade > 0 };
 };
+
+/* ---------- 02 → 03 · title card while the steps fold into the rail ---------- */
+scene(47.5, D0 + 1, el => {
+  const h = words(el, 'Live demo', 'xl', 0, 330);
+  h.line.style.width = W + 'px'; h.line.style.textAlign = 'center';
+  h.ws[1].style.color = C.gold;
+  const sub = $('div', 'abs sub', el, 'One real request, from submit to the signed PDF, following the basic flow.');
+  place(sub, 0, 490, W); sub.style.textAlign = 'center'; sub.style.fontSize = '36px';
+  const eb = $('div', 'abs eyebrow', el, 'REQ-2026-0002 · E-procurement'); place(eb, 0, 280, W);
+  eb.style.textAlign = 'center'; eb.style.color = '#8f8f9b';
+  return b => {
+    fadeUp(eb, b, 48.2, 51.4, 16);
+    reveal(h, b, 48.5, .35, 1, 51.5, .1, .6);
+    fadeUp(sub, b, 49.2, 51.4, 24);
+  };
+});
 
 /* the camera: a rectangle of the screenshot eased from one region to the next */
 const VX = 600, VY = 150, VW = 1224, VH = 796, IW = 1280, IH = 832, SMAX = 3.2;
 const WIDE = [0, 0, IW, IH];
 const KF = [{ t0: -1e9, t1: -1e9, r: WIDE }];
 SHOTS.forEach(s => {
-  KF.push({ t0: s.m1, t1: s.m1 + 1.5, r: s.f1 });
-  if (s.f2) KF.push({ t0: s.at + s.f2At, t1: s.at + s.f2At + 1.5, r: s.f2 });
+  s.F.forEach(F => KF.push({ t0: F.t0, t1: F.t0 + 1.5, r: F.f }));
 });
 function camAt(b) {
   let j = 0; for (let i = 1; i < KF.length; i++) if (b >= KF[i].t0) j = i;
@@ -633,66 +756,115 @@ function camAt(b) {
   return { s, tx, ty };
 }
 
-scene(D0 - .5, 172.5, el => {
+scene(D0 - .5, OUT + .5, el => {
   const tag = makeTag(el, '03', 'Live demo · REQ-2026-0002', C.gold);
   const scr = $('div', 'scr', el); place(scr, VX, VY, VW, VH);
   const cam = $('div', 'cam', scr);
-  SHOTS.forEach(s => { s.img = $('img', '', cam); s.img.src = IMG + s.src; s.img.alt = ''; });
+  SHOTS.forEach(s => { s.imgEl = $('img', '', cam); s.imgEl.src = IMG + s.src; s.imgEl.alt = ''; });
   const spot = $('div', 'spot', scr), ripple = $('div', 'ring rip', scr), ring = $('div', 'ring', scr), rlab = $('div', 'rlab', scr);
-  $('div', 'edge', scr);
+  const edge = $('div', 'edge', scr);
+  // who the screen belongs to, pinned to its top edge
+  const vas = $('div', 'abs vas', el); place(vas, VX + 28, VY - 22);
 
   // captions, one set per shot
   SHOTS.forEach((s, i) => {
     const g = s.cap = $('div', 'abs', el); place(g, 0, 0, W, H);
     const col = RCOL[s.rail];
     s.cnt = $('div', 'abs cnt', g, `${s.n} / ${SHOTS.length}`); place(s.cnt, 96, 182);
-    s.cst = $('div', 'abs cst', g, `<i></i>Step 0${s.rail + 1} · ${ROLE[s.rail]}`); place(s.cst, 96, 222); s.cst.style.color = col;
+    s.cst = $('div', 'abs cst', g, `<i></i>Step ${STEPNO[s.rail]} · ${s.step || ROLE[s.rail]}`); place(s.cst, 96, 222); s.cst.style.color = col;
     s.ttl = words(g, s.title, 'ttl', 96, 266);
     s.bdy = $('div', 'abs cbody', g, s.body); place(s.bdy, 96, 420);
-    const person = k => { const [ini, name, role, c] = PEOPLE[k]; const e = $('div', 'abs who', g, `<span class="av" style="background:${c}">${ini}</span><span><b>${name}</b><small>${role}</small></span>`); place(e, 96, 720); return e; };
-    s.p1 = person(s.who); s.p2 = s.who2 ? person(s.who2) : null;
+    const [ini, name, role, c] = PEOPLE[s.who];
+    s.p1 = $('div', 'abs who', g, `<span class="av" style="background:${c}">${ini}</span><span><b>${name}</b><small>${role}</small></span>`); place(s.p1, 96, 720);
     s.whr = $('div', 'abs where', g, s.where); place(s.whr, 96, 806);
   });
 
+  // handover cards: who acts now (and who handed over)
+  HANDOVERS.forEach(h => {
+    const [ini, name, role, c] = PEOPLE[h.ho];
+    const g = h.card = $('div', 'abs', el); place(g, 0, 0, W, H); g.style.zIndex = 3;
+    const centre = (e, y) => { place(e, 0, y, W); e.style.textAlign = 'center'; return e; };
+    h.now = centre($('div', 'abs eyebrow', g, h.from ? 'Handover · now acting' : 'Now acting'), 228); h.now.style.color = '#8f8f9b';
+    h.stp = centre($('div', 'abs eyebrow', g, `Step ${STEPNO[h.rail]} · ${h.step || ROLE[h.rail]}`), 270); h.stp.style.color = RCOL[h.rail];
+    h.av = $('div', 'abs hav', g, ini); place(h.av, 960 - 105, 340, 210, 210); h.av.style.background = c;
+    h.rg = $('div', 'abs hring', g); place(h.rg, 960 - 105, 340, 210, 210); h.rg.style.borderColor = c;
+    if (h.from) {
+      const [pi, pn, , pc] = PEOPLE[h.from];
+      h.pav = $('div', 'abs hav sm', g, pi); place(h.pav, 960 - 400 - 60, 385, 120, 120); h.pav.style.background = pc;
+      h.pnm = $('div', 'abs hprev', g, pn); place(h.pnm, 960 - 400 - 130, 520, 260);
+      h.arr = $('div', 'abs harr', g, '<svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg>'); place(h.arr, 960 - 250, 410, 72, 72); h.arr.style.color = c;
+    }
+    h.nm = words(g, name, 'hname', 0, 576); h.nm.line.style.width = W + 'px'; h.nm.line.style.textAlign = 'center';
+    h.ds = centre($('div', 'abs hdoes', g, h.does), 712);
+  });
+
   return b => {
-    renderTag(tag, b, D0 + .4, 170);
-    // the screen arrives as the steps settle into the rail, and leaves before the outro
-    const sin = E.oExp(P(b, D0, 1.6)), sout = E.i3(P(b, 170, 1.3));
-    T(scr, { y: (1 - sin) * 90 + sout * 60, s: .92 + .08 * sin, o: sin * (1 - sout), ry: (1 - sin) * -12 });
+    renderTag(tag, b, D0 + .4, OUT - 2);
+    // the screen arrives after the first card, steps aside for each handover, leaves before the outro
+    const sin = E.oExp(P(b, D0 + 3.2, 1.6)), sout = E.i3(P(b, OUT - 2, 1.3));
+    const dim = handoverDim(b);
+    T(scr, { y: (1 - sin) * 90 + sout * 60 + dim * 24, s: (.92 + .08 * sin) * (1 - .05 * dim), o: sin * (1 - sout) * (1 - .82 * dim), ry: (1 - sin) * -12, blur: dim * 10 });
+
+    // the person whose screen this is
+    const who = personAt(b), [pi, pn, pr, pc] = PEOPLE[who.ho];
+    if (vas._who !== who) {
+      vas._who = who;
+      vas.innerHTML = `<span class="av" style="background:${pc}">${pi}</span>Viewing as <b>${pn}</b><small>${pr}</small>`;
+      vas.style.setProperty('--pc', pc); edge.style.setProperty('--pc', pc);
+    }
+    const back = E.oBack(P(b, who.at + 3.2, .7), 2.4);   // pops in as the screen returns
+    T(vas, { o: sin * (1 - sout) * (1 - dim), s: .8 + .2 * clamp(back), y: (1 - clamp(back)) * 10 });
 
     const { s: cs, tx, ty } = camAt(b);
     T(cam, { x: tx, y: ty, s: cs });
     let cur = 0; SHOTS.forEach((s, i) => { if (b >= s.at) cur = i; });
     SHOTS.forEach((s, i) => {
-      const next = SHOTS[i + 1];
       const vis = i === cur || (i === cur - 1 && b < SHOTS[cur].at + .6);
-      show(s.img, vis);
-      if (vis) { s.img.style.zIndex = i; T(s.img, { o: i === 0 ? 1 : E.o3(P(b, s.at - .15, .5)) }); }
+      show(s.imgEl, vis);
+      if (vis) { s.imgEl.style.zIndex = i; T(s.imgEl, { o: i === 0 ? 1 : E.o3(P(b, s.at - .15, .5)) }); }
 
-      const on = b >= s.at - .3 && b < s.at + SHOT_LEN + .2;
+      const on = b >= s.at - .3 && b < s.at + s.len + .2;
       show(s.cap, on); if (!on) return;
-      const out = s.at + 7.4;
+      const out = s.at + s.len - .6;
       fadeUp(s.cnt, b, s.at + .1, out, 16);
       fadeUp(s.cst, b, s.at + .2, out, 16);
       reveal(s.ttl, b, s.at + .3, .18, .9, out, .06, .5);
       if (!s.th && s.ttl.line.offsetHeight) { s.th = s.ttl.line.offsetHeight; place(s.bdy, 96, 266 + s.th + 22); }
       fadeUp(s.bdy, b, s.at + .7, out, 24);
-      if (s.p2) {
-        const sw = s.at + s.f2At;
-        fadeUp(s.p1, b, s.at + 1, sw - .2, 20);
-        fadeUp(s.p2, b, sw + .2, out, 20);
-      } else fadeUp(s.p1, b, s.at + 1, out, 20);
+      fadeUp(s.p1, b, s.at + 1, out, 20);
       fadeUp(s.whr, b, s.at + 1.2, out, 16);
+    });
+
+    // handover cards
+    HANDOVERS.forEach(h => {
+      const t = h.at, on = b >= t + HO_SWAP && b < t + HO_LEN;
+      show(h.card, on); if (!on) return;
+      const out = t + 3.05;
+      fadeUp(h.now, b, t + .8, out, 16);
+      fadeUp(h.stp, b, t + .95, out, 16);
+      const pop = E.oBack(P(b, t + 1.15, .7), 2.2), leave = E.i3(P(b, out, .55));
+      T(h.av, { s: Math.max(0, pop) * (1 - .3 * leave), o: P(b, t + 1.15, .15) * (1 - leave), y: -leave * 40 });
+      const rp = P(b, t + 1.4, 1.1);
+      T(h.rg, { s: 1 + .45 * E.o3(rp), o: (1 - rp) * (rp > 0) * (1 - leave) });
+      if (h.from) {
+        // the previous person slides aside and fades, an arrow hands over
+        const slide = E.io3(P(b, t + .8, .9));
+        T(h.pav, { x: (1 - slide) * 400, s: lerp(1.6, 1, slide), o: lerp(1, .55, slide) * (1 - leave) });
+        T(h.pnm, { x: (1 - slide) * 400, o: slide * .7 * (1 - leave) });
+        const aw = E.oExp(P(b, t + 1.1, .7));
+        T(h.arr, { x: (1 - aw) * -30, o: aw * (1 - leave) });
+      }
+      reveal(h.nm, b, t + 1.4, .14, .9, out, .05, .5);
+      fadeUp(h.ds, b, t + 1.95, out, 20);
     });
 
     // the spotlight ring on the current region
     const s = SHOTS[cur];
-    const ph1End = s.f2 ? s.at + s.f2At : s.at + 7.6;
-    const ph = b < ph1End ? 1 : 2;
-    const st = ph === 1 ? s.m1 + 1.4 : s.at + s.f2At + 1.4, en = ph === 1 ? ph1End : s.at + 7.6;
-    const rr = ph === 1 ? s.r1 : s.r2, lab = ph === 1 ? s.l1 : s.l2;
-    const col = RCOL[ph === 2 && s.rail2 != null ? s.rail2 : s.rail];
-    const a = b >= D0 ? clamp(E.oBack(P(b, st, .5), 2)) * (1 - E.i3(P(b, en - .35, .35))) : 0;
+    let fi = 0; s.F.forEach((F, k) => { if (b >= F.t0) fi = k; });
+    const F = s.F[fi], st = F.t0 + 1.4, en = s.F[fi + 1] ? s.F[fi + 1].t0 : s.at + s.len - .4;
+    const rr = F.r, lab = F.l, below = F.below;
+    const col = RCOL[s.rail];
+    const a = b >= s.at ? clamp(E.oBack(P(b, st, .5), 2)) * (1 - E.i3(P(b, en - .35, .35))) : 0;
     const vis = a > .01 && rr;
     show(ring, vis); show(spot, vis); show(rlab, vis); show(ripple, vis);
     if (vis) {
@@ -707,7 +879,7 @@ scene(D0 - .5, 172.5, el => {
       setText(rlab, lab);
       const lw = rlab.offsetWidth || 200;
       // above the ring, else below it, else tucked inside its top edge
-      const lx = clamp(x, 10, VW - lw - 10), ly = y - 46 >= 10 ? y - 46 : y + h + 46 <= VH - 10 ? y + h + 10 : y + 12;
+      const lx = clamp(x, 10, VW - lw - 10), ly = below && y + h + 46 <= VH - 10 ? y + h + 10 : y - 46 >= 10 ? y - 46 : y + h + 46 <= VH - 10 ? y + h + 10 : y + 12;
       setStyle(rlab, 'left', lx.toFixed(1) + 'px'); setStyle(rlab, 'top', ly.toFixed(1) + 'px');
       T(rlab, { y: (1 - clamp(pop)) * 10, o: a });
     }
@@ -715,15 +887,14 @@ scene(D0 - .5, 172.5, el => {
 });
 
 /* ---------- 04 · Outro ---------- */
-const SLAM = 180;
-scene(171.5, 192, el => {
+scene(OUT - .5, END, el => {
   // arrives during the bar wipe, so the line sits in the overlay layer above the bars
   const h = words(overEl, 'Fill in. Sign off. On record.', 'lg', 0, 300);
   h.line.style.width = W + 'px'; h.line.style.textAlign = 'center';
   h.line.id = 'ovOut'; h.line.style.fontWeight = 400; h.line.style.filter = OUTLINE;
   h.ws[1].style.color = C.cyan; h.ws[3].style.color = C.green; h.ws[5].style.color = C.gold;
   const line = $('div', 'abs tl-line', el), fill = $('div', 'abs tl-fill', el);
-  const SUBS = ['Fill in & submit', 'Signs or rejects', 'If the form needs it', 'Tick off checklists', 'Signed PDF'];
+  const SUBS = ['Fill in & submit', 'Signs or rejects', 'If the form needs it', 'If the form needs it', 'Central Number · PDF'];
   const nodes = ROLE.map((t, i) => {
     const x = 360 + i * 1200 / (ROLE.length - 1);
     const n = $('div', 'abs node', el); place(n, x, 600); n.style.background = RCOL[i];
@@ -731,21 +902,21 @@ scene(171.5, 192, el => {
     return { n, l };
   });
   const logo = $('div', 'abs', el); logo.id = 'logoB'; place(logo, 470, 330, 980);
-  const t1 = $('div', 'abs', el, 'The e-form plugin for the COWISE CMS.'); place(t1, 0, 760, W);
+  const t1 = $('div', 'abs', el, 'The enterprise-form plugin for the COWISE CMS.'); place(t1, 0, 760, W);
   t1.style.cssText += ';text-align:center;font-size:40px;font-weight:300';
   const t2 = $('div', 'abs eyebrow', el, 'cowise.com.hk'); place(t2, 0, 840, W);
   t2.style.cssText += ';text-align:center;color:' + C.cyan;
   return b => {
-    const leave = E.i3(P(b, 177.5, 1.25));
-    reveal(h, b, 172.4, .25, 1, 177.5, .05);
-    T(line, { sx: E.io4(P(b, 173.4, 2)), o: 1 - leave });
-    T(fill, { sx: E.io3(P(b, 173.9, 3)) * (1 - leave) });
+    const leave = E.i3(P(b, OUT + 5.5, 1.25));
+    reveal(h, b, OUT + .4, .25, 1, OUT + 5.5, .05);
+    T(line, { sx: E.io4(P(b, OUT + 1.4, 2)), o: 1 - leave });
+    T(fill, { sx: E.io3(P(b, OUT + 1.9, 3)) * (1 - leave) });
     nodes.forEach(({ n, l }, i) => {
-      const a = E.oBack(P(b, 173.6 + i * .45, .6), 3);
-      // Teams sits this one out, as it did in the demo
-      const dim = i === 3 ? .45 : 1;
-      T(n, { s: Math.max(0, a) * (1 + .35 * (b > 174.4 + i * .45 && b < 177.5 ? pulse(b, 5) : 0)) * (1 - leave), o: P(b, 173.6 + i * .45, .1) * dim });
-      fadeUp(l, b, 173.9 + i * .45, 177.4 + i * .05, 24);
+      const a = E.oBack(P(b, OUT + 1.6 + i * .45, .6), 3);
+      // the optional steps sit a little further back
+      const dim = i === 2 || i === 3 ? .5 : 1;
+      T(n, { s: Math.max(0, a) * (1 + .35 * (b > OUT + 2.4 + i * .45 && b < OUT + 5.5 ? pulse(b, 5) : 0)) * (1 - leave), o: P(b, OUT + 1.6 + i * .45, .1) * dim });
+      fadeUp(l, b, OUT + 1.9 + i * .45, OUT + 5.4 + i * .05, 24);
     });
     // logo slam on the final drop
     const lg = E.oExp(P(b, SLAM, 1.5));
@@ -764,8 +935,8 @@ scene(171.5, 192, el => {
 /* ---------- background canvas: stripe artwork per section ---------- */
 const T2 = 2 / SPB, T2_5 = 2.5 / SPB, T4 = 4 / SPB, T7 = 7 / SPB; // intro landmarks in beats
 const softPulse = x => { const f = frac(x); return x < 0 ? 0 : f < .12 ? E.o2(f / .12) : Math.exp(-(f - .12) * 4.5); };
-const BANDS = [[16, 60], [60, 172]];
-const F0 = 176;                                                   // finale: stripes rise into the cover
+const BANDS = [[16, 52], [52, OUT]];
+const F0 = OUT + 4;                                                  // finale: stripes rise into the cover
 function renderBG(b) {
   bg.fillStyle = C.ink; bg.fillRect(0, 0, W, H);
   if (b < 16.2) {
@@ -810,7 +981,7 @@ function renderFX(b) {
   if (fxDirty) fx.clearRect(0, 0, W, H);
   let drew = false;
   drew = wipe(fx, b, 16, STRIPES, .9) || drew;
-  drew = wipe(fx, b, 172, STRIPES) || drew;
+  drew = wipe(fx, b, OUT, STRIPES) || drew;
   fxDirty = drew;
 }
 
@@ -821,15 +992,15 @@ const HUD_COL = [C.pink, C.cyan, C.orange, C.yellow];
 function render(b) {
   renderBG(b);
   for (const s of scenes) { const on = b >= s.from && b < s.to; show(s.el, on); if (on) s.render(b); }
-  show(document.getElementById('ovOut'), b >= 171.5 && b < 179);
+  show(document.getElementById('ovOut'), b >= OUT - .5 && b < OUT + 7);
   renderFX(b);
   // camera: punch on the big drops
   const hit = DROPS.reduce((m, d) => Math.max(m, b >= d && b < d + 1 ? Math.exp(-(b - d) * 5) : 0), 0);
   T(scenesEl, { s: 1 + hit * .025 });
   // beat HUD
-  const hv = b >= 16.5 && b < 171.5; show(hud, hv);
+  const hv = b >= 16.5 && b < OUT - .5; show(hud, hv);
   if (hv) {
-    hud.style.opacity = E.o3(P(b, 16.5, 1)) * (1 - P(b, 170.5, 1));
+    hud.style.opacity = E.o3(P(b, 16.5, 1)) * (1 - P(b, OUT - 1.5, 1));
     const k = Math.floor(b) % 4;
     hudSq.forEach((q, i) => { q.style.background = i === k ? HUD_COL[i] : '#333'; });
     setText(hudBar, 'BAR ' + String(Math.floor(b / 4) + 1).padStart(2, '0'));
@@ -897,29 +1068,39 @@ const SCORE = (() => {
   groove(8, 14, { noBass: true }); CH[0].forEach(f => tone(8, f, 24, 'sawtooth', .035, 1400));
   kick(14); kick(14.5, .6); for (let s = 0; s < 4; s++) clap(14 + s * .25, .12 + s * .03); roll(15);
   riser(12, 16);
-  // 01 approval flow: a note for each step as it lands, then the run
-  impact(16); groove(16, 40, { hats16: true, stabs: true });
+  // 01 basic flow: a note for each step as it lands, then the run
+  // one steady groove from the first drop to the outro: fills sit on the grid, and a clap roll
+  // replaces the groove's own clap for that beat instead of doubling it
+  const q = b => Math.round(b * 4) / 4;          // accents land on the 16th-note grid
+  const GROOVE = { hats16: true, stabs: true, arp: 1 };
+  impact(16); groove(16, 35, { hats16: true, stabs: true }); groove(35, 36, { hats16: true, stabs: true, noClap: true });
   [18.5, 20, 21.5, 23].forEach((b, i) => blip(b, [440, 523.25, 659.25, 880][i]));
-  [28, 29.5, 31, 32.5].forEach((b, i) => blip(b, [659.25, 783.99, 880, 1046.5][i], .06));
-  riser(37, 40, .2); roll(39);
-  // 02 in detail: Teams joins, the frame draws, the demo route lights, the steps fold into the rail
-  impact(40); groove(40, 56, { hats16: true, stabs: true, arp: 1 });
-  blip(41.2, 987.77); blip(44.2, 1318.5, .05);
-  [50, 50.8, 51.6, 53.2].forEach((b, i) => blip(b, [523.25, 659.25, 783.99, 1046.5][i], .06));
-  groove(56, 59, { noClap: true, arp: 2 }); riser(56, 60, .2); roll(59);
-  // 03 live demo: a lighter groove under the screenshots, a note on every shot and every ring
+  [26, 27.5, 29].forEach((b, i) => blip(b, [659.25, 783.99, 1046.5][i], .06));
+  riser(33, 36, .2); roll(35);
+  // 02 extended: further approvers join, then checklists, the frame draws, the basic route lights, the fold
+  impact(36); groove(36, D0, GROOVE);
+  blip(37.25, 783.99); blip(38.5, 987.77, .05); blip(40.5, 880); blip(41.75, 1174.66, .05); blip(43.25, 1318.5, .05);
+  [45, 45.75, 46.5].forEach((b, i) => blip(b, [523.25, 659.25, 1046.5][i], .06));
+  riser(48, D0, .2);
+  // 03 live demo: the same groove carries on; a note on every shot and every ring
   impact(D0);
-  for (let at = D0; at < 168; at += 16) groove(at, Math.min(at + 16, 168), { hats16: true, stabs: at % 32 === 28, arp: (at - D0) % 32 ? 2 : 1 });
+  groove(D0, OUT - 1, GROOVE); groove(OUT - 1, OUT, { ...GROOVE, noClap: true });
   SHOTS.forEach((s, i) => {
-    hat(s.at, true, .2);
-    blip(s.m1 + 1.4, [523.25, 659.25, 783.99, 880][i % 4], .05);
-    if (s.f2) blip(s.at + s.f2At + 1.4, 1046.5, .045);
+    s.F.forEach((F, k) => blip(q(F.t0 + 1.4), k ? 1046.5 : [523.25, 659.25, 783.99, 880][i % 4], k ? .045 : .05));
   });
-  groove(168, 171, { noClap: true, arp: 2 }); riser(168, 172, .2); roll(171);
+  // handovers: a soft crash on the 8th as the screen blurs (the first one already has the chapter impact),
+  // then a chord on the beat as the new person lands; no extra kicks, so the pulse never moves
+  const HO_ROOT = { A: 523.25, M: 587.33, H: 659.25 };
+  HANDOVERS.forEach(h => {
+    if (h.at !== D0) nz(h.at + .5, 'highpass', 2500, .5, .002, 1.1, .12, 0, true);
+    [1, 1.25, 1.5].forEach(k => blip(h.at + 1.25, HO_ROOT[h.ho] * k, .045));
+  });
+  [1046.5, 1318.5, 1567.98].forEach(f => blip(q(DONE_AT), f, .05));   // Done lights up
+  riser(OUT - 4, OUT, .2); roll(OUT - 1);
   // 04 outro
-  impact(172); groove(172, 178, { hats16: true, stabs: true, arp: 1 }); groove(178, 179, { noClap: true });
-  [173.6, 174.05, 174.5, 174.95, 175.4].forEach((b, i) => blip(b, [523.25, 659.25, 783.99, 880, 1046.5][i], .05));
-  roll(179); riser(176, 180, .2);
+  impact(OUT); groove(OUT, OUT + 6, { hats16: true, stabs: true, arp: 1 }); groove(OUT + 6, OUT + 7, { noClap: true });
+  [0, .45, .9, 1.35, 1.8].forEach((d, i) => blip(q(OUT + 1.6 + d), [523.25, 659.25, 783.99, 880, 1046.5][i], .05));
+  roll(OUT + 7); riser(OUT + 4, SLAM, .2);
   impact(SLAM); kick(SLAM); groove(SLAM + 1, SLAM + 4, { stabs: true });
   [220, 261.63, 329.63, 440, 523.25].forEach((f, k) => tone(SLAM, f, 9, 'sawtooth', .045, 2600, (k - 2) * .3));
   tone(SLAM, 55, 6, 'sine', .3, 300);
@@ -950,13 +1131,105 @@ setInterval(schedule, 25);
 async function initAudio() {
   if (actx) return;
   actx = new (window.AudioContext || window.webkitAudioContext)();
-  gainNode = actx.createGain(); gainNode.connect(actx.destination);
+  // music and voice meet in a brick-wall limiter, so the peaks never clip
+  const lim = makeLimiter(actx);
+  gainNode = actx.createGain(); gainNode.connect(lim);
   noiseBuf = actx.createBuffer(1, actx.sampleRate, actx.sampleRate);
   const d = noiseBuf.getChannelData(0); for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+  voGain = actx.createGain(); voGain.gain.value = voOn() ? VO_LEVEL : 0; voGain.connect(lim);
+  await decodeVO(actx);
   const custom = params.get('track');
   if (custom) { try { buffer = await actx.decodeAudioData(await (await fetch(custom)).arrayBuffer()); } catch (e) { console.warn('track failed, using synth', e); } }
 }
 const trackOffset = +(params.get('offset') || 0);
+
+/* ============================================================
+   VOICE-OVER — 12 recorded lines (media/audio/eform-vo), each cued to a moment on the beat
+   clock, so it stays in sync however the film is seeked. The voice has its own gain (it is not
+   faded with the music), and the music dips under every line. Toggle with the VO button or V;
+   ?vo=0 starts with it off, and the choice is remembered on this device.
+   ============================================================ */
+const VO_DIR = '/media/audio/eform-vo/';           // one folder per language, the same file names in each
+const shotAt = n => SHOTS[n - 1].at;                 // demo shots, numbered as on screen (01 / 15 …)
+const VO_LANGS = { en: { label: 'English', short: 'EN' }, yue: { label: '廣東話', short: '粵' } };
+const VO_CUES = [
+  // (no line over the intro: text, logo and music only)
+  ['02_plugin_path', 17.5],                          // the basic three steps
+  ['03_need_more', 37],                              // adjust and extend
+  ['04_real_request', 49],                           // live demo title
+  ['05_staff_submit', shotAt(1) + .5],
+  ['06_gets_number', shotAt(2) + .5],
+  ['07_dept_head_email', shotAt(3) + .25],
+  ['08_or_log_in', shotAt(5) + .5],
+  ['09_comment_approve', shotAt(7) + .5],
+  ['10_hr_admin', shotAt(11) + .5],                  // ends as Done lights up on Assign
+  ['11_signed_pdf', shotAt(13) + .5],
+  ['12_applicant_told', shotAt(15) + .5],
+  ['13_fill_sign_record', OUT + .4],
+  // (no line over the logo: text and music only)
+];
+// per-language moves where a recording runs longer than the shared cue allows
+const VO_CUE_LANG = {
+  // Cantonese: "need more" (6.7 s) fills the Live demo title, so "a real request" lands on the first
+  // handover card; HR Admin starts a beat earlier so it ends as Done lights up, well clear of line 11
+  yue: { '04_real_request': HANDOVERS[0].at + .3, '10_hr_admin': shotAt(11) - 1 },
+};
+const VO = Object.fromEntries(Object.keys(VO_LANGS).map(lang => [lang, VO_CUES.map(([name, beat]) => ({
+  name, t: (VO_CUE_LANG[lang]?.[name] ?? beat) * SPB, buf: null,
+  raw: fetch(`${VO_DIR}${lang}/${name}.mp3`).then(r => r.ok ? r.arrayBuffer() : null).catch(() => null),
+}))]));
+const voReady = Promise.all(Object.values(VO).flat().map(v => v.raw));
+// the voice: 'en', 'yue' or 'off'. ?vo=en|yue|0 wins, then this device's last choice, then the browser's language
+const VO_KEY = 'eform-vo';
+const voParse = x => x == null ? null : /^(0|off|none)$/i.test(x) ? 'off' : /^(yue|zh|hk|canto)/i.test(x) ? 'yue' : /^(en|1)/i.test(x) ? 'en' : null;
+let voLang = voParse(params.get('vo'));
+if (!voLang) try { voLang = voParse(localStorage.getItem(VO_KEY)); } catch (e) {}
+if (!voLang) voLang = /^(zh-HK|yue)/i.test(navigator.language || '') ? 'yue' : 'en';
+const voOn = () => voLang !== 'off';
+const voList = (lang = voLang) => VO[lang] || [];
+let voGain = null, voSrcs = [];
+async function decodeVO(c, langs = Object.keys(VO)) {
+  await Promise.all(langs.flatMap(l => VO[l] || []).map(async v => {
+    const raw = await v.raw;
+    if (raw) try { v.buf = await c.decodeAudioData(raw.slice(0)); } catch (e) { console.warn('VO decode failed', v.name, e); }
+  }));
+}
+function stopVO() { voSrcs.forEach(s => { try { s.stop(); } catch (e) {} s.disconnect(); }); voSrcs = []; }
+// play every line that is still to come (or under way) from film time `at`, film time `at` sounding at `when`
+function startVO(c, dest, at, when, list = voList()) {
+  const out = [];
+  for (const v of list) {
+    if (!v.buf || v.t + v.buf.duration <= at) continue;
+    const s = c.createBufferSource(); s.buffer = v.buf; s.connect(dest);
+    if (v.t >= at) s.start(when + v.t - at); else s.start(when, at - v.t);
+    out.push(s);
+  }
+  return out;
+}
+// levels, measured: the lines average about -25 dB RMS in both languages (peaks -4 dB); the music about -17 dB.
+// The voice is lifted ~3 dB and the music dips ~11 dB under it, so the voice sits ~6 dB on top.
+const VO_LEVEL = 1.4, DUCK = .28;
+function makeLimiter(c, dest = c.destination) {
+  const l = c.createDynamicsCompressor();
+  l.threshold.value = -2; l.knee.value = 0; l.ratio.value = 20; l.attack.value = .001; l.release.value = .08;
+  l.connect(dest); return l;
+}
+// the music eases down 0.2 s before a line and back up over 0.4 s after; lines closer than 0.6 s share one dip
+function duckPlan(g, at, when, full, list = voList()) {
+  const low = full * DUCK, spans = [];
+  for (const v of list) {
+    if (!v.buf) continue;
+    const s = when + v.t - at, e = s + v.buf.duration, last = spans[spans.length - 1];
+    if (e <= when) continue;
+    if (last && s - .6 <= last[1]) last[1] = e; else spans.push([s, e]);
+  }
+  g.setValueAtTime(full, when);
+  for (const [s, e] of spans) {
+    if (s <= when) g.setValueAtTime(low, when);
+    else { g.setValueAtTime(full, Math.max(when, s - .2)); g.linearRampToValueAtTime(low, s); }
+    g.setValueAtTime(low, e); g.linearRampToValueAtTime(full, e + .4);
+  }
+}
 
 /* ============================================================
    CLOCK & PLAYBACK
@@ -965,7 +1238,7 @@ let playing = false, pos = 0, t0 = 0, soundOn = !params.has('muted'), loop = par
 const audioLive = () => soundOn && actx && actx.state === 'running';
 const now = () => audioLive() ? actx.currentTime : performance.now() / 1000;
 const getPos = () => playing ? Math.max(pos, pos + (now() - t0)) : pos;
-function stopSrc() { stopSynth(); if (src) { try { src.stop(); } catch (e) {} src.disconnect(); src = null; } }
+function stopSrc() { stopSynth(); stopVO(); if (src) { try { src.stop(); } catch (e) {} src.disconnect(); src = null; } }
 function startSrc(at) {
   stopSrc(); if (!audioLive()) return now();
   let when;
@@ -975,6 +1248,7 @@ function startSrc(at) {
     const off = at + trackOffset; when = actx.currentTime + .03;
     if (off < buffer.duration) src.start(when, Math.max(0, off));
   }
+  if (voOn()) { voSrcs = startVO(actx, voGain, at, when); if (sess) duckPlan(sess.out.gain, at, when, .9); }
   fadeOut(at, when);
   return when;
 }
@@ -990,6 +1264,15 @@ function fadeOut(at, when) {
 function play() { if (getPos() >= DURATION - .01) pos = 0; playing = true; t0 = startSrc(pos); syncUI(); }
 function pause() { pos = getPos(); playing = false; stopSrc(); syncUI(); }
 function seek(sec) { pos = clamp(sec, 0, DURATION); if (playing) t0 = startSrc(pos); }
+// voice-over language ('en' | 'yue' | 'off'): re-cue from the current position so the music dip follows too
+function setVO(lang) {
+  voLang = lang;
+  try { localStorage.setItem(VO_KEY, lang); } catch (e) {}
+  if (voGain) voGain.gain.setTargetAtTime(voOn() ? VO_LEVEL : 0, actx.currentTime, .03);
+  if (playing && audioLive()) { pos = getPos(); t0 = startSrc(pos); }
+  syncUI();
+}
+const VO_CYCLE = [...Object.keys(VO_LANGS), 'off'];
 async function setSound(on) {
   const p = getPos(); soundOn = on;
   if (on) { await initAudio(); if (actx.state !== 'running') await actx.resume(); }
@@ -1001,9 +1284,14 @@ async function setSound(on) {
 const ui = document.getElementById('ui'), scrub = document.getElementById('scrub'), timeEl = document.getElementById('time'), railfill = document.getElementById('railfill');
 const startEl = document.getElementById('start'), startNote = document.getElementById('startNote');
 scrub.max = DURATION;
-[16, 40, 60, 172].filter(b => b < END).forEach(b => { const m = $('i', 'mk', document.getElementById('track')); m.style.left = (b / END * 100) + '%'; });
+[16, 36, 52, OUT].filter(b => b < END).forEach(b => { const m = $('i', 'mk', document.getElementById('track')); m.style.left = (b / END * 100) + '%'; });
 function syncUI() {
   document.getElementById('icoPlay').setAttribute('d', playing ? 'M6 4h4v16H6zm8 0h4v16h-4z' : 'M7 4l13 8-13 8z');
+  const bVO = document.getElementById('bVO');
+  bVO.classList.toggle('off', !voOn());
+  bVO.querySelector('span').textContent = voOn() ? 'VO · ' + VO_LANGS[voLang].short : 'VO';
+  bVO.setAttribute('aria-label', 'Voice-over: ' + (voOn() ? VO_LANGS[voLang].label : 'off') + ' (V)');
+  document.querySelectorAll('#voMenu [data-vo]').forEach(b => b.setAttribute('aria-checked', b.dataset.vo === voLang));
   document.getElementById('icoSound').setAttribute('d', soundOn ? 'M4 9h4l5-4v14l-5-4H4zM16 8a5 5 0 0 1 0 8M18.5 5.5a8.5 8.5 0 0 1 0 13' : 'M4 9h4l5-4v14l-5-4H4zM16 9l6 6M22 9l-6 6');
 }
 let scrubbing = false;
@@ -1012,6 +1300,12 @@ scrub.addEventListener('change', () => { scrubbing = false; });
 document.getElementById('bPlay').onclick = () => playing ? pause() : play();
 document.getElementById('bRestart').onclick = () => { seek(0); if (!playing) play(); };
 document.getElementById('bSound').onclick = () => setSound(!soundOn);
+// the voice-over menu: English / 廣東話 / Off
+const voMenu = document.getElementById('voMenu'), bVOel = document.getElementById('bVO');
+const voMenuOpen = open => { voMenu.hidden = !open; bVOel.setAttribute('aria-expanded', open); if (open) wake(); };
+bVOel.onclick = e => { e.stopPropagation(); voMenuOpen(voMenu.hidden); };
+voMenu.querySelectorAll('[data-vo]').forEach(b => b.onclick = e => { e.stopPropagation(); setVO(b.dataset.vo); voMenuOpen(false); });
+addEventListener('pointerdown', e => { if (!voMenu.hidden && !voMenu.contains(e.target) && e.target !== bVOel && !bVOel.contains(e.target)) voMenuOpen(false); });
 document.getElementById('bFull').onclick = () => document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen?.();
 addEventListener('keydown', e => {
   if (!startEl.classList.contains('hide')) { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); begin(); } return; }
@@ -1019,10 +1313,13 @@ addEventListener('keydown', e => {
   else if (e.key === 'ArrowRight') seek(getPos() + 4 * SPB);
   else if (e.key === 'ArrowLeft') seek(getPos() - 4 * SPB);
   else if (e.key === 'm' || e.key === 'M') setSound(!soundOn);
+  else if (e.key === 'v' || e.key === 'V') setVO(VO_CYCLE[(VO_CYCLE.indexOf(voLang) + 1) % VO_CYCLE.length]);
+  else if (e.key === 'Escape') voMenuOpen(false);
   else if (e.key === 'f' || e.key === 'F') document.getElementById('bFull').click();
 });
 let idleT; const wake = () => { ui.classList.remove('idle'); document.body.style.cursor = ''; clearTimeout(idleT); idleT = setTimeout(() => { if (playing) { ui.classList.add('idle'); document.body.style.cursor = 'none'; } }, 2200); };
 addEventListener('pointermove', wake); wake();
+syncUI();                                            // show the chosen voice-over before anything plays
 
 /* stage fit */
 const stage = document.getElementById('stage');
@@ -1047,9 +1344,9 @@ function frame() {
 const hashBeat = +(new URLSearchParams(location.hash.slice(1)).get('b') || 0);
 pos = hashBeat * SPB;
 let booted = false;
-const ready = Promise.all([preload(), logoReady, document.fonts.ready]);
+const ready = Promise.all([preload(), logoReady, document.fonts.ready, voReady]);
 const nextFrame = () => new Promise(r => { requestAnimationFrame(() => r()); setTimeout(r, 60); });
-const WARM = [2, 12, 20, 30, 38, 44, 52, 58, 62, 70, 78, 86, 94, 102, 110, 118, 126, 134, 142, 150, 158, 166, 174, 182, 188];
+const WARM = [2, 12, 20, 30, 38, 46, 52, 58, ...Array.from({ length: Math.ceil((END - 60) / 6) }, (_, i) => 61 + i * 6)];
 const warm = ready.then(async () => { // paint every section once, invisibly, so the first play is smooth
   stage.style.opacity = .01;
   for (const b of WARM.filter(b => b < END)) { render(b); await nextFrame(); }
@@ -1072,7 +1369,15 @@ if (params.has('autoplay')) { // silent autoplay for embeds; sound can be switch
   warm.then(() => { syncUI(); play(); });
 }
 /* test hook */
-window.__eform = { seekBeat: b => { pos = b * SPB; playing = false; render(b); }, render };
+window.__eform = {
+  seekBeat: b => { pos = b * SPB; playing = false; render(b); }, render,
+  // for the MP4 exporter: lay the voice-over into an OfflineAudioContext and dip the music gain under it
+  offlineVO: async (c, musicGain, full, dest = c.destination, lang = voLang) => {
+    if (!VO[lang]) return;
+    await decodeVO(c, [lang]); const g = c.createGain(); g.gain.value = VO_LEVEL; g.connect(dest);
+    startVO(c, g, 0, 0, VO[lang]); duckPlan(musicGain, 0, 0, full, VO[lang]);
+  },
+};
 </script>
 <script type="module">
 /* ============================================================
@@ -1082,8 +1387,8 @@ window.__eform = { seekBeat: b => { pos = b * SPB; playing = false; render(b); }
    - outro: burst on the logo slam, settling into a slow drift
    ============================================================ */
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.min.js';
-const { E, P, clamp, lerp, pulse, hash, STRIPES } = window.__G;
-const W = 1920, H = 1080, SLAM = 180;
+const { E, P, clamp, lerp, pulse, hash, STRIPES, SLAM } = window.__G;
+const W = 1920, H = 1080;
 const cv = document.getElementById('gl');
 const renderer = new THREE.WebGLRenderer({ canvas: cv, antialias: true, alpha: true, powerPreference: 'high-performance', preserveDrawingBuffer: new URLSearchParams(location.search).has('capture') });
 renderer.setPixelRatio(Math.min(1.5, devicePixelRatio || 1)); renderer.setSize(W, H, false); renderer.setClearColor(0x000000, 0);
