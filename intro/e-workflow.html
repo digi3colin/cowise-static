@@ -1144,7 +1144,7 @@ async function initAudio() {
 const trackOffset = +(params.get('offset') || 0);
 
 /* ============================================================
-   VOICE-OVER — 10 shared recorded lines (media/audio/eform-vo), each cued to a moment on the beat
+   VOICE-OVER — 11 shared recorded lines (media/audio/eform-vo), each cued to a moment on the beat
    clock, so it stays in sync however the film is seeked. The voice has its own gain (it is not
    faded with the music), and the music dips under every line. Toggle with the VO button or V;
    ?vo=0 starts with it off, and the choice is remembered on this device.
@@ -1152,10 +1152,11 @@ const trackOffset = +(params.get('offset') || 0);
 const VO_DIR = '/media/audio/eform-vo/';           // one folder per language, the same file names in each
 const shotAt = n => SHOTS[n - 1].at;                 // demo shots, numbered as on screen (01 / 15 …)
 const VO_LANGS = { en: { label: 'English', short: 'EN' }, yue: { label: '廣東話', short: '粵' } };
-// Reuse only narration that does not describe a separate CMS or form plugin.
+// Chapter 01 reuses the eform film's three-step line; the demo lines narrate the request as shown.
 const VO_CUES = [
   // (no line over the intro: text, logo and music only)
-  ['03_need_more', 37],                              // adjust and extend
+  ['02_plugin_path', 17.5],                          // 01 the basic three steps (8.2–8.4 s, ends by beat 35.5)
+  ['03_need_more', 37],                             // adjust and extend
   ['04_real_request', 49],                           // live demo title
   ['05_staff_submit', shotAt(1) + .5],
   ['06_gets_number', shotAt(2) + .5],
