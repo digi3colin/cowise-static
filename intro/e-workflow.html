@@ -1144,7 +1144,7 @@ async function initAudio() {
 const trackOffset = +(params.get('offset') || 0);
 
 /* ============================================================
-   VOICE-OVER — 11 shared recorded lines (media/audio/eform-vo), each cued to a moment on the beat
+   VOICE-OVER — 12 shared recorded lines (media/audio/eform-vo), each cued to a moment on the beat
    clock, so it stays in sync however the film is seeked. The voice has its own gain (it is not
    faded with the music), and the music dips under every line. Toggle with the VO button or V;
    ?vo=0 starts with it off, and the choice is remembered on this device.
@@ -1161,6 +1161,7 @@ const VO_CUES = [
   ['05_staff_submit', shotAt(1) + .5],
   ['06_gets_number', shotAt(2) + .5],
   ['07_dept_head_email', shotAt(3) + .25],
+  ['08_or_log_in', shotAt(5) + .5],                  // "Or log in to e-workflow"
   ['09_comment_approve', shotAt(7) + .5],
   ['10_hr_admin', shotAt(11) + .5],                  // ends as Done lights up on Assign
   ['11_signed_pdf', shotAt(13) + .5],
