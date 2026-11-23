@@ -405,6 +405,7 @@ html,body{height:100%;background:#000;color:#fff;overflow:hidden;font-family:var
 #credits ul{list-style:none;margin-top:52px;display:grid;gap:18px}
 #credits li{font-size:34px;font-weight:300;color:#8f8f9b}
 #credits li b{color:#fff;font-weight:400}
+#titleCard{position:absolute;inset:0;z-index:4;pointer-events:none}
 </style>
 </head>
 <body>
@@ -423,6 +424,7 @@ html,body{height:100%;background:#000;color:#fff;overflow:hidden;font-family:var
   <canvas id="bg" width="1920" height="1080"></canvas>
   <canvas id="gl" width="1920" height="1080"></canvas>
   <div id="scenes"></div>
+  <div id="titleCard"></div>
   <canvas id="fx" width="1920" height="1080"></canvas>
   <div id="over"></div>
   <div id="hud"><span>128 BPM</span><span class="sq"><i></i><i></i><i></i><i></i></span><span id="bar">BAR 01</span></div>
@@ -463,6 +465,10 @@ html,body{height:100%;background:#000;color:#fff;overflow:hidden;font-family:var
    Self-contained: its own clock (film beats 0 – DMS.FB), scenes,
    background, wipes and score. The e-workflow film follows it.
    ============================================================ */
+// The story begins at 0:32 after the two earlier edits. Its six stops are one bar apart.
+const STORY_START = 32, STORY_ORIGINAL = 20 * (60 / 128), STORY_EXTRA = 5;
+const STORY_LENGTH = STORY_ORIGINAL + STORY_EXTRA;
+const storyStopBeat = i => Math.round(STORY_START / (60 / 128)) + 4 + i * 4;
 const DMS = (() => {
 /* ============================================================
    COWISE IDEA LAB — e-workflow on our CMS (DMS introduction)
@@ -1297,7 +1303,7 @@ const HIST = [
   ['Node.js', 'Rebuilt on Node.js', 'Parknova · OccasionsPR · LMN · NY8 · GTE Forum'],
   ['Today', 'Our CMS', 'Hardened with AI, ready for plugins'],
 ];
-const HAT = i => 403 + i * 2.4;         // the beat each stop lights up
+const HAT = i => 400 + 20 * (storyStopBeat(i) * SPB - STORY_START) / STORY_LENGTH;
 scene(399.6, 420.4, el => {
   const tag = makeTag(el, '03', 'Our CMS story', C.gold);
   // the headline tells the story: it changes as each stop lights up
@@ -1349,7 +1355,7 @@ scene(399.6, 420.4, el => {
     T(fill, { sx: prog / 5, o: 1 - out });
     const kick = n >= 0 ? Math.exp(-(b - HAT(n)) * 4) : 0;
     runner.style.boxShadow = ringShadow(n + 1, 6, 3);
-    T(runner, { x: prog * XS, s: E.oBack(P(b, HAT(0) - .4, .6), 2) * (1 + .35 * kick), o: P(b, HAT(0) - .4, .2) * (1 - out) });
+    T(runner, { x: prog * XS, s: .6 * E.oBack(P(b, HAT(0) - .4, .6), 2) * (1 + .35 * kick), o: P(b, HAT(0) - .4, .2) * (1 - out) });
     const all = b >= HAT(5) + 1.5;      // once Today lands, every card comes up to full
     nodes.forEach(({ dot, yl, card }, i) => {
       const at = HAT(i), p = E.oBack(P(b, at, .6), 2.4);
@@ -1384,8 +1390,9 @@ scene(191.4, 224, el => {
     const m = $('div', 'abs dchip', cam, t); m.style.cssText += `;color:#0d0d10;background:${col};translate:-50% -50%;z-index:5`; return m;
   });
   const cv = $('canvas', 'abs', cam); cv.width = W; cv.height = H; const ctx = cv.getContext('2d'); cv.style.zIndex = 1;
-  const flash = $('div', '', overEl); flash.id = 'flash';
-  const endT = $('div', 'abs', overEl, `<div style="font-size:160px;font-weight:300;line-height:1;color:${C.purple}">e-workflow</div><div class="eyebrow" style="margin-top:26px;color:#55555f">Form + Approval</div>`);
+  const card = document.getElementById('titleCard');
+  const flash = $('div', '', card); flash.id = 'flash';
+  const endT = $('div', 'abs', card, `<div style="font-size:160px;font-weight:300;line-height:1;color:${C.purple}">e-workflow</div><div class="eyebrow" style="margin-top:26px;color:#55555f">Form + Approval</div>`);
   endT.id = 'endT'; place(endT, 0, 400, W); endT.style.textAlign = 'center';
   const ANG0 = -Math.PI / 2, SLOT = Math.PI * 2 / 7;
   return b => {
@@ -1475,8 +1482,6 @@ function renderBG(b) {
 const WIPES = [
   // every wipe uses the full brand palette
   [8, wipe, STRIPES, .9], [32, wipeD], [48, wipe],
-  // inside chapter 03 only the timeline → sign-in change wipes; the other slides hand over by
-  // animating their headline and panels out while the next builds in (see the overlap table below)
   [104, wipeD],
   [316, wipeH],                      // bar 41: fast because it's small → MIT licensed
   [192, wipeD],
@@ -1486,6 +1491,8 @@ function renderFX(fb) {
   if (fxDirty) fx.clearRect(0, 0, W, H);
   let drew = false;
   for (const [at, fn, pal, len] of WIPES) drew = (len ? fn(fx, fb, at, pal, len) : fn(fx, fb, at, pal)) || drew;
+  // Paint the incoming half of e-workflow's opening wipe over the white title card.
+  drew = wipe(fx, EW_SKIP + (fb - FILM_END), EW_SKIP, STRIPES, .9) || drew;
   fxDirty = drew;
 }
 
@@ -1558,6 +1565,7 @@ const logoReady = fetch(IMG + 'logo.svg').then(r => r.text()).then(svg => {
 }).catch(() => {});
 
 const lpFreq = () => 20000;
+let storyScore;
 const SCORE = (() => {
   // the intro is written in film beats, everything after it in source beats (mapped, minus the cut)
   let intro = true;
@@ -1600,9 +1608,7 @@ const SCORE = (() => {
   impact(32); groove(32, 35, { noBass: true, noClap: true }); riser(33, 36, .24); roll(35);
   seg(36, 48, { hats16: true, stabs: true, arp: 1 });
   // 03 infrastructure: five sections
-  [[48, 56, 2], [400, 420, 2], [104, 120, 1], [88, 104, 2], [300, 316, 2], [316, 332, 1]].forEach(([a, z, arp]) => seg(a, z, { hats16: true, stabs: true, arp }));
-  // the CMS story: a bell on every stop of the timeline
-  HIST.forEach((_, i) => [880, 1318.5].forEach((f, k) => tone(HAT(i), f, 1.5, 'triangle', .07, 6000, k ? .3 : -.3)));
+  [[48, 56, 2], [104, 120, 1], [88, 104, 2], [300, 316, 2], [316, 332, 1]].forEach(([a, z, arp]) => seg(a, z, { hats16: true, stabs: true, arp }));
   // 05 plugins: groove, the e-workflow drop at 208, then the push-in rises to the flash
   impact(192); groove(192, 208, { hats16: true, stabs: true, arp: 1 });
   impact(208); groove(208, 214, { hats16: true, stabs: true, arp: 2 });
@@ -1612,17 +1618,24 @@ const SCORE = (() => {
   // short tail: the e-workflow film's intro starts two beats later
   [220, 261.63, 329.63, 440, 523.25].forEach((f, k) => tone(222, f, 2, 'sawtooth', .045, 2600, (k - 2) * .3));
   tone(222, 55, 2, 'sine', .3, 300);
+  // Write this passage directly on the playback beat grid, including the six visual accents.
+  const storyIndex = ev.length;
+  intro = true;
+  const firstBeat = Math.round(STORY_START / SPB);
+  const nextBeat = firstBeat + Math.round(STORY_LENGTH / SPB);
+  seg(firstBeat, nextBeat, { hats16: true, stabs: true, arp: 2 });
+  HIST.forEach((_, i) => [880, 1318.5].forEach((f, k) => tone(storyStopBeat(i), f, 1.5, 'triangle', .07, 6000, k ? .3 : -.3)));
+  storyScore = ev.splice(storyIndex);
   return ev.sort((a, b) => a.t - b.t);
 })();
 
   const WARM = [2, 6, 12, 20, 26, 30, 36, 42, 50, 53, 55, 76, 82, 92, 100, 108, 114, 302, 308, 314, 318, 324, 330, 402, 406, 410, 414, 417, 419, 196, 204, 210, 216, 221, 223];
   return {
-    FB: FILM_END, LEN: DURATION, render, SCORE, toFilm,
+    FB: FILM_END, LEN: DURATION, render, SCORE, storyScore, toFilm,
     ready: Promise.all([imgReady, logoReady]),
     cuts: CUTS.map(toFilm).filter(f => f != null), warm: WARM.map(toFilm).filter(f => f != null),
     hide() { scenes.forEach(s => show(s.el, false)); show(deviceLayer, false); show(ovWho, false); show(flashEl, false); show(endEl, false); show(cmsMark, false); },
-    // the white flash at the end of the DMS part clears over the first beats of the e-workflow film
-    tail(eb) { const o = 1 - E.o3(P(eb, 0, 1.5)); show(flashEl, o > 0); flashEl.style.opacity = o; show(endEl, false); },
+
   };
 })();
 
@@ -1647,7 +1660,21 @@ const END = OUT + 20;                    // authored beats
 const DMS_FB = DMS.FB, DMS_LEN = DMS.LEN;   // the DMS opening plays first; this film follows on the same clock
 const EW_SKIP = 16;                          // this film's own intro ("Fill in. Sign off.", beats 0–16) is skipped
 const CREDIT_LEN = 16;                       // fade to black, then the credits (four bars)
-const DURATION = DMS_LEN + (END - EW_SKIP + CREDIT_LEN) * SPB;
+// Keep authored beats intact and translate between the film and playback clocks in seconds.
+// Stretch the two seconds leading into each edit to three seconds of continuous motion.
+const EXTEND_AT = [17, 30]; // playback seconds, including earlier edits
+const MOTION_LENGTH = 2, EXTRA_TIME = 1;
+const beforeStoryEdit = film => EXTEND_AT.reduce((time, end) =>
+  time + Math.min(1, Math.max(0, (time - end + MOTION_LENGTH) / MOTION_LENGTH)) * EXTRA_TIME, film);
+const undoEarlierEdits = playback => EXTEND_AT.reduceRight((time, end) =>
+  time - Math.min(1, Math.max(0, (time - end + MOTION_LENGTH) / (MOTION_LENGTH + EXTRA_TIME))) * EXTRA_TIME, playback);
+const storyProgress = (time, duration) => Math.min(1, Math.max(0, (time - STORY_START) / duration));
+function playbackTime(film) {
+  const time = beforeStoryEdit(film);
+  return time + STORY_EXTRA * storyProgress(time, STORY_ORIGINAL);
+}
+const filmTime = time => undoEarlierEdits(time - STORY_EXTRA * storyProgress(time, STORY_LENGTH));
+const DURATION = playbackTime(DMS_LEN + (END - EW_SKIP + CREDIT_LEN) * SPB);
 const W = 1920, H = 1080;
 const C = {pink:'#ff0062',cyan:'#7ce7f9',orange:'#fda602',yellow:'#ffde0b',navy:'#052675',green:'#7cf9bf',purple:'#a97cf9',blue:'#7c9ef9',gold:'#ffc93c',ink:'#0d0d10'};
 const STRIPES = [C.pink, C.cyan, C.orange, C.yellow, C.navy];
@@ -2434,13 +2461,14 @@ const logoReady = fetch(IMG + 'logo.svg').then(r => r.text()).then(svg => {
 
 /* ---------- one film: the DMS opening, then this one ---------- */
 let part = null;
-function render(fb) {
+function render(playbackBeat) {
+  const fb = filmTime(playbackBeat * SPB) / SPB;
   const inEW = fb >= DMS_FB;
   if (part !== inEW) {                 // crossing the join: clear the other part's layers
     part = inEW; fx.clearRect(0, 0, W, H); fxDirty = true;
     if (inEW) DMS.hide(); else { scenes.forEach(s => show(s.el, false)); show(document.getElementById('ovOut'), false); }
   }
-  if (inEW) { renderEW(Math.min(fb - DMS_FB + EW_SKIP, END - 1e-4)); DMS.tail(fb - DMS_FB); } else DMS.render(fb);
+  if (inEW) renderEW(Math.min(fb - DMS_FB + EW_SKIP, END - 1e-4)); else DMS.render(fb);
   renderCredits(fb);
 }
 
@@ -2469,7 +2497,8 @@ function renderCredits(fb) {
    Pass ?track=/path/to/song.mp3&offset=0.0 to sync to your own music.
    ============================================================ */
 const params = new URLSearchParams(location.search);
-let actx = null, buffer = null, gainNode = null, src = null, noiseBuf = null, sess = null;
+let actx = null, buffer = null, gainNode = null, noiseBuf = null, sess = null;
+let trackSource = null;
 const EW_SCORE = (() => {
   const ev = [], add = (b, fn) => { if (b < END) ev.push({ t: b * SPB, fn }); };
   const env = (g, t, a, d, peak) => { g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(peak, t + a); g.gain.exponentialRampToValueAtTime(.0001, t + a + d); };
@@ -2541,8 +2570,25 @@ const EW_SCORE = (() => {
   tone(SLAM, 55, 6, 'sine', .3, 300);
   return ev.sort((a, b) => a.t - b.t);
 })();
-// one score: the DMS part, then this film shifted to start where it ends
-const SCORE = [...DMS.SCORE, ...EW_SCORE.filter(e => e.t >= EW_SKIP * SPB - 1e-6).map(e => ({ t: e.t - EW_SKIP * SPB + DMS_LEN, fn: e.fn }))].sort((a, b) => a.t - b.t);
+// Extend the score in whole beats so the groove continues through each extended passage.
+const SCORE = [...DMS.SCORE, ...EW_SCORE.filter(e => e.t >= EW_SKIP * SPB - 1e-6)
+  .map(e => ({ t: e.t - EW_SKIP * SPB + DMS_LEN, fn: e.fn }))].sort((a, b) => a.t - b.t);
+const fillLength = Math.round(EXTRA_TIME / SPB) * SPB;
+for (const edit of EXTEND_AT) {
+  const cut = Math.floor(edit / SPB) * SPB;
+  const next = SCORE.findIndex(e => e.t >= cut);
+  const fill = SCORE.slice(0, next).filter(e => e.t >= cut - fillLength)
+    .map(e => ({ t: e.t + fillLength, fn: e.fn }));
+  for (let i = next; i < SCORE.length; i++) SCORE[i] = { ...SCORE[i], t: SCORE[i].t + fillLength };
+  SCORE.splice(next, 0, ...fill);
+}
+// Following sections move by the nearest whole number of beats to keep the 128 BPM pulse.
+const storyMusicEnd = Math.round(STORY_START / SPB) * SPB + STORY_ORIGINAL;
+for (const event of SCORE) {
+  if (event.t >= storyMusicEnd) event.t += Math.round(STORY_EXTRA / SPB) * SPB;
+}
+SCORE.push(...DMS.storyScore);
+SCORE.sort((a, b) => a.t - b.t);
 function stopSynth() { if (sess) { sess.out.disconnect(); sess = null; } }
 function startSynth(at) {
   stopSynth();
@@ -2612,18 +2658,21 @@ const VO_CUE_LANG = {
   // handover card; HR Admin starts a beat earlier so it ends as Done lights up, well clear of line 11
   yue: { '04_real_request': HANDOVERS[0].at + .3, '10_hr_admin': shotAt(11) - 1 },
 };
-// DMS source beats follow the individual slides, including the reordered CMS chapters.
+// Slide cues use source beats. The CMS story narration starts at the requested playback time.
+const slideTime = beat => playbackTime(DMS.toFilm(beat) * SPB);
 const DMS_YUE_CUES = [
-  ['01_intro', 8],                    // Who we are, after the opening logo
-  ['02_introduce_eworkflow', 32],
-  ['03_data_safe', 48],
-  ['04_cms_timeline', 54],            // lead into the timeline to fit the 12.2-second take
-  ['05_secure_signin', 109],           // leave room for the timeline narration to finish
-  ['06_versions', 88],
-  ['07_fast_small', 300],
-  ['08_mit', 316],
-  ['09_plugins', 192],
-  ['10_latest', 208],
+  ['01_intro', slideTime(8)],
+  ['02_introduce_eworkflow', slideTime(32)],
+  ['03_data_safe', slideTime(48)],
+  ['04_1_cms_start', 32],
+  ['04_2_own_system', null], // timed from the decoded end of 04_1
+  ['05_secure_signin', slideTime(104)],
+  ['06_versions', slideTime(88)],
+  ['07_fast_small', slideTime(300)],
+  ['08_mit', slideTime(316)],
+  ['09_plugins', slideTime(192)],
+  ['10_1_latest_intro', slideTime(208)],
+  ['10_2_follow_request', null],
 ];
 function voiceClip(dir, name, t) {
   return { name, t, buf: null,
@@ -2631,10 +2680,10 @@ function voiceClip(dir, name, t) {
   };
 }
 const VO = Object.fromEntries(Object.keys(VO_LANGS).map(lang => [lang, VO_CUES.map(([name, beat]) =>
-  voiceClip(VO_DIR + lang + '/', name, DMS_LEN + ((VO_CUE_LANG[lang]?.[name] ?? beat) - EW_SKIP) * SPB)
+  voiceClip(VO_DIR + lang + '/', name, playbackTime(DMS_LEN + ((VO_CUE_LANG[lang]?.[name] ?? beat) - EW_SKIP) * SPB))
 )]));
-VO.yue.unshift(...DMS_YUE_CUES.map(([name, beat]) =>
-  voiceClip('/media/audio/dms-vo/yue/', name, DMS.toFilm(beat) * SPB)
+VO.yue.unshift(...DMS_YUE_CUES.map(([name, t]) =>
+  voiceClip('/media/audio/dms-vo/yue/', name, t)
 ));
 const voReady = Promise.all(Object.values(VO).flat().map(v => v.raw));
 // the voice: 'en', 'yue' or 'off'. ?vo=en|yue|0 wins, then this device's last choice, then the browser's language
@@ -2651,13 +2700,21 @@ async function decodeVO(c, langs = Object.keys(VO)) {
     const raw = await v.raw;
     if (raw) try { v.buf = await c.decodeAudioData(raw.slice(0)); } catch (e) { console.warn('VO decode failed', v.name, e); }
   }));
+  if (langs.includes('yue')) {
+    // A null cue follows the preceding DMS recording after half a second of silence.
+    DMS_YUE_CUES.forEach(([, cue], i) => {
+      if (cue !== null) return;
+      const first = VO.yue[i - 1];
+      VO.yue[i].t = first.buf ? first.t + first.buf.duration + .5 : null;
+    });
+  }
 }
 function stopVO() { voSrcs.forEach(s => { try { s.stop(); } catch (e) {} s.disconnect(); }); voSrcs = []; }
 // play every line that is still to come (or under way) from film time `at`, film time `at` sounding at `when`
 function startVO(c, dest, at, when, list = voList()) {
   const out = [];
   for (const v of list) {
-    if (!v.buf || v.t + v.buf.duration <= at) continue;
+    if (!v.buf || v.t == null || v.t + v.buf.duration <= at) continue;
     const s = c.createBufferSource(); s.buffer = v.buf; s.connect(dest);
     if (v.t >= at) s.start(when + v.t - at); else s.start(when, at - v.t);
     out.push(s);
@@ -2676,7 +2733,7 @@ function makeLimiter(c, dest = c.destination) {
 function duckPlan(g, at, when, full, list = voList()) {
   const low = full * DUCK, spans = [];
   for (const v of list) {
-    if (!v.buf) continue;
+    if (!v.buf || v.t == null) continue;
     const s = when + v.t - at, e = s + v.buf.duration, last = spans[spans.length - 1];
     if (e <= when) continue;
     if (last && s - .6 <= last[1]) last[1] = e; else spans.push([s, e]);
@@ -2696,15 +2753,23 @@ let playing = false, pos = 0, t0 = 0, soundOn = !params.has('muted'), loop = par
 const audioLive = () => soundOn && actx && actx.state === 'running';
 const now = () => audioLive() ? actx.currentTime : performance.now() / 1000;
 const getPos = () => playing ? Math.max(pos, pos + (now() - t0)) : pos;
-function stopSrc() { stopSynth(); stopVO(); if (src) { try { src.stop(); } catch (e) {} src.disconnect(); src = null; } }
+function stopSrc() {
+  stopSynth(); stopVO();
+  if (trackSource) { trackSource.stop(); trackSource.disconnect(); trackSource = null; }
+}
 function startSrc(at) {
   stopSrc(); if (!audioLive()) return now();
   let when;
   if (!buffer) when = startSynth(at);
   else {
-    src = actx.createBufferSource(); src.buffer = buffer; src.connect(gainNode);
-    const off = at + trackOffset; when = actx.currentTime + .03;
-    if (off < buffer.duration) src.start(when, Math.max(0, off));
+    when = actx.currentTime + .03;
+    const offset = Math.max(0, at + trackOffset);
+    if (offset < buffer.duration) {
+      trackSource = actx.createBufferSource();
+      trackSource.buffer = buffer;
+      trackSource.connect(gainNode);
+      trackSource.start(when, offset);
+    }
   }
   if (voOn()) { voSrcs = startVO(actx, voGain, at, when); if (sess) duckPlan(sess.out.gain, at, when, .9); }
   fadeOut(at, when);
@@ -2742,7 +2807,7 @@ async function setSound(on) {
 const ui = document.getElementById('ui'), scrub = document.getElementById('scrub'), timeEl = document.getElementById('time'), railfill = document.getElementById('railfill');
 const startEl = document.getElementById('start'), startNote = document.getElementById('startNote');
 scrub.max = DURATION;
-[...DMS.cuts, ...[16, 36, 52, OUT, END].map(b => b - EW_SKIP + DMS_FB)].forEach(b => { const m = $('i', 'mk', document.getElementById('track')); m.style.left = (b / (DMS_FB + END - EW_SKIP + CREDIT_LEN) * 100) + '%'; });
+[...DMS.cuts, ...[16, 36, 52, OUT, END].map(b => b - EW_SKIP + DMS_FB)].forEach(b => { const m = $('i', 'mk', document.getElementById('track')); m.style.left = (playbackTime(b * SPB) / DURATION * 100) + '%'; });
 function syncUI() {
   document.getElementById('icoPlay').setAttribute('d', playing ? 'M6 4h4v16H6zm8 0h4v16h-4z' : 'M7 4l13 8-13 8z');
   const bVO = document.getElementById('bVO');
@@ -2794,7 +2859,7 @@ function frame() {
   if (!scrubbing) scrub.value = p;
   railfill.style.width = (p / DURATION * 100) + '%';
   const s = Math.floor(p);
-  setText(timeEl, `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(s % 60).padStart(2, '0')} · BAR ${String(Math.floor(b / 4) + 1).padStart(2, '0')}`);
+  setText(timeEl, `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(s % 60).padStart(2, '0')} · BAR ${String(Math.floor(filmTime(p) / SPB / 4) + 1).padStart(2, '0')}`);
   requestAnimationFrame(frame);
 }
 
@@ -2807,7 +2872,7 @@ const nextFrame = () => new Promise(r => { requestAnimationFrame(() => r()); set
 const WARM = [2, 12, 20, 30, 38, 46, 52, 58, ...Array.from({ length: Math.ceil((END - 60) / 6) }, (_, i) => 61 + i * 6)];
 const warm = ready.then(async () => { // paint every section once, invisibly, so the first play is smooth
   stage.style.opacity = .01;
-  for (const b of [...DMS.warm, ...WARM.filter(b => b >= EW_SKIP && b < END).map(b => b - EW_SKIP + DMS_FB), DMS_FB + END - EW_SKIP + 6]) { render(b); await nextFrame(); }
+  for (const b of [...DMS.warm, ...WARM.filter(b => b >= EW_SKIP && b < END).map(b => b - EW_SKIP + DMS_FB), DMS_FB + END - EW_SKIP + 6]) { render(playbackTime(b * SPB) / SPB); await nextFrame(); }
   stage.style.opacity = '';
   render(pos / SPB); requestAnimationFrame(frame);
   LOAD.warm = 1; document.querySelector('#lbar i').style.width = '100%';
