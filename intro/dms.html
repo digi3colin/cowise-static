@@ -480,15 +480,15 @@ const DMS = (() => {
      03   48 –  56  e-workflow: a plugin on our secure CMS (2 bars) 00:26.25
          400 – 420  our CMS story, on one timeline                  00:30
          104 – 120  sign-in                                         00:39.375
-          72 – 104  one document, every language · versions & co-editing  00:46.875
-         300 – 332  fast because it's small · MIT licensed          01:01.875
-     04  192 – 224  our CMS's plugins → push into e-workflow        01:16.875
-   The e-workflow film follows at film beat 196 (01:31.875).
+          88 – 104  versions & co-editing                           00:46.875
+         300 – 332  fast because it's small · MIT licensed          00:54.375
+     04  192 – 224  our CMS's plugins → push into e-workflow        01:09.375
+   The e-workflow film follows at film beat 180 (01:24.375).
    ============================================================ */
 const BPM = 128, SPB = 60 / BPM;             // 0.46875 s per beat
 const END = 224;                             // source beats
 const INTRO = 16;                            // film beats of the CMS intro (source 0–8)
-const SEGS = [[0, 8, .5], [8, 56, 1], [400, 420, 1], [104, 120, 1], [72, 104, 1], [300, 332, 1], [192, 224, 1]];   // [from, to, source beats per film beat]
+const SEGS = [[0, 8, .5], [8, 56, 1], [400, 420, 1], [104, 120, 1], [88, 104, 1], [300, 332, 1], [192, 224, 1]];   // [from, to, source beats per film beat]
 const toSrc = fb => {                        // film → source
   let f = 0;
   for (const [a, z, k] of SEGS) { const len = (z - a) / k; if (fb < f + len) return a + (fb - f) * k; f += len; }
@@ -505,8 +505,8 @@ const W = 1920, H = 1080;
 const C = {pink:'#ff0062',cyan:'#7ce7f9',orange:'#fda602',yellow:'#ffde0b',navy:'#052675',green:'#7cf9bf',purple:'#a97cf9',gold:'#ffc93c',ink:'#0d0d10'};
 const STRIPES = [C.pink, C.cyan, C.orange, C.yellow, C.navy];
 const IMG = '/media/images/';
-const CUTS = [8, 32, 48, 400, 104, 72, 88, 300, 316, 192];   // section changes: wipes, camera punches, timeline marks
-const DROPS = [8, 36, 48, 400, 104, 72, 88, 300, 316, 192, 208];
+const CUTS = [8, 32, 48, 400, 104, 88, 300, 316, 192];   // section changes: wipes, camera punches, timeline marks
+const DROPS = [8, 36, 48, 400, 104, 88, 300, 316, 192, 208];
 const NEXT_FILM = 'e-workflow.html';
 
 /* ---------- math & easing ---------- */
@@ -939,131 +939,6 @@ scene(47.4, 56.4, el => {             // two bars: source 48–56
 });
 
 
-/* ---------- 03b · One document, every language (the CMS film's chapter 03, in the old scoped-access slot) ---------- */
-chapter(72, 60, 24, el => {
-  const tag = makeTag(el, '03', 'Multilingual', C.gold);
-  const h = words(el, 'One document, every language.', 'xl', 104, 150);
-  h.line.style.fontSize = '124px';
-  h.ws.slice(2).forEach(w => w.style.color = C.gold);
-  const sub = $('div', 'abs sub', el, 'One JSON record holds every translation. Shared values like the document number are stored once, so there are no copies to keep in sync across languages.');
-  place(sub, 110, 304, 1280);
-
-  // 'mis' is our CMS's default content language: the value with no language, listed first
-  const LANGS = ['mis', 'EN', '繁中', '简中', '日本語', '한국어'];
-  const TITLES = ['ACME · SA-0142', 'Supplier agreement', '供應商協議', '供应商协议', 'サプライヤー契約', '공급업체 계약'];
-  // the editor steps through every language, then the no-language value; the record never changes shape
-  const activeLang = b => b >= 77 ? 1 : b >= 75.2 ? 0 : b >= 73.6 ? 5 : b >= 72 ? 4 : b >= 70.4 ? 3 : b >= 68.8 ? 2 : 1;
-
-  const left = $('div', 'abs panel', el); place(left, 100, 430, 700, 540);
-  const lh = $('div', 'ph', left, '<i></i>What your staff fills in'); lh.style.color = C.cyan;
-  const tabs = $('div', 'tabs', left, LANGS.map(l => `<b>${l}</b>`).join('') + '<em>one record</em>');
-  tabs.style.gap = '8px'; tabs.querySelectorAll('b').forEach(x => x.style.cssText = 'font-size:21px;padding:6px 13px');
-  const tabEls = [...tabs.querySelectorAll('b')];
-  const lw = $('div', '', left);
-  const FLD = [
-    ['Title', '', 'multilingual'],
-    ['Document no.', 'COR-PRC-2026-0142', 'attribute'],
-    ['Classification', 'Confidential', 'taxonomy'],
-    ['Attachment', 'sa-0142.pdf', 'file'],
-    ['Owner · Supplier', 'K. Wong · ACME Ltd', 'pointers'],
-  ];
-  const flds = FLD.map(([l, v, t]) => $('div', 'fld', lw, `<span class="lb">${l}</span><span class="vl">${v}</span><span class="tp">${t}</span>`));
-  const titleVal = flds[0].querySelector('.vl'), titleTp = flds[0].querySelector('.tp');
-
-  const right = $('div', 'abs panel', el); place(right, 860, 430, 960, 540);
-  const rh = $('div', 'ph', right, '<i></i>What we store<u>lect · JSON</u>'); rh.style.color = C.gold;
-  const code = $('div', 'code', right);
-  const K = s => `<span class="k">"${s}"</span><span class="p">:</span>`;
-  const S = s => `<span class="s">"${s}"</span>`;
-  const p_ = s => `<span class="p">${s}</span>`;
-  const CODE = [
-    p_('{'),
-    `  ${K('_type')} ${S('document')}${p_(',')}`,
-    `  ${K('title')} ${p_('{')}`,
-    `    ${K('mis')} ${S('ACME · SA-0142')}${p_(',')}`,
-    `    ${K('en')} ${S('Supplier agreement')}${p_(',')}`,
-    `    ${K('zh-hant')} ${S('供應商協議')}${p_(',')}`,
-    `    ${K('zh-hans')} ${S('供应商协议')}${p_(',')}`,
-    `    ${K('ja')} ${S('サプライヤー契約')}${p_(',')}`,
-    `    ${K('ko')} ${S('공급업체 계약')}`,
-    `  ${p_('},')}`,
-    `  ${K('doc_no')} ${S('COR-PRC-2026-0142')}${p_(',')}`,
-    `  ${K('classification')} ${S('confidential')}${p_(',')}`,
-    `  ${K('blocks')} ${p_('[')}`,
-    `    ${p_('{')} ${K('_type')} ${S('file')}${p_(',')} ${K('key')} ${S('procurement/sa-0142.pdf')} ${p_('}')}`,
-    `  ${p_('],')}`,
-    `  ${K('_pointers')} ${p_('{')} ${K('owner')} ${S('user_8812')}${p_(',')} ${K('supplier')} ${S('org_4471')} ${p_('}')}`,
-    p_('}'),
-  ];
-  // five languages make the record two lines longer, so it is set a little tighter than in the CMS film
-  code.style.cssText += ';font-size:16px;line-height:25.5px;padding-top:14px';
-  const lines = CODE.map(c => { const d = $('div', '', code, c); d.style.height = '25.5px'; return d; });
-  const OWNER = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 3, 3, 4, 4];  // which field brings each line in
-  const LANGLINE = [3, 4, 5, 6, 7, 8];                                 // the six lines of "title", in LANGS order
-  const LINK = [null, 10, 11, 13, 15];                                 // field → the key it becomes
-
-  const foot = $('div', 'abs', el, 'Add a language and nothing else changes — no new files, no rebuild, no migration.');
-  place(foot, 104, 1004); foot.style.cssText += ';font:400 26px var(--mono);letter-spacing:.05em;color:#7b7b88';
-
-  const cv = $('canvas', 'abs', el); cv.width = W; cv.height = H; const ctx = cv.getContext('2d');
-  cv.style.zIndex = 0;
-
-  return b => {
-    renderTag(tag, b, 60.4, 81.5);
-    reveal(h, b, 60.6, .4, 1, 81);
-    fadeUp(sub, b, 62.2, 80.8);
-    const lin = E.oExp(P(b, 63.4, 1.5)), out = E.i3(P(b, 81, 1.3));
-    T(left, { x: (1 - lin) * -180 + out * -180, o: lin * (1 - out), ry: (1 - lin) * 12 });
-    T(right, { x: (1 - lin) * 180 + out * 180, o: lin * (1 - out), ry: (1 - lin) * -12 });
-
-    const L = activeLang(b);
-    fadeUp(tabs, b, 64.4, 80.7, 20);
-    tabEls.forEach((t, i) => {
-      t.classList.toggle('on', i === L);
-      T(t, { s: 1 + .07 * (i === L ? pulse(b * .5, 4) : 0) });
-    });
-    setText(titleVal, TITLES[L]);
-    titleVal.style.color = C.gold;
-    setText(titleTp, L === 0 ? 'mis · no language' : 'multilingual');
-
-    flds.forEach((f, i) => { const p = E.o3(P(b, 65 + i * .8, .7)); T(f, { x: (1 - p) * -30, o: p }); });
-    lines.forEach((l, i) => {
-      const p = E.o3(P(b, 65.45 + OWNER[i] * .8, .5));
-      const k = LANGLINE.indexOf(i);
-      // the language the editor is looking at lights up in the record
-      const hot = k === L ? 1 : 0;
-      T(l, { x: (1 - p) * 26, o: p * (k < 0 ? 1 : .42 + .58 * hot) });
-      l.style.background = hot && k >= 0 ? 'linear-gradient(90deg,rgba(255,201,60,.14),rgba(255,201,60,0))' : 'none';
-    });
-    fadeUp(foot, b, 78, 80.6, 24);
-
-    // one field on the left, three languages on the right
-    ctx.clearRect(0, 0, W, H);
-    const ca = lin * (1 - out);
-    if (ca > .01) {
-      ctx.save(); ctx.lineWidth = 2;
-      const curve = (y0, y1, col, a, p) => {
-        const x0 = 800, x1 = 860;
-        ctx.globalAlpha = ca * a; ctx.strokeStyle = col;
-        ctx.beginPath(); ctx.moveTo(x0, y0);
-        ctx.bezierCurveTo(x0 + 34, y0, x1 - 34, y1, lerp(x0, x1, p), lerp(y0, y1, p));
-        ctx.stroke();
-      };
-      const rowY = i => 430 + flds[i].offsetTop + flds[i].offsetHeight / 2;
-      const lineY = i => 430 + lines[i].offsetTop + lines[i].offsetHeight / 2;
-      // the hero: Title fans out into its three languages
-      const tp = E.io3(P(b, 65.3, .9));
-      if (tp > 0) LANGLINE.forEach((ln, k) => curve(rowY(0), lineY(ln), C.gold, k === L ? .95 : .3, tp));
-      // and the fields that are the same in every language
-      for (let i = 1; i < FLD.length; i++) {
-        const p = E.io3(P(b, 65.3 + i * .8, .8)); if (p <= 0) continue;
-        curve(rowY(i), lineY(LINK[i]), STRIPES[i % 5], .75, p);
-      }
-      ctx.restore();
-    }
-  };
-});
-
 /* ---------- 03c · Nothing is ever lost: co-editing, versions, trash (the CMS film's chapter 04) ---------- */
 chapter(88, 84, 20, el => {
   const tag = makeTag(el, '03', 'Versions &amp; co-editing', C.green);
@@ -1262,8 +1137,9 @@ chapter(104, 36, 24, el => {
 
 /* ---------- 03e · Fast because it's small (the CMS film's chapter 08) ----------
    Authored at source beats 300–316 and spliced in after sign-in (see SEGS). */
-/* Measured 2026-11-08: src/index.ts; esbuild bundle/minify, ESM, browser, es2022;
-   external cloudflare:* and node:*. 831067 bytes; gzip 264686 bytes.
+/* Measured 2026-11-23 at workers/cms 9ca35fd: src/index.ts; esbuild bundle/minify, ESM, browser, es2022;
+   external cloudflare:* and node:*. 911813 bytes; gzip 272573 bytes (level 6).
+   Slices by path: src/core, src/features/plugins (plugin API), other src/features, node_modules, the rest.
    Excludes separately served assets. Decimal KB; segments use metafile bytesInOutput.
    The figures are measured from the host bundle (esbuild, minified) — re-measure and update
    FOOT / SEG when the core changes. */
@@ -1271,7 +1147,7 @@ chapter(300, 84, 20, el => {
   const tag = makeTag(el, '03', 'Performance', C.pink);
   const h1 = words(el, 'Fast because', 'xl', 104, 150);
   const h2 = words(el, 'it’s small.', 'xl', 104, 286); h2.ws[1].style.color = C.pink;
-  const sub = $('div', 'abs sub', el, 'The CMS server bundle is 831 KB minified, with two runtime dependencies. Optional features keep each installation lean.');
+  const sub = $('div', 'abs sub', el, 'The CMS server bundle is 912 KB minified, with three runtime dependencies. Optional features keep each installation lean.');
   place(sub, 110, 444, 640);
 
   /* same code, two ways to run it */
@@ -1290,7 +1166,7 @@ chapter(300, 84, 20, el => {
   });
 
   /* the footprint */
-  const FOOT = [['831', 'KB', 'minified · 265 KB gzipped', 104], ['2', '', 'dependencies · hono, yjs', 1000]];
+  const FOOT = [['912', 'KB', 'minified · 273 KB gzipped', 104], ['3', '', 'dependencies · hono, saxes, yjs', 1000]];
   const stats = FOOT.map(([v, unit, lab, x]) => {
     const e = $('div', 'abs', el);
     place(e, x, 676);
@@ -1301,11 +1177,11 @@ chapter(300, 84, 20, el => {
   });
   // where the bytes actually go, measured per feature slice
   const SEG = [
-    ['core', 32.470, C.cyan],
-    ['plugin API', 23.056, C.orange],
-    ['routes & other', 13.034, C.yellow],
-    ['dependencies', 12.122, C.purple],
-    ['other features', 19.317, '#66758b'],
+    ['core', 25.119, C.cyan],
+    ['plugin API', 23.253, C.orange],
+    ['routes & other', 8.915, C.yellow],
+    ['dependencies', 15.258, C.purple],
+    ['other features', 27.455, '#66758b'],
   ];
   const BX = 104, BY = 856, BW = 1716, BH = 44;
   const foot = $('div', 'abs', el, 'Switch a feature off and its bytes leave the bundle.');
@@ -1630,7 +1506,6 @@ const OV = .5;
 [[47.4, 48, 8, .1, 7.9, 0, OV],           // e-workflow: a plugin on our secure CMS (after the wipe; 2 bars)
  [399.6, 400, 20, -OV, 20, OV, 0],        // the CMS timeline (then the wipe): played 1:1 so the stop bells stay on their stops
  [103.6, 104, 16, .27, 14.8, 0, OV],      // sign-in
- [71.6, 72, 16, .27, 14.9, OV, OV],       // one document, every language
  [87.6, 88, 16, .32, 14.65, OV, OV],      // versions & co-editing
  [299.6, 300, 16, .32, 14.65, OV, 0],     // fast because it's small (then the wipe)
  [315.6, 316, 16, .4, 15, 0, 0],          // MIT licensed (wipes in and out)
@@ -1725,14 +1600,15 @@ const SCORE = (() => {
   impact(32); groove(32, 35, { noBass: true, noClap: true }); riser(33, 36, .24); roll(35);
   seg(36, 48, { hats16: true, stabs: true, arp: 1 });
   // 03 infrastructure: five sections
-  [[48, 56, 2], [400, 420, 2], [104, 120, 1], [72, 88, 2], [88, 104, 1], [300, 316, 2], [316, 332, 1]].forEach(([a, z, arp]) => seg(a, z, { hats16: true, stabs: true, arp }));
+  [[48, 56, 2], [400, 420, 2], [104, 120, 1], [88, 104, 2], [300, 316, 2], [316, 332, 1]].forEach(([a, z, arp]) => seg(a, z, { hats16: true, stabs: true, arp }));
   // the CMS story: a bell on every stop of the timeline
   HIST.forEach((_, i) => [880, 1318.5].forEach((f, k) => tone(HAT(i), f, 1.5, 'triangle', .07, 6000, k ? .3 : -.3)));
   // 05 plugins: groove, the e-workflow drop at 208, then the push-in rises to the flash
   impact(192); groove(192, 208, { hats16: true, stabs: true, arp: 1 });
   impact(208); groove(208, 214, { hats16: true, stabs: true, arp: 2 });
   groove(214, 220, { hats16: true, noClap: true }); riser(214, 222, .26); roll(220, 16, .1);
-  impact(222); kick(222);
+  groove(220, 224, { hats16: true, noClap: true, noBass: true });   // the kick keeps going into the e-workflow film: no gap at the join
+  impact(222);                                   // (the groove above already kicks on 222)
   // short tail: the e-workflow film's intro starts two beats later
   [220, 261.63, 329.63, 440, 523.25].forEach((f, k) => tone(222, f, 2, 'sawtooth', .045, 2600, (k - 2) * .3));
   tone(222, 55, 2, 'sine', .3, 300);
@@ -1741,7 +1617,7 @@ const SCORE = (() => {
 
   const WARM = [2, 6, 12, 20, 26, 30, 36, 42, 50, 53, 55, 76, 82, 92, 100, 108, 114, 302, 308, 314, 318, 324, 330, 402, 406, 410, 414, 417, 419, 196, 204, 210, 216, 221, 223];
   return {
-    FB: FILM_END, LEN: DURATION, render, SCORE,
+    FB: FILM_END, LEN: DURATION, render, SCORE, toFilm,
     ready: Promise.all([imgReady, logoReady]),
     cuts: CUTS.map(toFilm).filter(f => f != null), warm: WARM.map(toFilm).filter(f => f != null),
     hide() { scenes.forEach(s => show(s.el, false)); show(deviceLayer, false); show(ovWho, false); show(flashEl, false); show(endEl, false); show(cmsMark, false); },
@@ -2705,7 +2581,7 @@ async function initAudio() {
 const trackOffset = +(params.get('offset') || 0);
 
 /* ============================================================
-   VOICE-OVER — 12 shared recorded lines (media/audio/eform-vo), each cued to a moment on the beat
+   VOICE-OVER — Cantonese DMS chapters and shared e-workflow lines, each cued on the beat
    clock, so it stays in sync however the film is seeked. The voice has its own gain (it is not
    faded with the music), and the music dips under every line. Toggle with the VO button or V;
    ?vo=0 starts with it off, and the choice is remembered on this device.
@@ -2736,10 +2612,30 @@ const VO_CUE_LANG = {
   // handover card; HR Admin starts a beat earlier so it ends as Done lights up, well clear of line 11
   yue: { '04_real_request': HANDOVERS[0].at + .3, '10_hr_admin': shotAt(11) - 1 },
 };
-const VO = Object.fromEntries(Object.keys(VO_LANGS).map(lang => [lang, VO_CUES.map(([name, beat]) => ({
-  name, t: DMS_LEN + ((VO_CUE_LANG[lang]?.[name] ?? beat) - EW_SKIP) * SPB, buf: null,
-  raw: fetch(`${VO_DIR}${lang}/${name}.mp3`).then(r => r.ok ? r.arrayBuffer() : null).catch(() => null),
-}))]));
+// DMS source beats follow the individual slides, including the reordered CMS chapters.
+const DMS_YUE_CUES = [
+  ['01_intro', 8],                    // Who we are, after the opening logo
+  ['02_introduce_eworkflow', 32],
+  ['03_data_safe', 48],
+  ['04_cms_timeline', 54],            // lead into the timeline to fit the 12.2-second take
+  ['05_secure_signin', 109],           // leave room for the timeline narration to finish
+  ['06_versions', 88],
+  ['07_fast_small', 300],
+  ['08_mit', 316],
+  ['09_plugins', 192],
+  ['10_latest', 208],
+];
+function voiceClip(dir, name, t) {
+  return { name, t, buf: null,
+    raw: fetch(dir + name + '.mp3').then(r => r.ok ? r.arrayBuffer() : null).catch(() => null),
+  };
+}
+const VO = Object.fromEntries(Object.keys(VO_LANGS).map(lang => [lang, VO_CUES.map(([name, beat]) =>
+  voiceClip(VO_DIR + lang + '/', name, DMS_LEN + ((VO_CUE_LANG[lang]?.[name] ?? beat) - EW_SKIP) * SPB)
+)]));
+VO.yue.unshift(...DMS_YUE_CUES.map(([name, beat]) =>
+  voiceClip('/media/audio/dms-vo/yue/', name, DMS.toFilm(beat) * SPB)
+));
 const voReady = Promise.all(Object.values(VO).flat().map(v => v.raw));
 // the voice: 'en', 'yue' or 'off'. ?vo=en|yue|0 wins, then this device's last choice, then the browser's language
 const VO_KEY = 'e-workflow-vo';
@@ -2769,8 +2665,8 @@ function startVO(c, dest, at, when, list = voList()) {
   return out;
 }
 // levels, measured: the lines average about -25 dB RMS in both languages (peaks -4 dB); the music about -17 dB.
-// The voice is lifted ~3 dB and the music dips ~11 dB under it, so the voice sits ~6 dB on top.
-const VO_LEVEL = 1.4, DUCK = .28;
+// The voice is lifted ~3 dB and the music dips ~5 dB under it, so the beat keeps going under the voice.
+const VO_LEVEL = 1.4, DUCK = .55;   // a light dip (about -5 dB) so the beat carries on under the voice
 function makeLimiter(c, dest = c.destination) {
   const l = c.createDynamicsCompressor();
   l.threshold.value = -2; l.knee.value = 0; l.ratio.value = 20; l.attack.value = .001; l.release.value = .08;
