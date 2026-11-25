@@ -271,7 +271,7 @@ html,body{height:100%;background:#000;color:#fff;overflow:hidden;font-family:var
 
 /* ---- 03 · live demo ---- */
 .scr{position:absolute;left:0;top:0;border-radius:20px;overflow:hidden;background:#000;box-shadow:0 44px 130px rgba(0,0,0,.6);transform-origin:50% 50%;will-change:transform,opacity}
-.scr .cam{position:absolute;left:0;top:0;width:1280px;height:832px;transform-origin:0 0;will-change:transform}
+.scr .cam{position:absolute;left:0;top:0;width:1280px;height:692px;transform-origin:0 0;will-change:transform;background:#fff}
 .scr .cam img{position:absolute;left:0;top:0;width:100%;height:100%}
 .scr .edge{position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 3px color-mix(in srgb,var(--pc,#fff) 70%,transparent);pointer-events:none;z-index:4}
 /* whose screen this is */
@@ -381,12 +381,6 @@ html,body{height:100%;background:#000;color:#fff;overflow:hidden;font-family:var
 .w98 .btn.dn{box-shadow:inset 2px 2px 0 #404040,inset -2px -2px 0 #fff}
 .wm{position:absolute;border-radius:18px;background:rgba(255,255,255,.05);box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.14);display:grid;place-items:center;font-size:54px;font-weight:400;overflow:hidden}
 .ptl{translate:-50% 0;font:500 22px var(--mono);padding:11px 22px;border-radius:12px;background:var(--cyan);color:#06222a;white-space:nowrap;box-shadow:0 14px 34px rgba(0,0,0,.45)}
-.doc{position:absolute;border-radius:16px;background:#f4f2ec;color:#1b1b20;box-shadow:0 30px 80px rgba(0,0,0,.5);padding:24px 26px;translate:-50% 0}
-.doc .lgc{display:inline-block;font:500 20px var(--font);padding:3px 12px;border-radius:7px;background:#1b1b20;color:#f4f2ec}
-.doc .dt{margin:16px 0 10px;font-size:40px;font-weight:400;white-space:nowrap}
-.doc .bl{height:9px;margin:12px 0;border-radius:3px;background:#d8d4c8}
-.doc .dv{position:absolute;right:22px;bottom:16px;font:400 20px var(--mono);color:#8a8678;font-style:normal}
-.doc .dv.new{color:#0b8a52;font-weight:600}
 .xm{width:58px;height:58px;border-radius:50%;margin:-29px 0 0 -29px;background:var(--pink);color:#fff;display:grid;place-items:center;font-size:32px;font-weight:500;box-shadow:0 0 0 6px var(--ink)}
 .lgo{border-radius:16px;overflow:hidden;box-shadow:0 26px 70px rgba(0,0,0,.5)}
 .lgo img{display:block;width:300px;height:158px}
@@ -465,8 +459,9 @@ html,body{height:100%;background:#000;color:#fff;overflow:hidden;font-family:var
    Self-contained: its own clock (film beats 0 – DMS.FB), scenes,
    background, wipes and score. The e-workflow film follows it.
    ============================================================ */
-// The story begins at 0:32 after the two earlier edits. Its six stops are one bar apart.
-const STORY_START = 32, STORY_ORIGINAL = 20 * (60 / 128), STORY_EXTRA = 5;
+// The story begins at 0:32 after the two earlier edits, plus the six beats added to chapter 01's
+// client list (EXTEND_AT in part 2). Its six stops are one bar apart.
+const STORY_START = 32 + 6 * (60 / 128), STORY_ORIGINAL = 20 * (60 / 128), STORY_EXTRA = 5;
 const STORY_LENGTH = STORY_ORIGINAL + STORY_EXTRA;
 const storyStopBeat = i => Math.round(STORY_START / (60 / 128)) + 4 + i * 4;
 const DMS = (() => {
@@ -481,20 +476,20 @@ const DMS = (() => {
 
    PLAYS AS (source beats · 4 beats = 1 bar = 1.875 s · film time)
      00    0 –   8  intro: "Build big. Start simple." (half speed)  00:00
-     01    8 –  32  who we are: web, tailor-made solutions          00:07.5
+     01    8 –  32  who we are: web, then client solutions (+6 beats) 00:07.5
      02   32 –  48  today: e-workflow, form + approval              00:18.75
      03   48 –  56  e-workflow: a plugin on our secure CMS (2 bars) 00:26.25
          400 – 420  our CMS story, on one timeline                  00:30
          104 – 120  sign-in                                         00:39.375
           88 – 104  versions & co-editing                           00:46.875
-         300 – 332  fast because it's small · MIT licensed          00:54.375
-     04  192 – 224  our CMS's plugins → push into e-workflow        01:09.375
-   The e-workflow film follows at film beat 180 (01:24.375).
+         300 – 316  fast because it's small                         00:54.375
+     04  192 – 224  our CMS's plugins → push into e-workflow        01:01.875
+   The e-workflow film follows at film beat 164 (01:16.875).
    ============================================================ */
 const BPM = 128, SPB = 60 / BPM;             // 0.46875 s per beat
 const END = 224;                             // source beats
 const INTRO = 16;                            // film beats of the CMS intro (source 0–8)
-const SEGS = [[0, 8, .5], [8, 56, 1], [400, 420, 1], [104, 120, 1], [88, 104, 1], [300, 332, 1], [192, 224, 1]];   // [from, to, source beats per film beat]
+const SEGS = [[0, 8, .5], [8, 56, 1], [400, 420, 1], [104, 120, 1], [88, 104, 1], [300, 316, 1], [192, 224, 1]];   // [from, to, source beats per film beat]
 const toSrc = fb => {                        // film → source
   let f = 0;
   for (const [a, z, k] of SEGS) { const len = (z - a) / k; if (fb < f + len) return a + (fb - f) * k; f += len; }
@@ -511,8 +506,8 @@ const W = 1920, H = 1080;
 const C = {pink:'#ff0062',cyan:'#7ce7f9',orange:'#fda602',yellow:'#ffde0b',navy:'#052675',green:'#7cf9bf',purple:'#a97cf9',gold:'#ffc93c',ink:'#0d0d10'};
 const STRIPES = [C.pink, C.cyan, C.orange, C.yellow, C.navy];
 const IMG = '/media/images/';
-const CUTS = [8, 32, 48, 400, 104, 88, 300, 316, 192];   // section changes: wipes, camera punches, timeline marks
-const DROPS = [8, 36, 48, 400, 104, 88, 300, 316, 192, 208];
+const CUTS = [8, 32, 48, 400, 104, 88, 300, 192];   // section changes: wipes, camera punches, timeline marks
+const DROPS = [8, 36, 48, 400, 104, 88, 300, 192, 208];
 const NEXT_FILM = 'e-workflow.html';
 
 /* ---------- math & easing ---------- */
@@ -591,12 +586,22 @@ function renderTag(tag, b, inB, outB) {
 
 /* ---------- assets ---------- */
 const SRC = {
-  // chapter 01 · web, then apps
+  // chapter 01 · web, then digital solutions for corporate and government clients (CLIENTS below)
   web: ['projects/veuve-clicquot-website/01.webp', 'projects/louis-vuitton-minisites/01.webp', 'projects/scmp/01.webp', 'projects/towngas-low-carbon/01.webp'],
-  app: ['projects/ruinart-art-basel/02.webp', 'projects/krug/02.webp', 'projects/cartier/01.webp', 'projects/hennessy-artistry-photo-booth/01.webp'],
+  app: [],
   // chapter 04 · the multilingual CMS clients
   logos: ['clients/veuveclicquot-color.webp', 'clients/bbr-color.webp'],
 };
+// chapter 01 · one client per iPad screen, listed beside it; pos is the image's crop on the tall screen
+const CLIENTS = [
+  { name: 'Cartier', work: 'High jewellery iPad app', src: 'projects/cartier/01.webp', pos: '100% 50%' },
+  { name: 'Berry Bros. &amp; Rudd', work: 'e-shipment', src: 'projects/berry-bros-rudd-eshipment/01.webp', pos: '50% 0' },   // staff list over the customer's email
+  { name: 'pcbpro.online', work: 'Online quotation', src: 'projects/pcbpro-online/03.webp', pos: '50% 0' },
+  { name: 'GTEF', work: 'RSVP · RFID · check-in', src: 'projects/gtef-registration/gtef-2023-stage.webp', pos: '50% 50%' },
+  { name: 'WGHK', work: 'RSVP · RFID · check-in', src: 'projects/investhk-wghk/01.webp', pos: '50% 50%' },
+];
+SRC.app = CLIENTS.map(c => c.src);
+const CLIENT_AT = i => 20.5 + i * 1.6;                 // source beats; 20–28 plays at about half speed
 const images = {};
 function loadImg(src) { return images[src] || (images[src] = Object.assign(new Image(), { decoding: 'async', src: IMG + src })); }
 Object.values(SRC).flat().forEach(loadImg);
@@ -772,9 +777,13 @@ const glare = $('div', 'glare', device);
 const ipadFrame = $('img', 'frame', device); ipadFrame.src = 'ipad-frame.png'; ipadFrame.alt = '';
 const SLIDES = [
   ...SRC.web.map((s, i) => ({ src: s, at: 9.5 + i * 2, mode: 'up' })),
-  ...SRC.app.map((s, i) => ({ src: s, at: 20.5 + i * 2.25, mode: 'side' })),
+  ...CLIENTS.map((c, i) => ({ src: c.src, at: CLIENT_AT(i), mode: 'side', pos: c.pos })),
 ];
-SLIDES.forEach(s => { s.el = $('img', '', screen); s.el.src = IMG + s.src; s.el.alt = ''; });
+SLIDES.forEach(s => {
+  s.el = $('img', '', screen); s.el.src = IMG + s.src; s.el.alt = '';
+  // a website keeps its left edge (logo, navigation) when the browser narrows into the iPad
+  s.el.style.objectPosition = s.pos || (s.mode === 'up' ? '0 0' : '50% 0');
+});
 const BROWSER = { cx: 1310, cy: 560, w: 980, h: 640, r: 18, pad: 0, padY: 0, tb: 58 };
 // screen inset matches ipad-frame.png: x 126/1240, y 147/1610
 const IPAD = { cx: 1330, cy: 545, w: 600, h: 779, r: 37, pad: 61, padY: 71, tb: 0 };
@@ -830,15 +839,23 @@ scene(7.4, 32.4, el => {
   const h1 = words(ov, 'We started', 'xl', 110, 300);
   const h2 = words(ov, 'with the web.', 'xl', 110, 436); h2.ws.slice(2).forEach(w => w.style.color = C.green);
   const sub = $('div', 'abs sub', el, 'A digital solution agency in Hong Kong, building websites for brands across Asia.'); place(sub, 116, 610, 640);
-  const mq = $('div', 'abs marquee', el, ('HAUTE COUTURE — ').repeat(5)); place(mq, 0, 700);
-  // the word we love, with the headline under it saying what it means
-  const hc = $('div', 'abs', el, 'Haute couture'); place(hc, 114, 222);
-  hc.style.cssText += `;font:italic 400 58px Didot,"Bodoni 72","Bodoni MT",Georgia,serif;letter-spacing:.01em;color:${C.pink}`;
-  const h3 = words(el, 'Then, tailor-made', 'xl', 110, 300);
-  const h4 = words(el, 'digital solutions.', 'xl', 110, 422);
-  [h3, h4].forEach(g => g.line.style.fontSize = '112px');
-  h3.ws[1].style.color = C.pink; h4.ws.forEach(w => w.style.color = C.pink);
-  const sub2 = $('div', 'abs sub', el, 'Apps, platforms and interactive experiences, built around each client.'); place(sub2, 116, 580, 640);
+  const mq = $('div', 'abs marquee', el, ('APPS — E-SHIPMENT — QUOTATION — RSVP — CHECK-IN — ').repeat(3)); place(mq, 0, 700);
+  // proven work, not bespoke: named clients and what each one runs on it
+  const hc = $('div', 'abs eyebrow', el, 'Corporate &amp; government clients'); place(hc, 116, 250); hc.style.color = C.pink;
+  const h3 = words(el, 'Then, digital solutions', 'xl', 110, 300);
+  const h4 = words(el, 'for daily operations.', 'xl', 110, 422);
+  [h3, h4].forEach(g => g.line.style.fontSize = '104px');
+  h4.ws.slice(1).forEach(w => w.style.color = C.pink);
+  // the client list builds one row per iPad screen; the row on screen is lit
+  const rows = CLIENTS.map((c, i) => {
+    const r = $('div', 'abs', el, `<i></i><b>${c.name}</b><span>${c.work}</span>`); place(r, 116, 584 + i * 64);
+    r.style.cssText += ';display:flex;align-items:baseline;gap:18px;white-space:nowrap';
+    const [dot, nm, wk] = r.children;
+    dot.style.cssText = `width:10px;height:10px;border-radius:50%;background:${C.pink};align-self:center`;
+    nm.style.cssText = 'font-size:36px;font-weight:400;color:#fff';
+    wk.style.cssText = 'font-size:27px;font-weight:300;color:#9a9aa6';
+    return { r, dot, at: CLIENT_AT(i) };
+  });
   return b => {
     renderTag(tag, b, 8.6, 30.5);
     fadeUp(eb, b, 8.2, 17.6, 20);
@@ -846,11 +863,15 @@ scene(7.4, 32.4, el => {
     reveal(h2, b, 8.8, .5, 1, 17.6);
     fadeUp(sub, b, 10, 17.2);
     T(mq, { x: -((b - 19) * 38) % 1400 - 200, o: E.o3(P(b, 20, 2)) * (1 - E.i3(P(b, 29, 2))) });
-    fadeUp(hc, b, 18.6, 30, 24);
-    hc.style.letterSpacing = (.01 + .12 * (1 - E.o4(P(b, 18.6, 2)))) + 'em';
+    fadeUp(hc, b, 18.6, 30, 20);
     reveal(h3, b, 19, .5, 1, 30.2);
     reveal(h4, b, 19.8, .5, 1, 30.4);
-    fadeUp(sub2, b, 21, 30);
+    rows.forEach(({ r, dot, at }, i) => {
+      const on = E.o3(P(b, at, .6)), out = E.i3(P(b, 29.6 + i * .08, .8));
+      const lit = i === rows.length - 1 ? 1 : 1 - .45 * E.io3(P(b, rows[i + 1].at, .6));   // dims when the next one arrives
+      T(r, { o: on * lit * (1 - out), x: (1 - on) * -30, y: out * -16 });
+      T(dot, { s: lit > .99 ? 1 : .55 });
+    });
   };
 });
 
@@ -1244,45 +1265,6 @@ chapter(300, 84, 20, el => {
   };
 });
 
-/* ---------- 03f · MIT licensed (the CMS film's chapter 10, without the open-source wording) ---------- */
-chapter(316, 172, 16, el => {
-  const tag = makeTag(el, '03', 'License', C.green);
-  const title = words(el, 'MIT licensed.', 'xl', 104, 180);
-  title.line.style.fontSize = '240px';
-  title.ws[0].style.color = C.green;
-  const sub = $('div', 'abs sub', el, `<span style="color:${C.green}">No license fee. No user seat cost.</span> Yours to build on.`);
-  place(sub, 114, 460, 1600); sub.style.fontSize = '58px';
-  const rights = [
-    ['Use.', 'For personal or commercial projects.', C.cyan],
-    ['Modify.', 'Adapt the CMS to your own needs.', C.gold],
-    ['Distribute.', 'Share your work. Build on it.', C.green],
-  ].map(([title, note, color], i) => {
-    const card = $('div', 'abs panel', el);
-    place(card, 104 + i * 580, 610, 548, 290);
-    card.style.cssText += ';padding:30px 34px;border-top:4px solid ' + color;
-    const free = $('div', 'eyebrow', card, 'Free to');
-    free.style.cssText += ';font-size:24px;color:#c9c9d1';
-    const heading = $('div', '', card, title);
-    heading.style.cssText = 'margin-top:6px;font-size:76px;font-weight:300;line-height:1.05;color:' + color;
-    const detail = $('div', '', card, note);
-    detail.style.cssText = 'margin-top:18px;font-size:29px;line-height:1.3;color:#c9c9d1';
-    return card;
-  });
-  const note = $('div', 'abs', el, 'Keep the copyright and license notice.');
-  place(note, 110, 950); note.style.cssText += ';font-size:28px;color:#9a9aa6';
-  return b => {
-    renderTag(tag, b, 172.4, 186);
-    reveal(title, b, 172.7, .5, 1.2, 186);
-    fadeUp(sub, b, 174.2, 186);
-    rights.forEach((card, i) => {
-      const p = E.oBack(P(b, 175.5 + i * 1.1, 1), 1.4);
-      const out = E.i3(P(b, 186, 1));
-      T(card, { y: (1 - p) * 100 - out * 40, o: clamp(p) * (1 - out) });
-    });
-    fadeUp(note, b, 180, 186, 20);
-  };
-});
-
 
 /* ---------- 03b · Our CMS story, on one timeline (authored at source beats 400–420, five bars) ----------
    Six stops on one line; each lights up in turn while the core travels along it and gains a ring. */
@@ -1442,8 +1424,8 @@ scene(191.4, 224, el => {
 /* ---------- background canvas: stripe artwork per section ---------- */
 const T2 = 2 / SPB, T2_5 = 2.5 / SPB, T4 = 4 / SPB, T7 = 7 / SPB; // intro landmarks (CMS film beats)
 const softPulse = x => { const f = frac(x); return x < 0 ? 0 : f < .12 ? E.o2(f / .12) : Math.exp(-(f - .12) * 4.5); };
-const BANDS = [[8, 32], [32, 48], [48, 72], [72, 88], [88, 104], [104, 120], [300, 316], [316, 332], [400, 420], [128, 192], [192, 216]];
-const STEADY_IN = new Set([400, 104, 72, 88, 300, 316]), STEADY_OUT = new Set([72, 420, 120, 88, 104, 316]);
+const BANDS = [[8, 32], [32, 48], [48, 72], [72, 88], [88, 104], [104, 120], [300, 316], [400, 420], [128, 192], [192, 216]];
+const STEADY_IN = new Set([400, 104, 72, 88, 300]), STEADY_OUT = new Set([72, 420, 120, 88, 104, 316]);
 function renderBG(b) {
   bg.fillStyle = C.ink; bg.fillRect(0, 0, W, H);
   if (b < 8.1) {                            // the CMS film's intro, at double speed
@@ -1483,7 +1465,6 @@ const WIPES = [
   // every wipe uses the full brand palette
   [8, wipe, STRIPES, .9], [32, wipeD], [48, wipe],
   [104, wipeD],
-  [316, wipeH],                      // bar 41: fast because it's small → MIT licensed
   [192, wipeD],
 ].map(([s, fn, pal = STRIPES, len]) => [toFilm(s), fn, pal, len]);
 let fxDirty = true;
@@ -1504,7 +1485,7 @@ const ovWho = document.getElementById('ovWho'), flashEl = document.getElementByI
 // chapter 03 is all about our CMS: a standing label in the bottom-right corner says so
 const cmsMark = $('div', 'abs eyebrow', overEl, `<i style="display:inline-block;width:12px;height:12px;border-radius:50%;background:${C.cyan};margin-right:14px;vertical-align:1px"></i>Our CMS`);
 place(cmsMark, W - 96, 996); cmsMark.style.cssText += ';translate:-100% 0;color:#fff;font-size:28px;white-space:nowrap';
-const CMS_FROM = toFilm(48), CMS_TO = toFilm(332 - 1e-6);        // film beats: the plugin slide → the end of MIT
+const CMS_FROM = toFilm(48), CMS_TO = toFilm(316 - 1e-6);        // film beats: the plugin slide → the end of fast because small
 /* Chapter 03's slides run on the film clock with a short overlap: each slide's content (from its
    first entrance to its last exit) is stretched to fill its window plus OV beats either side, so the
    outgoing headline and panels leave while the next slide's come in, with no blank in between.
@@ -1515,7 +1496,6 @@ const OV = .5;
  [103.6, 104, 16, .27, 14.8, 0, OV],      // sign-in
  [87.6, 88, 16, .32, 14.65, OV, OV],      // versions & co-editing
  [299.6, 300, 16, .32, 14.65, OV, 0],     // fast because it's small (then the wipe)
- [315.6, 316, 16, .4, 15, 0, 0],          // MIT licensed (wipes in and out)
 ].forEach(([from, S, len, ci, co, ein, eout]) => {
   const s = scenes.find(s => Math.abs(s.from - from) < 1e-6);
   const F = toFilm(S);
@@ -1608,7 +1588,7 @@ const SCORE = (() => {
   impact(32); groove(32, 35, { noBass: true, noClap: true }); riser(33, 36, .24); roll(35);
   seg(36, 48, { hats16: true, stabs: true, arp: 1 });
   // 03 infrastructure: five sections
-  [[48, 56, 2], [104, 120, 1], [88, 104, 2], [300, 316, 2], [316, 332, 1]].forEach(([a, z, arp]) => seg(a, z, { hats16: true, stabs: true, arp }));
+  [[48, 56, 2], [104, 120, 1], [88, 104, 2], [300, 316, 2]].forEach(([a, z, arp]) => seg(a, z, { hats16: true, stabs: true, arp }));
   // 05 plugins: groove, the e-workflow drop at 208, then the push-in rises to the flash
   impact(192); groove(192, 208, { hats16: true, stabs: true, arp: 1 });
   impact(208); groove(208, 214, { hats16: true, stabs: true, arp: 2 });
@@ -1629,7 +1609,7 @@ const SCORE = (() => {
   return ev.sort((a, b) => a.t - b.t);
 })();
 
-  const WARM = [2, 6, 12, 20, 26, 30, 36, 42, 50, 53, 55, 76, 82, 92, 100, 108, 114, 302, 308, 314, 318, 324, 330, 402, 406, 410, 414, 417, 419, 196, 204, 210, 216, 221, 223];
+  const WARM = [2, 6, 12, 20, 26, 30, 36, 42, 50, 53, 55, 76, 82, 92, 100, 108, 114, 302, 308, 314, 402, 406, 410, 414, 417, 419, 196, 204, 210, 216, 221, 223];
   return {
     FB: FILM_END, LEN: DURATION, render, SCORE, storyScore, toFilm,
     ready: Promise.all([imgReady, logoReady]),
@@ -1661,13 +1641,18 @@ const DMS_FB = DMS.FB, DMS_LEN = DMS.LEN;   // the DMS opening plays first; this
 const EW_SKIP = 16;                          // this film's own intro ("Fill in. Sign off.", beats 0–16) is skipped
 const CREDIT_LEN = 16;                       // fade to black, then the credits (four bars)
 // Keep authored beats intact and translate between the film and playback clocks in seconds.
-// Stretch the two seconds leading into each edit to three seconds of continuous motion.
-const EXTEND_AT = [17, 30]; // playback seconds, including earlier edits
-const MOTION_LENGTH = 2, EXTRA_TIME = 1;
-const beforeStoryEdit = film => EXTEND_AT.reduce((time, end) =>
-  time + Math.min(1, Math.max(0, (time - end + MOTION_LENGTH) / MOTION_LENGTH)) * EXTRA_TIME, film);
-const undoEarlierEdits = playback => EXTEND_AT.reduceRight((time, end) =>
-  time - Math.min(1, Math.max(0, (time - end + MOTION_LENGTH) / (MOTION_LENGTH + EXTRA_TIME))) * EXTRA_TIME, playback);
+// Each edit stretches the `motion` seconds leading into `end` by `extra` seconds of continuous
+// (slower) motion; `end` is in seconds including earlier edits.
+const WHO_EXTRA = 6 * SPB;   // chapter 01's client list: about three seconds more (six beats, so the pulse holds)
+const EXTEND_AT = [
+  // chapter 01, source beats 20–28 (the headline lands, then the five clients) play at about half speed
+  { end: 36 * SPB, motion: 8 * SPB, extra: 1 + WHO_EXTRA },
+  { end: 30 + WHO_EXTRA, motion: 2, extra: 1 },
+];
+const beforeStoryEdit = film => EXTEND_AT.reduce((time, { end, motion, extra }) =>
+  time + Math.min(1, Math.max(0, (time - end + motion) / motion)) * extra, film);
+const undoEarlierEdits = playback => EXTEND_AT.reduceRight((time, { end, motion, extra }) =>
+  time - Math.min(1, Math.max(0, (time - end + motion) / (motion + extra))) * extra, playback);
 const storyProgress = (time, duration) => Math.min(1, Math.max(0, (time - STORY_START) / duration));
 function playbackTime(film) {
   const time = beforeStoryEdit(film);
@@ -1894,7 +1879,7 @@ const FLOW = [
   { cls: 'dept', ico: 'i-sign', h: 'Department approval', li: ['Department head signs'], verdict: 1 },
   { cls: 'extra opt', ico: 'i-sign', h: 'Additional approval', li: ['Only when the form needs it'], verdict: 1, chip: 'if needed' },
   { cls: 'tasks opt', ico: 'i-check', h: 'Checklist', li: ['Teams tick off their items'], chip: 'if needed' },
-  { cls: 'done', ico: 'i-done', h: 'Completed', li: ['HR Admin may assign a <b>Central Number</b>', 'Applicant gets the <b>signed PDF</b>'] },
+  { cls: 'done', ico: 'i-done', h: 'Completed', li: ['<b>Central Number</b> assigned automatically', 'HR and the applicant get the <b>signed PDF</b>'] },
 ];
 
 scene(15.5, OUT + .5, el => {
@@ -2025,80 +2010,86 @@ scene(15.5, OUT + .5, el => {
 /* during the demo the rail reports which step the request is on; set by chapter 03 */
 let demoState = () => null;
 
-/* ---------- 03 · Live demo: one real request, REQ-2026-0002, on the basic flow ----------
-   Screenshots are 2560×1664 desktop captures (system left, approver and HR Admin mail on the right).
-   Regions below are in a 1280×832 frame: [x, y, w, h]. Each shot is two bars long.
+/* ---------- 03 · Live demo: one real request, REQ-2026-0027, on the basic flow ----------
+   Screenshots (24 Nov 2026, e-procurement, low amount) are 1255×679 browser captures, plus
+   1225×679 (Outlook and the approver's personal link) and 1221×644 (administrator and SharePoint).
+   Each is fitted into one 1280×692 frame; the regions below are in each capture's own pixels
+   [x, y, w, h] and are mapped into the frame. Most shots are two bars long.
    Every time a different person takes over there is a one-bar HANDOVER: the screen blurs and dims,
    a card names who acts now, then the screen comes back as seen by them.
-   HR Admin's Central Number belongs to Done: once it is assigned, the Done step lights up. */
+   The Central Number is now assigned automatically: Done lights up as CENT-2026-0007 appears. */
 // [avatar initials, who, what they do in this flow, colour] — roles, not named people
 const PEOPLE = {
   A: ['S', 'Staff', 'Applicant', C.cyan],
   M: ['DH', 'Department Head (Management)', 'Approver', C.green],
-  H: ['HR', 'HR Admin', 'Completes the form', C.purple],   // one HR & Admin department
+  H: ['HR', 'HR Admin', 'Receives the completed form', C.purple],   // one HR & Admin department
+  R: ['AD', 'Administrator', 'Finds the record in SharePoint', C.blue],
 };
 const HO_LEN = 4, SHOT_LEN = 8, D0 = 52;
+const SHOT_W = 1280, SHOT_H = 692;                                  // the frame every capture is fitted into
+const SHOT_SIZE = { a: [1255, 679], b: [1225, 679], c: [1221, 644] };
+const SHOT_FIT = Object.fromEntries(Object.entries(SHOT_SIZE).map(([k, [w, h]]) => {
+  const s = Math.min(SHOT_W / w, SHOT_H / h);
+  return [k, { s, x: (SHOT_W - w * s) / 2, y: (SHOT_H - h * s) / 2, w: w * s, h: h * s }];
+}));
+const fitRect = (k, r) => r && [r[0] * SHOT_FIT[k].s + SHOT_FIT[k].x, r[1] * SHOT_FIT[k].s + SHOT_FIT[k].y, r[2] * SHOT_FIT[k].s, r[3] * SHOT_FIT[k].s];
+// One steady framing per shot (f1) and a highlight only on the key moments (r1/l1; none on the
+// others). Consecutive shots of the same screen share a framing, so the camera stays still.
+const FORM_VIEW = [250, 20, 1000, 640];                              // the staff form, shots 01–05
 const SEQ = [
   { ho: 'A', rail: 0, does: 'Fills in a request and sends it for approval.' },
-  { img: 1, rail: 0, who: 'A', where: 'e-workflow · new request', title: 'Fill in and submit',
-    body: 'The form shows the whole approval flow up front. Staff tick the department heads who should review it, then submit.',
-    len: 12, foci: [
-      [0, [150, 575, 500, 245], [180, 588, 358, 222], 'The full flow'],
-      [4, [150, 300, 490, 250], [180, 372, 440, 138], 'Choose approvers'],
-      [8, [140, 480, 330, 130], [171, 548, 43, 20], 'Submit'],
-    ] },
-  { img: 2, rail: 0, who: 'A', where: 'e-workflow · request page', title: 'Submitted',
-    body: 'The request becomes REQ-2026-0002. It now waits for the department head.',
-    f1: [160, 70, 480, 200], r1: [183, 181, 130, 63], l1: 'Waiting' },
+  { img: 1, k: 'a', len: 6, rail: 0, who: 'A', where: 'e-workflow · new request', title: 'Start a request',
+    body: 'Staff open the E-procurement form. Everything the approver needs is on one page.',
+    f1: FORM_VIEW },
+  { img: 2, k: 'a', len: 6, rail: 0, who: 'A', where: 'e-workflow · new request', title: 'Fill in the details',
+    body: 'A reason, a need-by date, and whether there is a cost budget.',
+    f1: FORM_VIEW },
+  { img: 3, k: 'a', rail: 0, who: 'A', where: 'e-workflow · new request', title: 'Price and quotation',
+    body: 'HKD 12,800 against the 2026 Core Budget, with the supplier’s quotation attached.',
+    f1: FORM_VIEW },
+  { img: 4, k: 'a', rail: 0, who: 'A', where: 'e-workflow · new request', title: 'Choose the approver',
+    body: 'Staff pick the department head who should approve, then submit.',
+    f1: FORM_VIEW, r1: [288, 593, 82, 38], l1: 'Submit' },
+  { img: 5, k: 'a', rail: 0, who: 'A', where: 'e-workflow · request page', title: 'Submitted, in three steps',
+    body: 'The request becomes REQ-2026-0027. Its route has three steps, and the Central Number step is automatic.',
+    f1: FORM_VIEW, r1: [554, 232, 224, 103], l1: 'Central Number: automatic' },
   { ho: 'M', rail: 1, does: 'Reviews the request, then approves and signs it.' },
-  { img: 3, rail: 1, who: 'M', where: 'Outlook · department head', title: 'The approver is emailed',
+  { img: 6, k: 'b', rail: 1, who: 'M', where: 'Outlook · department head', title: 'The approver is emailed',
     body: 'Seconds later, the department head gets an “Approval needed” email.',
-    f1: [790, 70, 490, 130], r1: [1076, 82, 198, 50], l1: 'Approval needed' },
-  { img: 4, rail: 1, who: 'M', where: 'Outlook · department head', title: 'Decide from the email',
-    body: 'One button opens a personal approval page. No password needed.',
-    f1: [975, 115, 230, 300], r1: [1010, 281, 90, 24], l1: 'Review and decide' },
-  { img: 5, rail: 1, who: 'M', where: 'e-workflow · dashboard', title: 'Or log in to e-workflow',
-    body: 'Signed in, the department head sees the same request under “Waiting for you”.',
-    f1: [795, 60, 480, 320], r1: [812, 141, 452, 40], l1: 'Waiting for you' },
-  { img: 6, rail: 1, who: 'M', where: 'e-workflow · personal link', title: 'A page for this approver',
-    body: 'The personal link shows the whole form and its procedure, with this step highlighted.',
-    f1: [770, 55, 420, 300], r1: [786, 147, 147, 64], l1: 'Your step' },
-  // 15 / 16 are 2000×1300 captures, the same shape, so the same 1280×832 frame applies
-  { img: 15, rail: 1, who: 'M', where: 'e-workflow · personal link', title: 'Comment, or ask others',
-    body: 'Before deciding, the department head can leave a comment, or ask others to review. Reviewers comment and endorse, but never approve.',
-    f1: [770, 215, 420, 200], r1: [790, 234, 370, 152], l1: 'Comment' },
-  { img: 16, rail: 1, who: 'M', where: 'e-workflow · personal link', title: 'Sign and approve',
-    body: 'They sign on screen, or upload a signature image, then approve. Rejecting needs a reason.',
-    foci: [
-      [0, [770, 90, 420, 270], [797, 138, 205, 74], 'Signature'],
-      [4, [770, 200, 330, 160], [797, 307, 55, 25], 'Approve'],
-    ] },
-  { img: 7, rail: 1, who: 'M', where: 'e-workflow · personal link', title: 'Approved',
-    body: 'Signed and approved. The department head’s part is done.',
-    f1: [770, 120, 420, 170], r1: [788, 160, 370, 28], l1: 'Approved' },
-  { ho: 'H', rail: 4, step: 'Done · HR Admin', does: 'Completes the form by assigning a Central Number.' },
-  { img: 7, rail: 4, step: 'Done · HR Admin', who: 'H', where: 'Outlook · HR Admin', title: 'Over to HR Admin',
-    body: 'To complete the form, HR Admin is emailed to assign a Central Number.',
-    f1: [700, 470, 440, 280], r1: [800, 529, 175, 40], l1: 'Central Number needed' },
-  { img: 8, rail: 4, step: 'Done · HR Admin', who: 'H', where: 'Outlook · HR Admin', title: 'HR Admin gets the task',
-    body: 'HR Admin’s email has its own button: Assign Central Number. It opens their personal page.',
-    f1: [978, 500, 220, 300], r1: [1014, 656, 106, 25], l1: 'Assign Central Number' },
-  { id: 'cn', img: 12, rail: 4, step: 'Done · HR Admin', who: 'H', where: 'e-workflow · personal link', title: 'Assign the Central Number',
-    body: 'On that page, HR Admin enters CN002 and clicks Assign Central Number. The form is complete.',
-    foci: [
-      [0, [780, 590, 390, 210], [797, 632, 354, 24], 'CN002'],
-      [4, [760, 600, 330, 140], [797, 658, 110, 24], 'Assign Central Number', 'below'],   // keep CN002 visible above
-    ] },
-  { img: 13, rail: 4, step: 'Done · HR Admin', who: 'H', where: 'Outlook · HR Admin', title: 'The completed form',
-    body: 'HR Admin receives the completed form with the signed PDF attached and Central Number CN002.',
-    f1: [980, 500, 215, 280], r1: [1013, 583, 135, 26], l1: 'Signed PDF attached' },
-  { img: 14, rail: 4, step: 'Done · HR Admin', who: 'H', where: 'REQ-2026-0002 Electronic form setup.pdf', title: 'The signed PDF',
-    body: 'One document: the form, the department head’s signature and HR Admin’s Central Number.',
-    f1: [860, 490, 220, 285], r1: [866, 497, 208, 262], l1: 'Generated PDF', f2At: 3.5, f2: [890, 590, 180, 120], r2: [936, 651, 50, 30], l2: 'Signature' },
+    f1: [560, 120, 560, 559], r1: [730, 512, 170, 43], l1: 'Review and decide' },
+  { img: 7, k: 'b', rail: 1, who: 'M', where: 'e-workflow · personal link', title: 'A page for this approver',
+    body: 'One button opens a personal page with the whole form and its procedure. No password needed.',
+    f1: [200, 20, 820, 620] },
+  { img: 8, k: 'b', rail: 1, who: 'M', where: 'e-workflow · personal link', title: 'Sign and approve',
+    body: 'They choose a saved signature or the company stamp, then approve. Rejecting needs a reason.',
+    f1: [200, 60, 820, 500], r1: [262, 419, 102, 43], l1: 'Approve' },
+  { id: 'cn', img: 9, k: 'b', rail: 1, who: 'M', where: 'e-workflow · personal link', title: 'Approved, and numbered',
+    body: 'The form is complete. Its Central Number, CENT-2026-0007, is assigned automatically.',
+    f1: [200, 160, 820, 480], r1: [240, 570, 140, 24], l1: 'CENT-2026-0007' },
+  { ho: 'H', rail: 4, step: 'Done · HR Admin', does: 'Receives the completed form, with the signed PDF.' },
+  { img: 10, k: 'b', rail: 4, step: 'Done · HR Admin', who: 'H', where: 'Outlook · HR Admin', title: 'HR gets the completed form',
+    body: 'HR receives the completed form with the signed PDF attached, and its Central Number.',
+    f1: [560, 150, 560, 520], r1: [700, 328, 260, 48], l1: 'Signed PDF attached' },
   { ho: 'A', rail: 4, step: 'Done', does: 'Gets the result.' },
-  { img: 13, rail: 4, step: 'Done', who: 'A', where: 'Gmail · applicant', title: 'The applicant is told',
-    body: 'Staff get a “Completed” email with a link back to the form.',
-    f1: [160, 105, 460, 120], r1: [188, 116, 290, 18], l1: 'Completed' },
+  { img: 11, k: 'a', rail: 4, step: 'Done', who: 'A', where: 'Gmail · applicant', title: 'The applicant is told',
+    body: 'Staff get a “Completed” email, with the signed PDF and the quotation attached.',
+    f1: [260, 100, 980, 560] },
+  { img: 12, k: 'a', len: 6, rail: 4, step: 'Done', who: 'A', where: 'e-workflow · request page', title: 'The completed form',
+    body: 'Back in e-workflow, the form shows Completed, with its Central Number at the top.',
+    f1: FORM_VIEW },
+  { img: 13, k: 'a', rail: 4, step: 'Done', who: 'A', where: 'e-workflow · history', title: 'Every step on record',
+    body: 'The history shows who did what, and when: submitted, approved from the email link, numbered automatically.',
+    f1: FORM_VIEW, r1: [313, 280, 460, 100], l1: 'Numbered automatically' },
+  { ho: 'R', rail: 4, step: 'Done · Records', does: 'Finds the completed form filed in SharePoint.' },
+  { img: 14, k: 'c', rail: 4, step: 'Done · Records', who: 'R', where: 'e-workflow · administrator view', title: 'Filed to SharePoint',
+    body: 'Once complete, the form files itself to SharePoint, under Internal / 2026 / E-procurement.',
+    f1: [250, 30, 960, 560], r1: [289, 263, 899, 118], l1: 'Filed to SharePoint' },
+  { img: 15, k: 'c', len: 6, rail: 4, step: 'Done · Records', who: 'R', where: 'SharePoint · document library', title: 'In the document library',
+    body: 'The signed PDF and the quotations sit together in the request’s own folder.',
+    f1: [80, 60, 1141, 584] },
+  { img: 16, k: 'c', rail: 4, step: 'Done · Records', who: 'R', where: 'SharePoint · version history', title: 'Every version kept',
+    body: 'File it again, and SharePoint keeps both versions.',
+    f1: [80, 60, 1141, 584], r1: [118, 240, 830, 56], l1: 'Two versions' },
 ];
 const SHOTS = SEQ.filter(s => !s.ho), HANDOVERS = SEQ.filter(s => s.ho);
 {
@@ -2109,13 +2100,13 @@ const SHOTS = SEQ.filter(s => !s.ho), HANDOVERS = SEQ.filter(s => s.ho);
     else {
       s.len = s.len || SHOT_LEN;
       s.foci = s.foci || [[0, s.f1, s.r1, s.l1], ...(s.f2 ? [[s.f2At || 4, s.f2, s.r2, s.l2]] : [])];
-      s.F = s.foci.map(([o, f, r, l, pos]) => ({ t0: s.at + o, f, r, l, below: pos === 'below' }));
+      s.F = s.foci.map(([o, f, r, l, pos]) => ({ t0: s.at + o, f: fitRect(s.k, f), r: fitRect(s.k, r), l, below: pos === 'below' }));
       t += s.len;
     }
   });
   if (t !== OUT) console.warn(`demo ends at ${t}, outro starts at ${OUT}`);
 }
-SHOTS.forEach((s, i) => { s.n = String(i + 1).padStart(2, '0'); s.src = `eform/${String(s.img).padStart(2, '0')}.webp`; });
+SHOTS.forEach((s, i) => { s.n = String(i + 1).padStart(2, '0'); s.src = `eform-v2/${String(s.img).padStart(2, '0')}.webp`; });
 SRC.shots = [...new Set(SHOTS.map(s => s.src))];
 SRC.shots.forEach(loadImg); LOAD.imgTotal = Object.keys(images).length;
 // who is acting at beat b (switches under the handover wipe)
@@ -2159,9 +2150,9 @@ scene(47.5, D0 + 1, el => {
   const h = words(el, 'Live demo', 'xl', 0, 330);
   h.line.style.width = W + 'px'; h.line.style.textAlign = 'center';
   h.ws[1].style.color = C.gold;
-  const sub = $('div', 'abs sub', el, 'One real request, from submit to the signed PDF, following the basic flow.');
+  const sub = $('div', 'abs sub', el, 'One real request, from submit to the signed PDF, filed in SharePoint.');
   place(sub, 0, 490, W); sub.style.textAlign = 'center'; sub.style.fontSize = '36px';
-  const eb = $('div', 'abs eyebrow', el, 'REQ-2026-0002 · E-procurement'); place(eb, 0, 280, W);
+  const eb = $('div', 'abs eyebrow', el, 'REQ-2026-0027 · E-procurement'); place(eb, 0, 280, W);
   eb.style.textAlign = 'center'; eb.style.color = '#8f8f9b';
   return b => {
     fadeUp(eb, b, 48.2, 51.4, 16);
@@ -2171,11 +2162,12 @@ scene(47.5, D0 + 1, el => {
 });
 
 /* the camera: a rectangle of the screenshot eased from one region to the next */
-const VX = 600, VY = 150, VW = 1224, VH = 796, IW = 1280, IH = 832, SMAX = 3.2;
+// the screen keeps the captures' wide shape (1280×692), centred where the taller frame used to sit
+const VX = 600, VY = 217, VW = 1224, VH = 662, IW = SHOT_W, IH = SHOT_H, SMAX = 2.4;
 const WIDE = [0, 0, IW, IH];
 const KF = [{ t0: -1e9, t1: -1e9, r: WIDE }];
 SHOTS.forEach(s => {
-  s.F.forEach(F => KF.push({ t0: F.t0, t1: F.t0 + 1.5, r: F.f }));
+  s.F.forEach(F => KF.push({ t0: F.t0, t1: F.t0 + 2.5, r: F.f }));   // slow, gentle moves between framings
 });
 function camAt(b) {
   let j = 0; for (let i = 1; i < KF.length; i++) if (b >= KF[i].t0) j = i;
@@ -2188,10 +2180,13 @@ function camAt(b) {
 }
 
 scene(D0 - .5, OUT + .5, el => {
-  const tag = makeTag(el, '03', 'Live demo · REQ-2026-0002', C.gold);
+  const tag = makeTag(el, '03', 'Live demo · REQ-2026-0027', C.gold);
   const scr = $('div', 'scr', el); place(scr, VX, VY, VW, VH);
   const cam = $('div', 'cam', scr);
-  SHOTS.forEach(s => { s.imgEl = $('img', '', cam); s.imgEl.src = IMG + s.src; s.imgEl.alt = ''; });
+  SHOTS.forEach(s => {
+    s.imgEl = $('img', '', cam); s.imgEl.src = IMG + s.src; s.imgEl.alt = '';
+    const f = SHOT_FIT[s.k]; place(s.imgEl, f.x, f.y, f.w, f.h);   // fitted, centred in the frame
+  });
   const spot = $('div', 'spot', scr), ripple = $('div', 'ring rip', scr), ring = $('div', 'ring', scr), rlab = $('div', 'rlab', scr);
   const edge = $('div', 'edge', scr);
   // who the screen belongs to, pinned to its top edge
@@ -2573,9 +2568,9 @@ const EW_SCORE = (() => {
 // Extend the score in whole beats so the groove continues through each extended passage.
 const SCORE = [...DMS.SCORE, ...EW_SCORE.filter(e => e.t >= EW_SKIP * SPB - 1e-6)
   .map(e => ({ t: e.t - EW_SKIP * SPB + DMS_LEN, fn: e.fn }))].sort((a, b) => a.t - b.t);
-const fillLength = Math.round(EXTRA_TIME / SPB) * SPB;
-for (const edit of EXTEND_AT) {
-  const cut = Math.floor(edit / SPB) * SPB;
+for (const { end, extra } of EXTEND_AT) {
+  const fillLength = Math.round(extra / SPB) * SPB;   // repeats the whole beats just before the edit
+  const cut = Math.floor(end / SPB + 1e-6) * SPB;
   const next = SCORE.findIndex(e => e.t >= cut);
   const fill = SCORE.slice(0, next).filter(e => e.t >= cut - fillLength)
     .map(e => ({ t: e.t + fillLength, fn: e.fn }));
@@ -2632,44 +2627,45 @@ const trackOffset = +(params.get('offset') || 0);
    faded with the music), and the music dips under every line. Toggle with the VO button or V;
    ?vo=0 starts with it off, and the choice is remembered on this device.
    ============================================================ */
-const VO_DIR = '/media/audio/eform-vo/';           // one folder per language, the same file names in each
+const VO_DIR = '/media/audio/dms-vo/';             // every line this film plays, one folder per language
 const shotAt = n => SHOTS[n - 1].at;                 // demo shots, numbered as on screen (01 / 15 …)
 const VO_LANGS = { en: { label: 'English', short: 'EN' }, yue: { label: '廣東話', short: '粵' } };
 // Chapter 01 reuses the eform film's three-step line; the demo lines narrate the request as shown.
 const VO_CUES = [
   // (no line over the intro: text, logo and music only)
-  ['02_plugin_path', 17.5],                          // 01 the basic three steps (8.2–8.4 s, ends by beat 35.5)
-  ['03_need_more', 37],                             // adjust and extend
-  ['04_real_request', 49],                           // live demo title
-  ['05_staff_submit', shotAt(1) + .5],
-  ['06_gets_number', shotAt(2) + .5],
-  ['07_dept_head_email', shotAt(3) + .25],
-  ['08_or_log_in', shotAt(5) + .5],                  // "Or log in to e-workflow"
-  ['09_comment_approve', shotAt(7) + .5],
-  ['10_hr_admin', shotAt(11) + .5],                  // ends as Done lights up on Assign
-  ['11_signed_pdf', shotAt(13) + .5],
-  ['12_applicant_told', shotAt(15) + .5],
-  ['13_fill_sign_record', OUT + .4],
+  ['ew_02_plugin_path', 17.5],                          // 01 the basic three steps (8.2–8.4 s, ends by beat 35.5)
+  ['ew_03_need_more', 37],                             // adjust and extend
+  // the live demo, REQ-2026-0027 (24 Nov 2026 screens, automatic Central Number). The DMS part's own
+  // last line already says "let's follow one request", so there is no line over the demo title card.
+  ['demo_05_fill_in', shotAt(1) + .5],               // shots 01–04: fill in, price and quotation, approver, submit
+  ['demo_06_three_steps', shotAt(5) + .5],           // submitted: three steps, the Central Number is automatic
+  ['demo_07_head_email', shotAt(6) + .5],            // the approval email and the personal page
+  ['demo_08_sign_approve', shotAt(8) + .5],          // sign, approve, numbered automatically
+  ['demo_09_hr_completed', HANDOVERS[2].at + .5],    // HR gets the completed form with the PDF
+  ['demo_10_applicant_done', HANDOVERS[3].at + .5],  // the applicant's Completed email and form
+  ['demo_11_history', shotAt(13) + .5],              // every step on record
+  ['demo_12_sharepoint', shotAt(14) + .5],           // filed to SharePoint, versions kept
+  ['ew_13_fill_sign_record', OUT + .4],
   // (no line over the logo: text and music only)
 ];
 // per-language moves where a recording runs longer than the shared cue allows
 const VO_CUE_LANG = {
-  // Cantonese: "need more" (6.7 s) fills the Live demo title, so "a real request" lands on the first
-  // handover card; HR Admin starts a beat earlier so it ends as Done lights up, well clear of line 11
-  yue: { '04_real_request': HANDOVERS[0].at + .3, '10_hr_admin': shotAt(11) - 1 },
+  yue: {},
 };
 // Slide cues use source beats. The CMS story narration starts at the requested playback time.
 const slideTime = beat => playbackTime(DMS.toFilm(beat) * SPB);
 const DMS_YUE_CUES = [
-  ['01_intro', slideTime(8)],
-  ['02_introduce_eworkflow', slideTime(32)],
+  ['01_1_intro', slideTime(8)],
+  ['01_2_intro', null],              // half a second after 01_1
+  ['02_1_introduce_eworkflow', slideTime(32)],
+  ['02_2_introduce_eworkflow', null], // half a second after 02_1
+  ['02_3_introduce_eworkflow', null, .25], // a quarter second after 02_2
   ['03_data_safe', slideTime(48)],
-  ['04_1_cms_start', 32],
+  ['04_1_cms_start', STORY_START],
   ['04_2_own_system', null], // timed from the decoded end of 04_1
   ['05_secure_signin', slideTime(104)],
   ['06_versions', slideTime(88)],
   ['07_fast_small', slideTime(300)],
-  ['08_mit', slideTime(316)],
   ['09_plugins', slideTime(192)],
   ['10_1_latest_intro', slideTime(208)],
   ['10_2_follow_request', null],
@@ -2683,7 +2679,7 @@ const VO = Object.fromEntries(Object.keys(VO_LANGS).map(lang => [lang, VO_CUES.m
   voiceClip(VO_DIR + lang + '/', name, playbackTime(DMS_LEN + ((VO_CUE_LANG[lang]?.[name] ?? beat) - EW_SKIP) * SPB))
 )]));
 VO.yue.unshift(...DMS_YUE_CUES.map(([name, t]) =>
-  voiceClip('/media/audio/dms-vo/yue/', name, t)
+  voiceClip(VO_DIR + 'yue/', name, t)
 ));
 const voReady = Promise.all(Object.values(VO).flat().map(v => v.raw));
 // the voice: 'en', 'yue' or 'off'. ?vo=en|yue|0 wins, then this device's last choice, then the browser's language
@@ -2701,11 +2697,12 @@ async function decodeVO(c, langs = Object.keys(VO)) {
     if (raw) try { v.buf = await c.decodeAudioData(raw.slice(0)); } catch (e) { console.warn('VO decode failed', v.name, e); }
   }));
   if (langs.includes('yue')) {
-    // A null cue follows the preceding DMS recording after half a second of silence.
-    DMS_YUE_CUES.forEach(([, cue], i) => {
-      if (cue !== null) return;
-      const first = VO.yue[i - 1];
-      VO.yue[i].t = first.buf ? first.t + first.buf.duration + .5 : null;
+    // A null cue follows the preceding DMS recording after a pause (half a second unless given).
+    // A timed cue keeps its slot unless the line before is still speaking; then it waits the same pause.
+    DMS_YUE_CUES.forEach(([, cue, gap = .5], i) => {
+      const prev = VO.yue[i - 1];
+      const after = prev?.buf && prev.t != null ? prev.t + prev.buf.duration + gap : null;
+      VO.yue[i].t = cue === null ? after : Math.max(cue, after ?? -Infinity);
     });
   }
 }
